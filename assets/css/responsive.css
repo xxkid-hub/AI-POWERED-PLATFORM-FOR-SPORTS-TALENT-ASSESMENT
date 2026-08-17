@@ -1,0 +1,110 @@
+/* ==========================================================================
+   ApexScout AI - Responsive Layout & Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .assessment-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .helpline-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .athlete-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetry-gauges-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .top-navbar {
+    padding: 0 1rem;
+    height: auto;
+    flex-wrap: wrap;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .nav-links-container {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0.4rem;
+  }
+
+  .nav-tab-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .main-wrapper {
+    padding: 1.25rem 1rem 3rem 1rem;
+  }
+
+  .section-header-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .section-header-block h1 {
+    font-size: 1.6rem;
+  }
+
+  .telemetry-gauges-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .video-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .coach-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .leaderboard-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metrics-summary-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .dual-badge-banner {
+    flex-direction: column;
+  }
+
+  .coach-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .telemetry-gauges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-text {
+    font-size: 1.15rem;
+  }
+
+  .user-badge-header {
+    display: none;
+  }
+}
