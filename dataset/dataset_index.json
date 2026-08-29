@@ -1,0 +1,38 @@
+{
+  "dataset_name": "ApexScout Augmented Multi-Sport Training Dataset",
+  "version": "3.0.0",
+  "total_sports": 6,
+  "total_samples": 600,
+  "sports_breakdown": {
+    "Athletics": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    },
+    "Basketball": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    },
+    "Cricket": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    },
+    "Kabaddi": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    },
+    "Soccer": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    },
+    "Volleyball": {
+      "base_samples": 15,
+      "augmented_samples": 85,
+      "total_samples": 100
+    }
+  }
+}

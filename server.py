@@ -11,6 +11,7 @@ import os
 import json
 import urllib.parse
 from datetime import datetime
+from infer import predict_sports_action
 
 PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +34,20 @@ class ApexScoutRequestHandler(http.server.SimpleHTTPRequestHandler):
                 'version': '2.4.0'
             }
             self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        elif parsed_path.path == '/api/model-evaluation':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            eval_path = os.path.join(DIRECTORY, 'trained_model', 'evaluation_report.json')
+            if os.path.exists(eval_path):
+                with open(eval_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                data = {'status': 'ERROR', 'message': 'No evaluation report found'}
+            self.wfile.write(json.dumps(data).encode('utf-8'))
             return
         
         super().do_GET()
@@ -62,6 +77,20 @@ class ApexScoutRequestHandler(http.server.SimpleHTTPRequestHandler):
                 'result': 'PASSED'
             }
             self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        elif parsed_path.path == '/api/predict-sport':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+
+            image_path = payload.get('image_path')
+            if not image_path:
+                image_path = os.path.join(DIRECTORY, 'dataset', 'Cricket', 'CR001 - Copy.png')
+                
+            prediction = predict_sports_action(image_path)
+            self.wfile.write(json.dumps(prediction).encode('utf-8'))
             return
 
         elif parsed_path.path == '/api/helpline-ticket':
