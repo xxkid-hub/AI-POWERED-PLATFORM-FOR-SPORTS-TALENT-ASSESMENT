@@ -1,0 +1,27 @@
+{
+  "dataset_name": "ApexScout 24-Hour Medical & Anti-Doping Verification Standards",
+  "compliance_authority": "WADA / USADA Standardized Screen",
+  "verification_window_hours": 24,
+  "prohibited_substance_categories": [
+    { "code": "S1", "category": "Anabolic-Androgenic Steroids (AAS)", "status_required": "NEGATIVE" },
+    { "code": "S2", "category": "Peptide Hormones, Growth Factors & EPO", "status_required": "NEGATIVE" },
+    { "code": "S3", "category": "Beta-2 Agonists & Bronchodilators", "status_required": "NEGATIVE" },
+    { "code": "S4", "category": "Hormone and Metabolic Modulators (SARMs)", "status_required": "NEGATIVE" },
+    { "code": "S5", "category": "Diuretics and Masking Agents", "status_required": "NEGATIVE" },
+    { "code": "S6", "category": "Stimulants & Central Nervous Accelerants", "status_required": "NEGATIVE" }
+  ],
+  "sample_cleared_records": [
+    {
+      "token": "APEX-MED-8492-7104",
+      "athlete_id": "ATH-001",
+      "athlete_name": "Ravi Kumar",
+      "lab_name": "Apex Olympic Certified Bio-Diagnostic Lab",
+      "accreditation": "WADA-ISO/IEC-17025-CL492",
+      "medical_timestamp": "2026-08-17T08:30:00Z",
+      "video_timestamp": "2026-08-17T14:15:00Z",
+      "timestamp_delta_hours": 5.75,
+      "is_valid_within_24h": true,
+      "anti_doping_result": "PASSED_CLEAN"
+    }
+  ]
+}

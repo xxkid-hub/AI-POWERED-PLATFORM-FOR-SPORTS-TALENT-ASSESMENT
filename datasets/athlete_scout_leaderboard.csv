@@ -1,0 +1,7 @@
+athlete_id,name,sport,origin_type,age,height,location,skill_tested,speed_metric,accuracy,reaction_time,overall_score,ai_deepfake_status,medical_24h_status
+ATH-001,Ravi Kumar,Kabaddi,Rural Grassroots Academy,18,"5 ft 11 in",Haryana India,Dubki Raid & Toe Touch,22.4 km/h,96%,0.38 sec,96,PASSED (99.8% Authentic),VERIFIED (Cleared within 24h)
+ATH-002,Mateo Silva,Football / Soccer,Grassroots Youth Club,17,"5 ft 10 in",Minas Gerais Brazil,Penalty Kick (Bottom Left),91.0 km/h,92%,0.82 sec,94,PASSED (99.4% Authentic),VERIFIED (Cleared within 24h)
+ATH-003,Simran Preet Kaur,Cricket,Rural Sports Center,19,"5 ft 8 in",Punjab India,Fast Bowling Outswinger,138.6 km/h,95%,0.62 sec,95,PASSED (99.9% Authentic),VERIFIED (Cleared within 24h)
+ATH-004,Kobe Alvarez,Basketball,Community High School,18,"6 ft 4 in",Dallas TX USA,Crossover 3-Point Shot,4.8 Hz Dribble,91%,0.45 sec,93,PASSED (99.2% Authentic),VERIFIED (Cleared within 24h)
+ATH-005,Amina Diallo,Athletics / Track,National Combine,19,"5 ft 9 in",Dakar Senegal,Max Vertical Leap,36.8 inches,97%,0.29 sec,96,PASSED (99.9% Authentic),VERIFIED (Cleared within 24h)
+ATH-006,Sophia Lindqvist,Tennis,Junior Regional Tour,16,"5 ft 11 in",Stockholm Sweden,Serve Explosiveness,162 km/h,89%,0.48 sec,92,PASSED (99.5% Authentic),VERIFIED (Cleared within 24h)
