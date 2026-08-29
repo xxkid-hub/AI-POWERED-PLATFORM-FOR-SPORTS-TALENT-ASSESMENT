@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ApexScout AI - State of the art AI sports talent assessment platform. Computer vision video analysis for jump height, dribbling speed, sprint velocity, deepfake fraud detection, 24h anti-doping medical verification, and certified coach discovery.">
-  <title>ApexScout AI | Sports Talent Assessment & Scout Platform</title>
+  <meta name="description" content="ApexScout AI - Multi-Sport Talent Assessment Platform with Computer Vision Biomechanics, Deepfake Fraud Detection, 24h Medical Clearance, and Grassroots Rural Talent Support.">
+  <title>ApexScout AI | Sports Talent Assessment & Grassroots Combine</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -21,7 +21,7 @@
 
     <nav class="nav-links-container">
       <button class="nav-tab-btn active" data-tab-target="video-assessment">
-        🎥 Video Assessment
+        🎥 Video & Skill Analysis
       </button>
       <button class="nav-tab-btn" data-tab-target="medical-verification">
         🛡 24h Medical Check
@@ -40,9 +40,18 @@
       </button>
     </nav>
 
-    <div class="nav-user-profile">
-      <span class="user-badge-header">Verified Athlete</span>
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Athlete Profile" class="user-avatar-mini" />
+    <!-- Rural & Grassroots Accessibility Bar -->
+    <div class="rural-access-bar">
+      <select id="languageSelector" class="select-pill">
+        <option value="en">🌐 English</option>
+        <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+        <option value="es">🇪🇸 Español</option>
+      </select>
+
+      <label style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+        <input type="checkbox" id="lowDataModeToggle">
+        <span>📶 2G/3G Low Data</span>
+      </label>
     </div>
   </header>
 
@@ -50,13 +59,33 @@
   <main class="main-wrapper">
 
     <!-- ====================================================================
-         SECTION 1: AI VIDEO ASSESSMENT & MOTION ANALYSIS
+         SECTION 1: AI VIDEO ASSESSMENT & MULTI-SPORT SKILL ANALYSIS
          ==================================================================== -->
     <section id="section-video-assessment" class="tab-content-section active">
+      
+      <!-- Audio Coach & Rural Share Banner -->
+      <div class="audio-coach-banner">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.5rem;">🎙️</span>
+          <div>
+            <strong style="color: #FFFFFF; font-size: 0.95rem;">Grassroots & Rural AI Audio Coach</strong>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Listen to your performance feedback aloud in your local language.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+          <button id="audioCoachBtn" class="btn btn-outline btn-sm">
+            🔊 Listen to AI Voice Coach
+          </button>
+          <button id="shareWhatsAppBtn" class="btn btn-whatsapp btn-sm">
+            📲 Share to Coach on WhatsApp
+          </button>
+        </div>
+      </div>
+
       <div class="section-header-block">
         <div>
-          <h1>AI Biomechanical Video Assessment</h1>
-          <p>Real-time pose estimation, vertical leap elevation, dribble cadence tracking, and automated video anti-tampering inspection.</p>
+          <h1>Multi-Sport Skill & Motion Analysis</h1>
+          <p>Automated computer vision extraction of shooting, bowling, raiding, and jumping mechanics from any smartphone video.</p>
         </div>
         <div>
           <button id="startAnalysisBtn" class="btn btn-primary btn-lg">
@@ -66,25 +95,23 @@
       </div>
 
       <div class="assessment-layout-grid">
-        <!-- Left: Video Player & HUD Canvas -->
-        <div class="video-main-column">
+        <!-- Left: Video Player & Canvas Overlay -->
+        <div>
           <div class="video-player-container">
-            <span id="videoSourceLabel" class="video-source-pill">BASKETBALL • SPEED DRIBBLE COMBINE</span>
-            <video id="assessmentVideo" playsinline muted loop poster="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1000&auto=format&fit=crop&q=80">
-              <!-- Video source will be managed dynamically -->
-            </video>
+            <span id="videoSourceLabel" class="video-source-pill">FOOTBALL / SOCCER • PENALTY KICK</span>
+            <video id="assessmentVideo" playsinline muted loop poster="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1000&auto=format&fit=crop&q=80"></video>
             <canvas id="assessmentCanvas"></canvas>
           </div>
 
           <div class="video-controls-bar">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <label for="videoFileInput" class="btn btn-outline btn-sm">
-                📁 Upload Custom Video (.mp4)
+                📁 Upload Smartphone Video (.mp4)
               </label>
-              <input type="file" id="videoFileInput" class="input-file-hidden" accept="video/mp4,video/webm,video/quicktime">
+              <input type="file" id="videoFileInput" class="input-file-hidden" accept="video/*">
               
               <button id="webcamToggleBtn" class="btn btn-outline btn-sm">
-                📷 Live Webcam Combine
+                📷 Live Camera Combine
               </button>
             </div>
 
@@ -93,99 +120,147 @@
               <span id="deepfakeStatusBadge" class="status-pill">PENDING INSPECTION</span>
             </div>
           </div>
-
-          <!-- Telemetry Live Gauges -->
-          <div class="telemetry-gauges-grid">
-            <div class="gauge-card">
-              <span class="gauge-label">Vertical Leap Apex</span>
-              <div id="liveJumpHeight" class="gauge-value">0.0"</div>
-              <span class="gauge-sub">Hang Time Physics (g=9.8)</span>
-            </div>
-            <div class="gauge-card gauge-lime">
-              <span class="gauge-label">Dribble Cadence</span>
-              <div id="liveDribbleSpeed" class="gauge-value">0.0 Hz</div>
-              <span class="gauge-sub">Ball Oscillation Freq</span>
-            </div>
-            <div class="gauge-card gauge-orange">
-              <span class="gauge-label">Sprint Velocity</span>
-              <div id="liveSprintSpeed" class="gauge-value">0.0 km/h</div>
-              <span class="gauge-sub">Kinetic Ground Velocity</span>
-            </div>
-            <div class="gauge-card">
-              <span class="gauge-label">Takeoff Knee Angle</span>
-              <div id="liveKneeAngle" class="gauge-value">160°</div>
-              <span class="gauge-sub">Kinetic Chain Flexion</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Right: Drill Preset Selector & Anti-Fraud Security Box -->
-        <div class="side-controls-column">
+        <!-- Right: Multi-Sport Combine Selector -->
+        <div>
           <div class="glass-card">
-            <h3>Select Combine Drill</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-              Choose a standardized benchmark drill or upload your own video tape.
+            <h3>Select Sport & Skill Combine</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+              Choose any sport (Football, Cricket, Kabaddi, Basketball, Athletics, Volleyball):
             </p>
 
             <div class="drill-selection-list">
-              <div class="drill-select-card active" data-drill-id="drill-bball-dribble">
+              <div class="drill-select-card active" data-drill-id="drill-soccer-penalty">
                 <div>
-                  <div class="drill-info-title">Crossover Speed Dribble</div>
-                  <div class="drill-info-sport">Basketball • Cadence & Symmetry</div>
+                  <div class="drill-info-title">⚽ Soccer Penalty Kick Analysis</div>
+                  <div class="drill-info-sport">Striking Speed, Placement, Plant Foot & Curve</div>
                 </div>
-                <span class="drill-duration-tag">15s Combine</span>
+                <span class="drill-duration-tag">8s Combine</span>
               </div>
 
-              <div class="drill-select-card" data-drill-id="drill-vertical-jump">
+              <div class="drill-select-card" data-drill-id="drill-cricket-bowling">
                 <div>
-                  <div class="drill-info-title">Max Vertical Leap & Apex</div>
-                  <div class="drill-info-sport">Basketball / Track • Hang Time</div>
+                  <div class="drill-info-title">🏏 Cricket Fast Bowling Release</div>
+                  <div class="drill-info-sport">Pace Velocity, Front Foot Brace & Outswing</div>
                 </div>
                 <span class="drill-duration-tag">10s Combine</span>
               </div>
 
-              <div class="drill-select-card" data-drill-id="drill-soccer-agility">
+              <div class="drill-select-card" data-drill-id="drill-kabaddi-raid">
                 <div>
-                  <div class="drill-info-title">Slalom Agility & Dribble</div>
-                  <div class="drill-info-sport">Soccer • Cone Turn Latency</div>
+                  <div class="drill-info-title">🤼 Kabaddi Toe Touch & Dubki Raid</div>
+                  <div class="drill-info-sport">Agility Latency, Baulk Line Reach & Evasion</div>
                 </div>
-                <span class="drill-duration-tag">18s Combine</span>
+                <span class="drill-duration-tag">14s Combine</span>
               </div>
 
-              <div class="drill-select-card" data-drill-id="drill-track-sprint">
+              <div class="drill-select-card" data-drill-id="drill-bball-dribble">
                 <div>
-                  <div class="drill-info-title">40-Yard Sprint Acceleration</div>
-                  <div class="drill-info-sport">Track / Athletics • Top Velocity</div>
+                  <div class="drill-info-title">🏀 Basketball Crossover & 3-Point Shot</div>
+                  <div class="drill-info-sport">Dribble Cadence, Release Point & Backspin</div>
                 </div>
-                <span class="drill-duration-tag">8s Combine</span>
+                <span class="drill-duration-tag">12s Combine</span>
+              </div>
+
+              <div class="drill-select-card" data-drill-id="drill-vertical-jump">
+                <div>
+                  <div class="drill-info-title">🏃 Track & Field Max Vertical Leap</div>
+                  <div class="drill-info-sport">Apex Elevation, Hang Time & Takeoff Force</div>
+                </div>
+                <span class="drill-duration-tag">10s Combine</span>
+              </div>
+
+              <div class="drill-select-card" data-drill-id="drill-volleyball-spike">
+                <div>
+                  <div class="drill-info-title">🏐 Volleyball Jump Spike</div>
+                  <div class="drill-info-sport">Approach Jump, Wrist Snap & Topspin Angle</div>
+                </div>
+                <span class="drill-duration-tag">9s Combine</span>
               </div>
             </div>
           </div>
 
-          <!-- Deepfake & Anti-Tampering Scanner Card -->
+          <!-- Deepfake & Anti-Tampering Filter -->
           <div class="security-inspect-box">
-            <div class="inspect-header">
-              <div class="inspect-title">
-                <span>🛡 AI Deepfake & Tamper Filter</span>
-              </div>
-              <span class="badge-mini badge-green">Active 2.4 Forensics</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="font-size: 0.92rem; color: #FFFFFF;">🛡 AI Deepfake & Anti-Tampering Check</strong>
+              <span class="badge-mini badge-green">Active</span>
             </div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">
-              Every frame is inspected to prevent speed-up editing (e.g. 1.25x fake dribble acceleration), generative AI synthetic limbs (Sora/Runway), and apex splicing.
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">
+              Inspects video for artificial speedup (e.g. 1.25x fake pace) and generative AI synthesis.
             </p>
-            <ul class="inspect-features-list">
-              <li>Temporal Optical Flow & Frame-Rate Audit</li>
-              <li>Gravitational Parabola Verification ($g=9.81\text{ m/s}^2$)</li>
-              <li>Generative AI Limb Distortion Detection</li>
-            </ul>
-
-            <div class="toggle-switch-wrapper">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
               <span>Simulate Speed Tampering Test</span>
               <input type="checkbox" id="simulateTamperToggle" style="cursor: pointer;">
             </div>
           </div>
         </div>
       </div>
+
+      <!-- ==================================================================
+           EXACT SKILL ANALYSIS TABLE (MATCHING USER'S SCREENSHOT)
+           ================================================================== -->
+      <div class="skill-analysis-container">
+        <div class="skill-analysis-title">
+          <span id="skillAnalysisTableTitle">PENALTY ANALYSIS</span>
+          <span style="font-size: 0.75rem; color: var(--accent-lime); font-weight: 600;">✓ AI BIOMECHANICAL TELEMETRY EXTRACTED</span>
+        </div>
+
+        <table class="skill-analysis-table">
+          <tbody>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Skill</td>
+              <td id="valSkill" class="skill-component-value">Penalty Kick</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Shot Result</td>
+              <td id="valShotResult" class="skill-component-value highlight-lime">Goal</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Shot Speed</td>
+              <td id="valShotSpeed" class="skill-component-value highlight-cyan">91 km/h</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Accuracy</td>
+              <td id="valAccuracy" class="skill-component-value">92%</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Ball Placement</td>
+              <td id="valBallPlacement" class="skill-component-value">Bottom Left Corner</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Reaction Time</td>
+              <td id="valReactionTime" class="skill-component-value">0.82 sec</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Run-up Speed</td>
+              <td id="valRunUpSpeed" class="skill-component-value">18.4 km/h</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Plant Foot</td>
+              <td id="valPlantFoot" class="skill-component-value">Good</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Balance</td>
+              <td id="valBalance" class="skill-component-value">Excellent</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Follow Through</td>
+              <td id="valFollowThrough" class="skill-component-value">Good</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Contact Quality</td>
+              <td id="valContactQuality" class="skill-component-value">Clean</td>
+            </tr>
+            <tr class="skill-analysis-row">
+              <td class="skill-component-label">Ball Curve</td>
+              <td id="valBallCurve" class="skill-component-value">Slight Inside Curve</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </section>
 
     <!-- ====================================================================
@@ -195,35 +270,34 @@
       <div class="section-header-block">
         <div>
           <h1>24-Hour Medical & Anti-Doping Clearance Hub</h1>
-          <p>Scout combine rules require medical & drug testing verification within 24 hours of video recording to prevent unauthorized performance enhancers or stimulants.</p>
+          <p>Validates that medical and anti-doping testing occurred within 24 hours of video recording, checking WADA-prohibited substances.</p>
         </div>
       </div>
 
-      <div class="medical-grid-layout">
-        <!-- Upload & Timestamp Form -->
+      <div class="medical-grid-layout" style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem;">
         <div class="glass-card">
-          <h3>Medical Clearance Submission</h3>
+          <h3>Medical Clearance Upload</h3>
           <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-            Upload your accredited sports medicine laboratory certificate and verify timestamp synchronization.
+            Upload medical certificate or fitness report from any clinic, hospital, or sports camp.
           </p>
 
           <div class="form-group">
-            <label class="form-label">Athlete Full Name</label>
+            <label class="form-label">Athlete Name</label>
             <input type="text" id="medAthleteNameInput" class="form-control" value="Alex Rivera">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Upload Medical / Drug Panel Certificate (PDF, PNG, JPG)</label>
+            <label class="form-label">Upload Medical / Lab Report (PDF, JPG, PNG)</label>
             <label for="medicalDocFileInput" class="upload-dropzone">
               <div class="upload-icon">📄</div>
-              <strong id="uploadedMedicalDocName">Click to browse or drop medical report file</strong>
-              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">WADA / USADA accredited lab panel certificate</p>
+              <strong id="uploadedMedicalDocName">Click to browse or drop medical certificate</strong>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">Fitness clearance & anti-doping panel</p>
             </label>
             <input type="file" id="medicalDocFileInput" class="input-file-hidden" accept=".pdf,image/*">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Test Timestamp Simulation Preset</label>
+            <label class="form-label">Simulation Preset</label>
             <select id="medTimePresetSelect" class="form-control">
               <option value="fresh-4h">Tested 4 Hours Before Video (Valid & Verified)</option>
               <option value="valid-18h">Tested 18 Hours Before Video (Valid within 24h Window)</option>
@@ -247,13 +321,13 @@
           </button>
         </div>
 
-        <!-- Verification Results & Certificate Card -->
+        <!-- Verification Results Card -->
         <div id="medicalVerificationResultCard" class="cert-result-card">
           <div class="cert-header">
             <div>
               <span class="token-pill" id="medResultToken">APEX-MED-8492-7104</span>
               <h3 style="margin-top: 0.4rem;" id="medResultAthlete">Alex Rivera</h3>
-              <span style="font-size: 0.8rem; color: var(--text-secondary);">Apex Olympic Accredited Diagnostics Lab</span>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);">Accredited Sports Diagnostics Lab</span>
             </div>
             <span id="medResultStatusBadge" class="status-pill pill-success">🛡 VERIFIED WITHIN 24H</span>
           </div>
@@ -264,41 +338,20 @@
           </div>
 
           <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">
-            WADA Prohibited Substances Panel:
+            WADA Prohibited Substances Screen:
           </h4>
 
-          <div id="medSubstanceChecklist" class="substance-checklist-grid">
-            <div class="substance-row">
-              <span class="sub-name">Anabolic-Androgenic Steroids (AAS)</span>
-              <span class="sub-code">WADA-S1</span>
-              <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-            </div>
-            <div class="substance-row">
-              <span class="sub-name">Peptide Hormones & EPO</span>
-              <span class="sub-code">WADA-S2</span>
-              <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-            </div>
-            <div class="substance-row">
-              <span class="sub-name">Beta-2 Agonists & Clenbuterol</span>
-              <span class="sub-code">WADA-S3</span>
-              <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-            </div>
-            <div class="substance-row">
-              <span class="sub-name">Metabolic Modulators & SARMs</span>
-              <span class="sub-code">WADA-S4</span>
-              <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-            </div>
-            <div class="substance-row">
-              <span class="sub-name">Stimulants & Amphetamines</span>
-              <span class="sub-code">WADA-S6</span>
-              <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-            </div>
+          <div class="substance-checklist-grid">
+            <div class="substance-row"><span class="sub-name">Anabolic Steroids (AAS)</span><span class="sub-code">WADA-S1</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
+            <div class="substance-row"><span class="sub-name">Peptide Hormones & EPO</span><span class="sub-code">WADA-S2</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
+            <div class="substance-row"><span class="sub-name">Beta-2 Agonists</span><span class="sub-code">WADA-S3</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
+            <div class="substance-row"><span class="sub-name">Stimulants & Amphetamines</span><span class="sub-code">WADA-S6</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
           </div>
 
-          <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary); border-left: 3px solid var(--accent-lime);">
+          <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary); border-left: 3px solid var(--accent-lime); margin-top: 1rem;">
             <strong style="color: #FFFFFF;">Doctor's Certification:</strong>
             <p id="medResultConclusion" style="margin-top: 0.25rem;">
-              FIT FOR COMPETITION & SCOUT RECRUITMENT. Clean anti-doping panel verified within the strict 24-hour combine window.
+              FIT FOR COMPETITION & SCOUT RECRUITMENT. Clean anti-doping panel verified within 24-hour combine window.
             </p>
           </div>
         </div>
@@ -311,147 +364,95 @@
     <section id="section-scout-leaderboard" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>Verified Talent Leaderboard</h1>
-          <p>Global rankings of top athletes with verified AI biomechanical metrics, tamper-proof video forensics, and 24h medical clearance.</p>
+          <h1>Verified Grassroots & Elite Leaderboard</h1>
+          <p>Rankings of top talent with verified 12-component biomechanics and 24h medical clearance.</p>
         </div>
       </div>
 
-      <!-- Filter Controls -->
-      <div class="leaderboard-controls-bar">
-        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-          <div>
-            <label class="form-label" style="margin-bottom: 0.2rem;">Sport Category</label>
-            <select id="leaderboardSportFilter" class="form-control" style="width: 200px;">
-              <option value="All">All Sports</option>
-              <option value="Basketball">Basketball</option>
-              <option value="Football / Soccer">Football / Soccer</option>
-              <option value="Athletics / Track">Athletics / Track</option>
-              <option value="Cricket">Cricket</option>
-              <option value="Tennis">Tennis</option>
-            </select>
-          </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; gap: 1rem;">
+          <select id="leaderboardSportFilter" class="form-control" style="width: 200px;">
+            <option value="All">All Sports</option>
+            <option value="Football / Soccer">Football / Soccer</option>
+            <option value="Cricket">Cricket</option>
+            <option value="Kabaddi">Kabaddi</option>
+            <option value="Basketball">Basketball</option>
+          </select>
 
-          <div>
-            <label class="form-label" style="margin-bottom: 0.2rem;">Rank By Metric</label>
-            <select id="leaderboardSortSelect" class="form-control" style="width: 220px;">
-              <option value="overallScore">Overall Talent Score</option>
-              <option value="jumpHeightInches">Vertical Jump Height</option>
-              <option value="dribbleSpeedHz">Dribbling Speed / Cadence</option>
-              <option value="sprint40yd">40-Yard Sprint Velocity</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="font-size: 0.82rem; color: var(--text-muted);">
-          Showing verified athletes with 24h medical compliance
+          <select id="leaderboardSortSelect" class="form-control" style="width: 220px;">
+            <option value="overallScore">Overall Talent Score</option>
+            <option value="shotSpeed">Velocity / Speed</option>
+            <option value="accuracy">Accuracy %</option>
+          </select>
         </div>
       </div>
 
-      <!-- Leaderboard Table -->
       <div class="leaderboard-table-container">
         <table class="leaderboard-table">
           <thead>
             <tr>
               <th style="width: 60px;">Rank</th>
               <th>Athlete</th>
-              <th>Vertical Leap</th>
-              <th>Dribble Speed</th>
-              <th>40-Yard Sprint</th>
+              <th>Skill Tested</th>
+              <th>Speed / Velocity</th>
+              <th>Accuracy</th>
               <th>Trust Badges</th>
-              <th>Overall Rating</th>
+              <th>Score</th>
               <th>Action</th>
             </tr>
           </thead>
-          <tbody id="leaderboardTableBody">
-            <!-- Rendered by leaderboard.js -->
-          </tbody>
+          <tbody id="leaderboardTableBody"></tbody>
         </table>
       </div>
     </section>
 
     <!-- ====================================================================
-         SECTION 4: COACHES & TALENT SCOUTS MARKETPLACE
+         SECTION 4: COACHES & SCOUTS MARKETPLACE
          ==================================================================== -->
     <section id="section-coach-marketplace" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>Certified Coaches & Scout Marketplace</h1>
-          <p>Connect directly with top collegiate scouts, UEFA/NBA development directors, and Olympic performance coaches.</p>
+          <h1>Certified Coaches & Grassroots Scout Portal</h1>
+          <p>Connect directly with top coaches, state sports authorities, and collegiate scouts.</p>
         </div>
         <div>
-          <input type="text" id="coachSearchInput" class="form-control" placeholder="🔍 Search coaches by name, sport, or credentials..." style="width: 320px;">
+          <input type="text" id="coachSearchInput" class="form-control" placeholder="🔍 Search coaches or scouts..." style="width: 300px;">
         </div>
       </div>
 
-      <!-- Sport Filter Pills -->
-      <div class="coach-filter-bar">
-        <div class="sport-pills-row">
-          <button class="coach-sport-pill active" data-sport="All">All Sports</button>
-          <button class="coach-sport-pill" data-sport="Basketball">Basketball</button>
-          <button class="coach-sport-pill" data-sport="Soccer">Football / Soccer</button>
-          <button class="coach-sport-pill" data-sport="Athletics">Athletics / Track</button>
-          <button class="coach-sport-pill" data-sport="Cricket">Cricket</button>
-          <button class="coach-sport-pill" data-sport="Tennis">Tennis</button>
-        </div>
-      </div>
-
-      <!-- Coaches Grid -->
-      <div id="coachesGridContainer" class="coaches-grid">
-        <!-- Rendered by coaches.js -->
-      </div>
+      <div id="coachesGridContainer" class="coaches-grid"></div>
     </section>
 
     <!-- ====================================================================
-         SECTION 5: 24/7 HELPLINE & ATHLETE WELLNESS HUB
+         SECTION 5: 24/7 HELPLINE & SPORTS PHYSIO
          ==================================================================== -->
     <section id="section-helpline-hub" class="tab-content-section">
       <div class="section-header-block">
         <div>
           <h1>24/7 Athlete Helpline & Sports Physio AI</h1>
-          <p>Round-the-clock emergency sports injury hotline, concussion protocol assistance, mental wellness, and anti-doping verification.</p>
+          <p>Toll-free rural sports helpline, emergency sports injury hotline, and anti-doping advisory.</p>
         </div>
       </div>
 
-      <div class="helpline-layout-grid">
-        <!-- Left: Hotlines Stack & SOS Form -->
+      <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 2rem;">
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          <div id="helplineCardsContainer" class="helplines-cards-stack">
-            <!-- Rendered by helpline.js -->
-          </div>
+          <div id="helplineCardsContainer" class="helplines-cards-stack"></div>
 
-          <!-- SOS Emergency Form -->
           <div class="glass-card">
             <h3>Submit Emergency Support Ticket</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
-              Direct emergency dispatch to regional athletic federations and medical triage officers.
-            </p>
-
             <form id="emergencyTicketForm">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div class="form-group">
-                  <label class="form-label">Your Name</label>
-                  <input type="text" id="ticketName" class="form-control" value="Alex Rivera" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Sport Category</label>
-                  <input type="text" id="ticketSport" class="form-control" value="Basketball" required>
-                </div>
-              </div>
-
               <div class="form-group">
-                <label class="form-label">Urgency Level</label>
-                <select id="ticketUrgency" class="form-control">
-                  <option value="Urgent">URGENT: Acute Injury / Combine Triage</option>
-                  <option value="Anti-Doping">Anti-Doping / Medication Clarification</option>
-                  <option value="Scout-Assistance">Scout Connection / Verification Help</option>
-                </select>
+                <label class="form-label">Your Name</label>
+                <input type="text" id="ticketName" class="form-control" value="Alex Rivera" required>
               </div>
-
               <div class="form-group">
-                <label class="form-label">Details / Symptoms</label>
-                <textarea id="ticketDesc" class="form-control" rows="3" placeholder="Describe the acute pain, injury incident, or urgent advisory required..." required></textarea>
+                <label class="form-label">Sport Category</label>
+                <input type="text" id="ticketSport" class="form-control" value="Football / Soccer" required>
               </div>
-
+              <div class="form-group">
+                <label class="form-label">Issue Details</label>
+                <textarea id="ticketDesc" class="form-control" rows="3" placeholder="Describe acute pain, injury, or query..." required></textarea>
+              </div>
               <button type="submit" class="btn btn-danger" style="width: 100%;">
                 🚨 Dispatch Emergency SOS Ticket
               </button>
@@ -459,7 +460,6 @@
           </div>
         </div>
 
-        <!-- Right: Interactive AI Sports Physiotherapist & Anti-Doping Chatbot -->
         <div>
           <div class="ai-physio-box">
             <div class="chat-header-bar">
@@ -477,30 +477,15 @@
                 <div class="message-bubble physio-bubble">
                   <div class="physio-badge">🤖 ApexScout Sports Physio & Anti-Doping AI</div>
                   <div class="physio-text">
-                    Hello! I'm your 24/7 Sports Physiotherapy and CleanSport Anti-Doping Advisor. Ask me anything about <strong>injury rehab (RICE protocol)</strong>, <strong>jump biomechanics</strong>, <strong>dribble cadence</strong>, or <strong>WADA prohibited medicines</strong>.
+                    Hello! Ask me anything about <strong>injury rehab</strong>, <strong>plant foot stability</strong>, <strong>bowling/striking mechanics</strong>, or <strong>WADA medication clearance</strong>.
                   </div>
-                  <span class="message-time">Always Online</span>
                 </div>
               </div>
             </div>
 
-            <div class="quick-prompt-chips">
-              <button class="prompt-chip" onclick="window.helplineManager.sendPresetPhysioPrompt('I have knee pain after high vertical jumps, what should I do?')">
-                🦵 Jumper's Knee Rehab
-              </button>
-              <button class="prompt-chip" onclick="window.helplineManager.sendPresetPhysioPrompt('Are pre-workout stimulants allowed under WADA regulations?')">
-                💊 Anti-Doping Check
-              </button>
-              <button class="prompt-chip" onclick="window.helplineManager.sendPresetPhysioPrompt('How can I increase my dribble frequency and ball control?')">
-                🏀 Dribble Frequency
-              </button>
-            </div>
-
             <div class="chat-input-bar">
-              <input type="text" id="aiPhysioInput" class="form-control" placeholder="Ask sports doctor about injury, medicine, or biomechanics...">
-              <button id="aiPhysioSendBtn" class="btn btn-primary">
-                Send
-              </button>
+              <input type="text" id="aiPhysioInput" class="form-control" placeholder="Ask sports doctor about injury or medicine...">
+              <button id="aiPhysioSendBtn" class="btn btn-primary">Send</button>
             </div>
           </div>
         </div>
@@ -508,95 +493,54 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 6: ATHLETE CARD & PRINTABLE VERIFIED SCORECARD
+         SECTION 6: ATHLETE SCORECARD & EXPORT
          ==================================================================== -->
     <section id="section-athlete-card" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>Athlete Digital Passport & Verified Scorecard</h1>
-          <p>Official scout combine dossier with tamper-proof video telemetry, biometric metrics, and 24-hour anti-doping clearance certificate.</p>
+          <h1>Athlete Digital Scorecard & Passport</h1>
+          <p>Official scout combine dossier with tamper-proof video telemetry and 24h medical clearance.</p>
         </div>
-        <div style="display: flex; gap: 0.75rem;">
+        <div>
           <button class="btn btn-primary" onclick="window.app.printOrDownloadScorecard()">
             🖨 Print / Export PDF Scorecard
           </button>
         </div>
       </div>
 
-      <div class="athlete-card-grid">
-        <!-- Scout Passport Card -->
-        <div id="athleteUnifiedScorecard" class="scout-passport-card">
-          <div class="passport-watermark">APEX VERIFIED</div>
-
-          <div class="passport-top-row">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Alex Rivera" class="passport-avatar" />
-            <div>
-              <h2 class="passport-name">Alex Rivera</h2>
-              <div class="passport-sport-tag">Basketball • Point Guard / Shooting Guard</div>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                Age 18 • 6'2" (188 cm) • 82 kg • Dallas, TX, USA
-              </p>
-            </div>
-          </div>
-
-          <div class="metrics-summary-matrix">
-            <div class="matrix-box">
-              <span class="matrix-label">Vertical Leap</span>
-              <div id="cardJumpVal" class="matrix-val">36.4"</div>
-              <span style="font-size: 0.75rem; color: var(--accent-cyan);">92.5 cm Apex</span>
-            </div>
-            <div class="matrix-box">
-              <span class="matrix-label">Dribble Cadence</span>
-              <div id="cardDribbleVal" class="matrix-val">4.8 Hz</div>
-              <span style="font-size: 0.75rem; color: var(--accent-lime);">58 Dribbles/12s</span>
-            </div>
-            <div class="matrix-box">
-              <span class="matrix-label">40-Yard Sprint</span>
-              <div id="cardSprintVal" class="matrix-val">4.42s</div>
-              <span style="font-size: 0.75rem; color: var(--accent-orange);">33.6 km/h Top</span>
-            </div>
-          </div>
-
-          <div class="dual-badge-banner">
-            <div style="flex: 1;">
-              <span id="cardDeepfakeBadge" class="badge-tag badge-green">✓ AI Deepfake Free (99.4% Authentic)</span>
-              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                Frame rate & gravitational optical flow verified. No artificial speed tampering.
-              </p>
-            </div>
-            <div style="flex: 1;">
-              <span id="cardMedBadge" class="badge-tag badge-cyan">🛡 24h Medical & Anti-Doping Cleared</span>
-              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                Tested within 24 hours of video combine. Zero prohibited substances detected.
-              </p>
-            </div>
-          </div>
-
-          <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
-            <div>
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Overall Combine Rating</div>
-              <div id="cardOverallScore" style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--accent-lime);">94</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-family: monospace; font-size: 0.8rem; color: var(--accent-cyan);">TOKEN: APEX-VERIFIED-2026-9904</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Scout Verification QR Code Validated</div>
-            </div>
+      <div id="athleteUnifiedScorecard" class="glass-card" style="padding: 2.5rem; background: linear-gradient(145deg, #0d121c 0%, #151e2e 100%); border: 2px solid var(--border-active);">
+        <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 2rem;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Alex Rivera" style="width: 84px; height: 84px; border-radius: var(--radius-lg); object-fit: cover; border: 3px solid var(--accent-cyan);" />
+          <div>
+            <h2>Alex Rivera</h2>
+            <div id="cardSkillTested" style="color: var(--accent-cyan); font-weight: 700;">Penalty Kick Analysis</div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Age 18 • 5'11" (180 cm) • Grassroots Combine</p>
           </div>
         </div>
 
-        <!-- Quick Actions & Scout Notes -->
-        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-          <div class="glass-card">
-            <h3>Scout Combine Summary</h3>
-            <ul style="list-style: none; font-size: 0.88rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
-              <li>⚡ <strong>Kinetic Arm-Swing:</strong> Generates 14.8% additional ground reaction force during vertical takeoff.</li>
-              <li>🏀 <strong>Crossover Symmetry:</strong> 48% Left / 52% Right distribution indicates ambidextrous playmaking.</li>
-              <li>🛡 <strong>Integrity Clearance:</strong> Passed WADA drug screen and AI optical flow deepfake verification.</li>
-            </ul>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+          <div style="background: rgba(0,0,0,0.35); padding: 1rem; border-radius: var(--radius-md); text-align: center;">
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Shot Speed</span>
+            <div id="cardShotSpeedVal" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #FFFFFF;">91 km/h</div>
+          </div>
+          <div style="background: rgba(0,0,0,0.35); padding: 1rem; border-radius: var(--radius-md); text-align: center;">
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Accuracy</span>
+            <div id="cardAccuracyVal" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #FFFFFF;">92%</div>
+          </div>
+          <div style="background: rgba(0,0,0,0.35); padding: 1rem; border-radius: var(--radius-md); text-align: center;">
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Reaction Time</span>
+            <div id="cardReactionVal" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #FFFFFF;">0.82 sec</div>
+          </div>
+        </div>
 
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="window.app.switchTab('coach-marketplace')">
-              📤 Send Scorecard to Coaches & Scouts
-            </button>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Combine Rating</div>
+            <div id="cardOverallScore" style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--accent-lime);">94</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: monospace; font-size: 0.8rem; color: var(--accent-cyan);">TOKEN: APEX-VERIFIED-RURAL-2026</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">✓ AI Deepfake Free | 🛡 24h Medical Cleared</div>
           </div>
         </div>
       </div>
@@ -604,81 +548,49 @@
 
   </main>
 
-  <!-- ====================================================================
-       INTERACTIVE MODALS
-       ==================================================================== -->
-
-  <!-- Modal 1: AI Video Analysis & Deepfake Forensics Report Modal -->
+  <!-- Modals -->
   <div id="assessmentReportModal" class="modal-container">
     <div class="modal-backdrop"></div>
     <div class="modal-content-card">
       <div class="modal-header">
         <div>
-          <h2 id="reportDrillTitle">Crossover Speed Dribble Combine</h2>
-          <span id="reportSport" style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 700;">Basketball</span>
+          <h2 id="reportDrillTitle">Penalty Kick Combine</h2>
+          <span id="reportSport" style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 700;">Football / Soccer</span>
         </div>
         <button class="modal-close">&times;</button>
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-md);">
         <div>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">ASSESSMENT COMPLETED AT</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">ASSESSMENT COMPLETED</span>
           <div id="reportTimestamp" style="font-size: 0.9rem; font-weight: 600;">Just now</div>
         </div>
         <div style="text-align: right;">
-          <span style="font-size: 0.75rem; color: var(--text-muted);">COMBINE RATING</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">OVERALL RATING</span>
           <div id="reportOverallScore" style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--accent-lime);">94</div>
         </div>
       </div>
 
-      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">Biomechanical Performance Metrics</h3>
-      <div class="metrics-summary-matrix" style="margin-top: 0;">
-        <div class="matrix-box">
-          <span class="matrix-label">Vertical Leap</span>
-          <div id="repJumpHeight" class="matrix-val">36.4"</div>
-          <span id="repHangTime" style="font-size: 0.75rem; color: var(--text-muted);">615 ms</span>
-        </div>
-        <div class="matrix-box">
-          <span class="matrix-label">Dribble Speed</span>
-          <div id="repDribbleSpeed" class="matrix-val">4.8 Hz</div>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">58 Hits</span>
-        </div>
-        <div class="matrix-box">
-          <span class="matrix-label">Sprint Velocity</span>
-          <div id="repSprintSpeed" class="matrix-val">4.42s</div>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">33.6 km/h</span>
-        </div>
-      </div>
-
-      <h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.75rem;">
-        🛡 Deepfake & Video Tampering Inspection Audit
-      </h3>
+      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">🛡 AI Deepfake & Speed Tampering Audit</h3>
       <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
         <div>
           <div id="repDeepfakeStatus" style="font-weight: 700; color: var(--accent-lime);">PASSED: Zero Synthetic Artifacts</div>
           <div id="repDeepfakeSpeed" style="font-size: 0.8rem; color: var(--text-secondary);">1.00x Real-Time Speed Verified</div>
         </div>
-        <div style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--accent-cyan);" id="repDeepfakeScore">
-          99.4%
-        </div>
+        <div style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--accent-cyan);" id="repDeepfakeScore">99.4%</div>
       </div>
 
-      <div id="repDeepfakeAuditList" class="deepfake-audit-list">
-        <!-- Rendered dynamically -->
-      </div>
+      <div id="repDeepfakeAuditList" class="deepfake-audit-list"></div>
 
       <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
         <button class="btn btn-primary" style="flex: 1;" onclick="window.app.switchTab('medical-verification')">
           🛡 Proceed to 24h Medical Verification
         </button>
-        <button class="btn btn-outline modal-close">
-          Close
-        </button>
+        <button class="btn btn-outline modal-close">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 2: Coach Direct Chat Modal -->
   <div id="coachChatModal" class="modal-container">
     <div class="modal-backdrop"></div>
     <div class="modal-content-card" style="max-width: 600px; padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 580px;">
@@ -687,26 +599,19 @@
           <img id="chatModalCoachAvatar" src="" alt="Coach" class="coach-avatar" style="width: 42px; height: 42px;" />
           <div>
             <h3 id="chatModalCoachName" style="font-size: 1.05rem;">Marcus Vance</h3>
-            <span id="chatModalCoachSub" style="font-size: 0.75rem; color: var(--accent-lime);">Verified NBA/NCAA Scout</span>
+            <span id="chatModalCoachSub" style="font-size: 0.75rem; color: var(--accent-lime);">Verified Scout</span>
           </div>
         </div>
         <button class="modal-close">&times;</button>
       </div>
-
-      <div id="coachChatMessagesBody" class="chat-messages-body">
-        <!-- Rendered dynamically -->
-      </div>
-
+      <div id="coachChatMessagesBody" class="chat-messages-body"></div>
       <div class="chat-input-bar">
         <input type="text" id="coachChatInput" class="form-control" placeholder="Type a message to the coach...">
-        <button class="btn btn-primary" onclick="window.coachesManager.sendChatMessage(window.coachesManager.activeChatCoach?.id, document.getElementById('coachChatInput').value); document.getElementById('coachChatInput').value = '';">
-          Send
-        </button>
+        <button class="btn btn-primary" onclick="window.coachesManager.sendChatMessage(window.coachesManager.activeChatCoach?.id, document.getElementById('coachChatInput').value); document.getElementById('coachChatInput').value = '';">Send</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 3: Send AI Dossier to Coach Modal -->
   <div id="sendDossierModal" class="modal-container">
     <div class="modal-backdrop"></div>
     <div class="modal-content-card" style="max-width: 520px;">
@@ -717,118 +622,27 @@
         </div>
         <button class="modal-close">&times;</button>
       </div>
-
       <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
-        <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Included in this official transmission:</h4>
         <ul style="list-style: none; font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.4rem;">
-          <li>✓ Biomechanical Video Telemetry (Vertical Leap, Dribble Speed, Sprint)</li>
-          <li>✓ AI Deepfake Authenticity Forensics Certificate</li>
+          <li>✓ 12-Component Biomechanical Skill Telemetry</li>
+          <li>✓ AI Deepfake Forensics Audit Certificate</li>
           <li>✓ 24-Hour WADA Anti-Doping Clearance Token</li>
         </ul>
       </div>
-
       <div style="display: flex; gap: 0.75rem;">
-        <button class="btn btn-primary" style="flex: 1;" onclick="window.coachesManager.confirmSendDossier()">
-          Confirm & Send Dossier
-        </button>
-        <button class="btn btn-outline modal-close">
-          Cancel
-        </button>
+        <button class="btn btn-primary" style="flex: 1;" onclick="window.coachesManager.confirmSendDossier()">Confirm & Send Dossier</button>
+        <button class="btn btn-outline modal-close">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 4: Athlete Leaderboard Profile Modal -->
-  <div id="athleteProfileModal" class="modal-container">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content-card" style="max-width: 620px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <img id="modalAthAvatar" src="" alt="Athlete" class="athlete-table-avatar" style="width: 58px; height: 58px;" />
-          <div>
-            <h2 id="modalAthName">Kobe Alvarez</h2>
-            <div id="modalAthSport" style="color: var(--accent-cyan); font-weight: 700; font-size: 0.88rem;">Basketball</div>
-            <div id="modalAthLocation" style="font-size: 0.78rem; color: var(--text-muted);">Los Angeles, USA</div>
-          </div>
-        </div>
-        <button class="modal-close">&times;</button>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
-        <span id="modalAthAge" style="font-size: 0.85rem; color: var(--text-secondary);">18 yrs • 6 ft 4 in</span>
-        <div style="text-align: right;">
-          <span style="font-size: 0.72rem; color: var(--text-muted);">COMBINE RATING</span>
-          <div id="modalAthOverallScore" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; color: var(--accent-lime);">96</div>
-        </div>
-      </div>
-
-      <div class="metrics-summary-matrix" style="margin: 0 0 1.25rem 0;">
-        <div class="matrix-box">
-          <span class="matrix-label">Vertical Leap</span>
-          <div id="modalAthJump" class="matrix-val">38.2"</div>
-        </div>
-        <div class="matrix-box">
-          <span class="matrix-label">Dribble Cadence</span>
-          <div id="modalAthDribble" class="matrix-val">4.9 Hz</div>
-        </div>
-        <div class="matrix-box">
-          <span class="matrix-label">40-Yard Sprint</span>
-          <div id="modalAthSprint" class="matrix-val">4.48s</div>
-        </div>
-      </div>
-
-      <div style="background: rgba(0, 0, 0, 0.35); padding: 1rem; border-radius: var(--radius-md); font-size: 0.82rem; margin-bottom: 1.5rem;">
-        <div style="margin-bottom: 0.4rem;">
-          <strong style="color: var(--accent-lime);">Deepfake Status:</strong> <span id="modalAthDeepfake">PASSED (99.8% Authentic)</span>
-        </div>
-        <div style="margin-bottom: 0.4rem;">
-          <strong style="color: var(--accent-cyan);">Medical Clearance:</strong> <span id="modalAthMedical">VERIFIED (Cleared within 24h)</span>
-        </div>
-        <div id="modalAthMedTime" style="font-size: 0.75rem; color: var(--text-muted);">
-          Med Test: 2026-08-17 08:30 AM | Video: 2026-08-17 02:15 PM
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 0.75rem;">
-        <button class="btn btn-outline" style="flex: 1;" onclick="window.leaderboardManager.bookmarkAthlete()">
-          ⭐ Bookmark Talent
-        </button>
-        <button class="btn btn-primary" style="flex: 1;" onclick="window.leaderboardManager.inviteToCombine()">
-          📩 Invite to Combine Trial
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 5: Ticket Success Modal -->
-  <div id="ticketSuccessModal" class="modal-container">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content-card" style="max-width: 480px; text-align: center;">
-      <div style="font-size: 3rem; margin-bottom: 0.5rem;">🚨</div>
-      <h2>Emergency Ticket Dispatched</h2>
-      <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0.5rem 0 1.25rem 0;">
-        Your priority ticket has been transmitted directly to duty sports physicians and athletic federation coordinators.
-      </p>
-
-      <div style="background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; text-align: left;">
-        <div><strong>Ticket ID:</strong> <span id="successTicketId" class="token-pill">TICK-491029</span></div>
-        <div style="margin-top: 0.35rem;"><strong>Priority:</strong> <span id="successTicketUrgency" style="color: var(--accent-danger); font-weight: 700;">URGENT</span></div>
-        <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-muted);">An officer will follow up via phone/SMS within 15 minutes.</div>
-      </div>
-
-      <button class="btn btn-primary modal-close" style="width: 100%;">
-        Acknowledge
-      </button>
-    </div>
-  </div>
-
-  <!-- Floating Toast Notifications Container -->
   <div id="toastContainer" class="toast-container"></div>
 
-  <!-- Application Logic Scripts -->
+  <!-- JavaScript Modules -->
   <script src="assets/js/sample-data.js"></script>
   <script src="assets/js/deepfake-detector.js"></script>
   <script src="assets/js/medical-verifier.js"></script>
+  <script src="assets/js/rural-access.js"></script>
   <script src="assets/js/ai-engine.js"></script>
   <script src="assets/js/coaches.js"></script>
   <script src="assets/js/leaderboard.js"></script>

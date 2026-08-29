@@ -1,6 +1,7 @@
 /**
- * ApexScout AI - Core Computer Vision & Biomechanical Motion Engine
- * Real-time video pose tracking, jump height physics, dribble cadence HUD, and motion analysis.
+ * ApexScout AI - Core Computer Vision & Multi-Sport Motion Engine
+ * Real-time video pose tracking, granular 12-component biomechanical analysis (matching user design),
+ * and dynamic target trajectory rendering.
  */
 
 class AIEngine {
@@ -20,9 +21,6 @@ class AIEngine {
       elapsedTime: 0,
       jumpApexHeightCm: 0,
       currentJumpHeightInches: 0,
-      hangTimeMs: 0,
-      dribbleCount: 0,
-      dribbleFrequencyHz: 0,
       currentSpeedKmh: 0,
       kneeAngleDeg: 160,
       poseKeypoints: [],
@@ -35,9 +33,6 @@ class AIEngine {
     this.onAnalysisComplete = null;
   }
 
-  /**
-   * Bind video and canvas overlay elements
-   */
   init(videoEl, canvasEl) {
     this.videoElement = videoEl;
     this.canvasElement = canvasEl;
@@ -46,9 +41,6 @@ class AIEngine {
     }
   }
 
-  /**
-   * Set up preset drill or uploaded video
-   */
   loadDrill(drillId) {
     const drill = SAMPLE_DATA.drills.find(d => d.id === drillId) || SAMPLE_DATA.drills[0];
     this.currentDrill = drill;
@@ -58,9 +50,6 @@ class AIEngine {
     return drill;
   }
 
-  /**
-   * Initialize live webcam mode
-   */
   async startWebcam() {
     this.isWebcam = true;
     try {
@@ -96,9 +85,6 @@ class AIEngine {
       elapsedTime: 0,
       jumpApexHeightCm: 0,
       currentJumpHeightInches: 0,
-      hangTimeMs: 0,
-      dribbleCount: 0,
-      dribbleFrequencyHz: 0,
       currentSpeedKmh: 0,
       kneeAngleDeg: 160,
       poseKeypoints: [],
@@ -111,14 +97,12 @@ class AIEngine {
     }
   }
 
-  /**
-   * Start AI Motion Analysis & Live HUD Render Loop
-   */
   startAnalysis(options = {}) {
     this.isPlaying = true;
     const startTime = performance.now();
-    const durationMs = 12000; // 12 seconds combine run
-    const drillType = (this.currentDrill && this.currentDrill.drillType) || 'jump';
+    const durationMs = 8000; // 8 seconds combine run
+    const drill = this.currentDrill || SAMPLE_DATA.drills[0];
+    const drillType = drill.drillType || 'penalty_kick';
 
     const renderLoop = (timestamp) => {
       if (!this.isPlaying) return;
@@ -126,13 +110,9 @@ class AIEngine {
       const elapsed = timestamp - startTime;
       const progress = Math.min(1.0, elapsed / durationMs);
 
-      // Compute frame-by-frame physics & kinematics
       this.updateKinematics(progress, drillType);
-
-      // Draw HUD and pose skeleton on canvas
       this.renderHUD(drillType, progress);
 
-      // Callback to UI
       if (this.onMetricsUpdate) {
         this.onMetricsUpdate({ ...this.analysisState, progress });
       }
@@ -155,55 +135,46 @@ class AIEngine {
     }
   }
 
-  /**
-   * Physics simulation of athlete pose & kinematics
-   */
   updateKinematics(progress, drillType) {
-    this.analysisState.elapsedTime = (progress * 12).toFixed(1);
+    this.analysisState.elapsedTime = (progress * 8).toFixed(1);
 
-    if (drillType === 'jump') {
-      // 3 Jump cycles throughout the 12s video
-      const cycle = (progress * 3) % 1;
-      // Parabolic jump arc: 0 to 0.3 load, 0.3 to 0.7 airborne, 0.7 to 1.0 landing
-      if (cycle >= 0.25 && cycle <= 0.75) {
-        this.analysisState.isAirborne = true;
-        const jumpNormalized = (cycle - 0.25) / 0.50; // 0 to 1 in air
-        const heightParabola = 4 * jumpNormalized * (1 - jumpNormalized); // 0 -> 1 -> 0
-
-        const maxHeightInches = 36.8;
-        const currentInches = (heightParabola * maxHeightInches).toFixed(1);
-        this.analysisState.currentJumpHeightInches = currentInches;
-        this.analysisState.jumpApexHeightCm = (currentInches * 2.54).toFixed(1);
-        this.analysisState.hangTimeMs = Math.round(jumpNormalized * 620);
-        this.analysisState.kneeAngleDeg = Math.round(175 - 25 * heightParabola);
-        this.analysisState.phase = jumpNormalized < 0.5 ? 'TAKEOFF & ASCENT' : 'APEX TO LANDING';
+    if (drillType === 'penalty_kick') {
+      // Penalty kick sequence: 0 to 0.4 run-up, 0.4 to 0.6 plant foot & strike, 0.6 to 1.0 ball flight & follow-through
+      if (progress < 0.4) {
+        this.analysisState.currentSpeedKmh = (12.0 + progress * 16.0).toFixed(1); // Run-up acceleration to 18.4 km/h
+        this.analysisState.kneeAngleDeg = Math.round(145 + Math.sin(progress * 25) * 20);
+        this.analysisState.phase = 'RUN-UP APPROACH';
+      } else if (progress < 0.6) {
+        this.analysisState.currentSpeedKmh = (18.4 - (progress - 0.4) * 20).toFixed(1);
+        this.analysisState.kneeAngleDeg = 125; // Plant foot flexion
+        this.analysisState.phase = 'PLANT FOOT & IMPACT';
       } else {
-        this.analysisState.isAirborne = false;
-        this.analysisState.currentJumpHeightInches = 0;
-        this.analysisState.kneeAngleDeg = cycle < 0.25 ? Math.round(110 + cycle * 100) : 155;
-        this.analysisState.phase = cycle < 0.25 ? 'KINETIC LOADING' : 'GROUND RECOVERY';
+        this.analysisState.currentSpeedKmh = 91.0; // Ball speed
+        this.analysisState.kneeAngleDeg = 168; // Follow-through extension
+        this.analysisState.phase = 'BALL FLIGHT (BOTTOM LEFT CORNER)';
       }
-    } else if (drillType === 'dribble') {
-      // High speed dribbling: 4.8 Hz cadence
-      const dribbles = Math.floor(progress * 56);
-      this.analysisState.dribbleCount = dribbles;
-      this.analysisState.dribbleFrequencyHz = (4.6 + Math.sin(progress * 15) * 0.4).toFixed(1);
-      this.analysisState.currentSpeedKmh = (14.2 + Math.cos(progress * 10) * 2.1).toFixed(1);
-      this.analysisState.kneeAngleDeg = Math.round(135 + Math.sin(progress * 30) * 15);
-      this.analysisState.phase = 'SPEED CROSSOVER CADENCE';
-    } else if (drillType === 'sprint' || drillType === 'agility_dribble') {
-      // Sprint acceleration curve
-      const speed = Math.min(33.8, 12 + progress * 24 + Math.sin(progress * 20) * 3).toFixed(1);
-      this.analysisState.currentSpeedKmh = speed;
-      this.analysisState.dribbleFrequencyHz = (3.8 + Math.sin(progress * 10) * 0.3).toFixed(1);
-      this.analysisState.kneeAngleDeg = Math.round(120 + Math.sin(progress * 40) * 35);
-      this.analysisState.phase = progress < 0.3 ? 'MAX DRIVE ACCELERATION' : 'PEAK STRIDE VELOCITY';
+    } else if (drillType === 'cricket_bowling') {
+      if (progress < 0.5) {
+        this.analysisState.currentSpeedKmh = (16.0 + progress * 17.6).toFixed(1);
+        this.analysisState.phase = 'PACE RUN-UP DRIVE';
+      } else if (progress < 0.7) {
+        this.analysisState.currentSpeedKmh = 24.8;
+        this.analysisState.kneeAngleDeg = 178; // Front leg braced lockout
+        this.analysisState.phase = 'FRONT FOOT BRACE & RELEASE';
+      } else {
+        this.analysisState.currentSpeedKmh = 138.6; // Delivery speed
+        this.analysisState.phase = 'SEAM ROTATION & LATERAL OUTSWING';
+      }
+    } else if (drillType === 'kabaddi_raid') {
+      this.analysisState.currentSpeedKmh = (16.0 + Math.sin(progress * 20) * 6.4).toFixed(1);
+      this.analysisState.kneeAngleDeg = Math.round(110 + Math.cos(progress * 20) * 35);
+      this.analysisState.phase = progress < 0.5 ? 'BAULK LINE SCANNING' : 'DUBKI EVASION BURST';
+    } else {
+      this.analysisState.currentSpeedKmh = (22.0 + Math.sin(progress * 15) * 8.0).toFixed(1);
+      this.analysisState.phase = 'KINETIC EXECUTION';
     }
   }
 
-  /**
-   * Render real-time high-tech sports HUD on canvas
-   */
   renderHUD(drillType, progress) {
     if (!this.canvasElement || !this.ctx) return;
     const width = this.canvasElement.width = this.canvasElement.offsetWidth || 800;
@@ -213,23 +184,18 @@ class AIEngine {
     ctx.clearRect(0, 0, width, height);
 
     // 1. Draw Biomechanical Pose Skeleton
-    const centerX = width * 0.5;
+    const centerX = width * 0.45;
     const groundY = height * 0.82;
-    const jumpOffset = this.analysisState.isAirborne
-      ? (this.analysisState.currentJumpHeightInches / 36.8) * (height * 0.28)
-      : 0;
+    const athleteY = groundY;
 
-    const athleteY = groundY - jumpOffset;
-
-    // Joints coordinates
     const head = { x: centerX, y: athleteY - height * 0.52 };
     const neck = { x: centerX, y: athleteY - height * 0.44 };
     const leftShoulder = { x: centerX - width * 0.06, y: athleteY - height * 0.40 };
     const rightShoulder = { x: centerX + width * 0.06, y: athleteY - height * 0.40 };
-    const leftElbow = { x: centerX - width * 0.10, y: athleteY - height * 0.28 + Math.sin(progress * 20) * 15 };
-    const rightElbow = { x: centerX + width * 0.10, y: athleteY - height * 0.28 - Math.sin(progress * 20) * 15 };
-    const leftWrist = { x: centerX - width * 0.08, y: athleteY - height * 0.18 + Math.sin(progress * 25) * 20 };
-    const rightWrist = { x: centerX + width * 0.08, y: athleteY - height * 0.18 - Math.sin(progress * 25) * 20 };
+    const leftElbow = { x: centerX - width * 0.10, y: athleteY - height * 0.28 + Math.sin(progress * 15) * 12 };
+    const rightElbow = { x: centerX + width * 0.10, y: athleteY - height * 0.28 - Math.sin(progress * 15) * 12 };
+    const leftWrist = { x: centerX - width * 0.08, y: athleteY - height * 0.18 + Math.sin(progress * 20) * 15 };
+    const rightWrist = { x: centerX + width * 0.08, y: athleteY - height * 0.18 - Math.sin(progress * 20) * 15 };
 
     const spineMid = { x: centerX, y: athleteY - height * 0.28 };
     const pelvis = { x: centerX, y: athleteY - height * 0.20 };
@@ -241,29 +207,19 @@ class AIEngine {
     const leftAnkle = { x: centerX - width * 0.04, y: athleteY };
     const rightAnkle = { x: centerX + width * 0.04, y: athleteY };
 
-    // Draw Skeleton Bones
     const bones = [
-      [head, neck],
-      [neck, spineMid],
-      [spineMid, pelvis],
-      [neck, leftShoulder],
-      [neck, rightShoulder],
-      [leftShoulder, leftElbow],
-      [leftElbow, leftWrist],
-      [rightShoulder, rightElbow],
-      [rightElbow, rightWrist],
-      [pelvis, leftHip],
-      [pelvis, rightHip],
-      [leftHip, leftKnee],
-      [leftKnee, leftAnkle],
-      [rightHip, rightKnee],
-      [rightKnee, rightAnkle]
+      [head, neck], [neck, spineMid], [spineMid, pelvis],
+      [neck, leftShoulder], [neck, rightShoulder],
+      [leftShoulder, leftElbow], [leftElbow, leftWrist],
+      [rightShoulder, rightElbow], [rightElbow, rightWrist],
+      [pelvis, leftHip], [pelvis, rightHip],
+      [leftHip, leftKnee], [leftKnee, leftAnkle],
+      [rightHip, rightKnee], [rightKnee, rightAnkle]
     ];
 
-    // Bone lines
     ctx.lineWidth = 3;
-    ctx.strokeStyle = this.analysisState.isAirborne ? '#39FF14' : '#00F2FE';
-    ctx.shadowColor = this.analysisState.isAirborne ? 'rgba(57, 255, 20, 0.6)' : 'rgba(0, 242, 254, 0.6)';
+    ctx.strokeStyle = '#00F2FE';
+    ctx.shadowColor = 'rgba(0, 242, 254, 0.6)';
     ctx.shadowBlur = 8;
 
     bones.forEach(([p1, p2]) => {
@@ -273,153 +229,101 @@ class AIEngine {
       ctx.stroke();
     });
 
-    // Draw Joint Keypoints
     const joints = [head, neck, leftShoulder, rightShoulder, leftElbow, rightElbow, leftWrist, rightWrist, spineMid, pelvis, leftHip, rightHip, leftKnee, rightKnee, leftAnkle, rightAnkle];
     ctx.fillStyle = '#FFFFFF';
-    ctx.shadowBlur = 10;
     joints.forEach(j => {
       ctx.beginPath();
-      ctx.arc(j.x, j.y, 4.5, 0, Math.PI * 2);
+      ctx.arc(j.x, j.y, 4, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    // Draw Ball & Bounce Vector for Dribble Drills
-    if (drillType === 'dribble' || drillType === 'agility_dribble') {
-      const ballBounce = Math.abs(Math.sin(progress * 50));
-      const ballX = centerX + width * 0.09;
-      const ballY = groundY - ballBounce * (height * 0.22);
+    // 2. Dynamic Sport Target & Ball Trajectory
+    if (drillType === 'penalty_kick') {
+      // Draw Goal Frame on right side
+      const goalX = width * 0.75;
+      const goalY = height * 0.40;
+      const goalW = width * 0.20;
+      const goalH = height * 0.42;
 
-      ctx.fillStyle = '#FF6B00';
-      ctx.shadowColor = '#FF6B00';
-      ctx.shadowBlur = 12;
-      ctx.beginPath();
-      ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Bounce trajectory trail
-      ctx.strokeStyle = 'rgba(255, 107, 0, 0.4)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
       ctx.lineWidth = 2;
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(ballX, groundY);
-      ctx.lineTo(ballX, ballY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
+      ctx.strokeRect(goalX, goalY, goalW, goalH);
 
-    // 2. Draw Jump Apex Line & Telemetry
-    if (drillType === 'jump') {
-      // Ground Baseline
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
-      ctx.lineWidth = 1.5;
+      // Target placement hotspot: Bottom Left Corner
+      const targetX = goalX + 25;
+      const targetY = goalY + goalH - 25;
+
+      ctx.strokeStyle = '#39FF14';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(width * 0.2, groundY);
-      ctx.lineTo(width * 0.8, groundY);
+      ctx.arc(targetX, targetY, 16, 0, Math.PI * 2);
       ctx.stroke();
 
-      // Jump Height Apex Laser
-      if (this.analysisState.isAirborne && parseFloat(this.analysisState.currentJumpHeightInches) > 5) {
-        ctx.strokeStyle = '#39FF14';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([6, 3]);
+      // Ball Trajectory Curve
+      if (progress > 0.5) {
+        const flightProg = (progress - 0.5) / 0.5;
+        const currentBallX = centerX + (targetX - centerX) * flightProg;
+        const currentBallY = groundY + (targetY - groundY) * flightProg - Math.sin(flightProg * Math.PI) * 45;
+
+        // Trace line
+        ctx.strokeStyle = '#FF6B00';
+        ctx.setLineDash([4, 4]);
         ctx.beginPath();
-        ctx.moveTo(width * 0.3, athleteY);
-        ctx.lineTo(width * 0.7, athleteY);
+        ctx.moveTo(centerX, groundY);
+        ctx.quadraticCurveTo(centerX + (targetX - centerX) * 0.5, groundY - 60, targetX, targetY);
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Height tag
-        ctx.fillStyle = '#39FF14';
-        ctx.font = 'bold 13px Inter, sans-serif';
-        ctx.fillText(`▲ ${this.analysisState.currentJumpHeightInches}" (${this.analysisState.jumpApexHeightCm} cm)`, width * 0.72, athleteY + 4);
+        // Ball
+        ctx.fillStyle = '#FF6B00';
+        ctx.beginPath();
+        ctx.arc(currentBallX, currentBallY, 9, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
 
-    // 3. Futuristic HUD HUD Corners & Metrics Badge
+    // 3. Cyber HUD Overlays
     this.renderHUDOverlay(ctx, width, height, drillType);
   }
 
-  /**
-   * Draw cyber HUD corner targets and live metrics
-   */
   renderHUDOverlay(ctx, width, height, drillType) {
     ctx.shadowBlur = 0;
 
     // Corner Target Brackets
     ctx.strokeStyle = 'rgba(0, 242, 254, 0.5)';
     ctx.lineWidth = 2;
-    const cornerSize = 18;
+    const cornerSize = 16;
 
-    // Top-Left
     ctx.beginPath();
-    ctx.moveTo(20, 20 + cornerSize);
-    ctx.lineTo(20, 20);
-    ctx.lineTo(20 + cornerSize, 20);
-    ctx.stroke();
-
-    // Top-Right
-    ctx.beginPath();
-    ctx.moveTo(width - 20 - cornerSize, 20);
-    ctx.lineTo(width - 20, 20);
-    ctx.lineTo(width - 20, 20 + cornerSize);
-    ctx.stroke();
-
-    // Bottom-Left
-    ctx.beginPath();
-    ctx.moveTo(20, height - 20 - cornerSize);
-    ctx.lineTo(20, height - 20);
-    ctx.lineTo(20 + cornerSize, height - 20);
-    ctx.stroke();
-
-    // Bottom-Right
-    ctx.beginPath();
-    ctx.moveTo(width - 20 - cornerSize, height - 20);
-    ctx.lineTo(width - 20, height - 20);
-    ctx.lineTo(width - 20, height - 20 - cornerSize);
+    ctx.moveTo(16, 16 + cornerSize); ctx.lineTo(16, 16); ctx.lineTo(16 + cornerSize, 16);
+    ctx.moveTo(width - 16 - cornerSize, 16); ctx.lineTo(width - 16, 16); ctx.lineTo(width - 16, 16 + cornerSize);
     ctx.stroke();
 
     // Top HUD Telemetry Pill
-    ctx.fillStyle = 'rgba(10, 13, 20, 0.85)';
+    ctx.fillStyle = 'rgba(10, 13, 20, 0.88)';
     ctx.strokeStyle = 'rgba(0, 242, 254, 0.4)';
     ctx.lineWidth = 1;
-    this.roundRect(ctx, 24, 24, 220, 54, 8, true, true);
+    this.roundRect(ctx, 20, 20, 240, 50, 6, true, true);
 
     ctx.fillStyle = '#00F2FE';
     ctx.font = '10px Inter, sans-serif';
-    ctx.fillText('LIVE AI TELEMETRY HUD', 36, 40);
+    ctx.fillText('LIVE AI COMPONENT TELEMETRY', 30, 35);
 
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 12px Inter, sans-serif';
-    ctx.fillText(`PHASE: ${this.analysisState.phase}`, 36, 56);
-    ctx.fillText(`TIME: ${this.analysisState.elapsedTime}s | FPS: 60.0`, 36, 70);
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.fillText(`PHASE: ${this.analysisState.phase}`, 30, 52);
 
-    // Live Metric Badge on Top-Right
-    ctx.fillStyle = 'rgba(10, 13, 20, 0.85)';
+    // Live Velocity Speedometer on Top-Right
+    ctx.fillStyle = 'rgba(10, 13, 20, 0.88)';
     ctx.strokeStyle = 'rgba(57, 255, 20, 0.4)';
-    this.roundRect(ctx, width - 210, 24, 186, 54, 8, true, true);
+    this.roundRect(ctx, width - 200, 20, 180, 50, 6, true, true);
 
-    if (drillType === 'jump') {
-      ctx.fillStyle = '#39FF14';
-      ctx.font = '10px Inter, sans-serif';
-      ctx.fillText('VERTICAL LEAP APEX', width - 198, 40);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px Inter, sans-serif';
-      ctx.fillText(`${this.analysisState.currentJumpHeightInches}" (${this.analysisState.jumpApexHeightCm} cm)`, width - 198, 62);
-    } else if (drillType === 'dribble') {
-      ctx.fillStyle = '#39FF14';
-      ctx.font = '10px Inter, sans-serif';
-      ctx.fillText('DRIBBLE CADENCE', width - 198, 40);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px Inter, sans-serif';
-      ctx.fillText(`${this.analysisState.dribbleFrequencyHz} Hz (${this.analysisState.dribbleCount} hits)`, width - 198, 62);
-    } else {
-      ctx.fillStyle = '#39FF14';
-      ctx.font = '10px Inter, sans-serif';
-      ctx.fillText('VELOCITY SPEEDOMETER', width - 198, 40);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px Inter, sans-serif';
-      ctx.fillText(`${this.analysisState.currentSpeedKmh} km/h`, width - 198, 62);
-    }
+    ctx.fillStyle = '#39FF14';
+    ctx.font = '10px Inter, sans-serif';
+    ctx.fillText('KINETIC VELOCITY', width - 188, 35);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 15px Inter, sans-serif';
+    ctx.fillText(`${this.analysisState.currentSpeedKmh} km/h`, width - 188, 54);
   }
 
   roundRect(ctx, x, y, width, height, radius, fill, stroke) {
@@ -438,18 +342,14 @@ class AIEngine {
     if (stroke) ctx.stroke();
   }
 
-  /**
-   * Finalize analysis and bundle full talent dossier with deepfake & medical validation
-   */
   async finishAnalysis() {
     this.isPlaying = false;
     const drill = this.currentDrill || SAMPLE_DATA.drills[0];
-    const sim = drill.simulatedMetrics;
+    const comp = drill.componentAnalysis;
 
-    // Run Deepfake verification
     const deepfakeResult = await this.deepfakeDetector.inspectVideo(this.videoElement, {
       isPreset: !this.isWebcam,
-      simulatedMetrics: sim
+      simulatedMetrics: comp
     });
 
     const report = {
@@ -457,17 +357,8 @@ class AIEngine {
       timestamp: new Date().toISOString(),
       drillTitle: drill.title,
       sport: drill.sport,
-      metrics: {
-        jumpHeightInches: sim.jumpHeightInches || 36.4,
-        jumpHeightCm: sim.jumpHeightCm || 92.5,
-        hangTimeMs: sim.hangTimeMs || 615,
-        dribbleSpeedHz: sim.dribbleSpeedHz || 4.8,
-        totalDribbles: sim.totalDribbles || 58,
-        sprintTime40yd: sim.sprintTime40yd || 4.42,
-        topSpeedKmh: sim.topSpeedKmh || 32.4,
-        explosivenessScore: sim.explosivenessScore || 94,
-        overallRating: sim.overallRating || 93
-      },
+      skillName: drill.skillName,
+      components: comp,
       deepfakeForensics: deepfakeResult,
       isVerified: deepfakeResult.isAuthentic
     };
@@ -478,7 +369,6 @@ class AIEngine {
   }
 }
 
-// Expose globally
 if (typeof window !== 'undefined') {
   window.AIEngine = AIEngine;
 }

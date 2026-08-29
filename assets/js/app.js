@@ -1,6 +1,6 @@
 /**
  * ApexScout AI - Main Application Controller
- * Tab routing, session state management, analysis pipeline orchestration, and UI interactions.
+ * Tab routing, multi-sport skill breakdown rendering, rural accessibility, and session orchestration.
  */
 
 class App {
@@ -12,11 +12,10 @@ class App {
     this.latestMedicalReport = null;
     this.currentAthlete = {
       name: 'Alex Rivera',
-      sport: 'Basketball',
+      sport: 'Football / Soccer',
       age: 18,
-      height: "6'2\" (188 cm)",
-      weight: '82 kg (181 lbs)',
-      location: 'Dallas, TX, USA'
+      height: "5'11\" (180 cm)",
+      location: 'Grassroots Combine'
     };
   }
 
@@ -26,7 +25,6 @@ class App {
     this.bindAssessmentControls();
     this.bindMedicalControls();
 
-    // Initialize submodules
     const videoEl = document.getElementById('assessmentVideo');
     const canvasEl = document.getElementById('assessmentCanvas');
     this.aiEngine.init(videoEl, canvasEl);
@@ -34,14 +32,12 @@ class App {
     if (window.coachesManager) window.coachesManager.init();
     if (window.leaderboardManager) window.leaderboardManager.init();
     if (window.helplineManager) window.helplineManager.init();
+    if (window.ruralAccess) window.ruralAccess.init();
 
-    // Select default preset drill
-    this.selectDrill('drill-bball-dribble');
-
-    // Load default sample medical report
+    // Select default preset drill: Soccer Penalty Kick (matches user image)
+    this.selectDrill('drill-soccer-penalty');
     this.loadDefaultMedicalReport();
 
-    // Setup AI engine callbacks
     this.aiEngine.onMetricsUpdate = (metrics) => this.handleMetricsUpdate(metrics);
     this.aiEngine.onAnalysisComplete = (report) => this.handleAnalysisComplete(report);
   }
@@ -49,7 +45,7 @@ class App {
   bindNavigation() {
     const navButtons = document.querySelectorAll('[data-tab-target]');
     navButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         const target = btn.getAttribute('data-tab-target');
         this.switchTab(target);
       });
@@ -59,7 +55,6 @@ class App {
   switchTab(tabId) {
     this.currentTab = tabId;
 
-    // Update nav buttons
     document.querySelectorAll('[data-tab-target]').forEach(btn => {
       if (btn.getAttribute('data-tab-target') === tabId) {
         btn.classList.add('active');
@@ -68,7 +63,6 @@ class App {
       }
     });
 
-    // Update tab sections
     document.querySelectorAll('.tab-content-section').forEach(sec => {
       if (sec.id === `section-${tabId}`) {
         sec.classList.add('active');
@@ -81,9 +75,8 @@ class App {
   }
 
   bindModals() {
-    // Close modal on close button or backdrop click
     document.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
-      el.addEventListener('click', (e) => {
+      el.addEventListener('click', () => {
         const modal = el.closest('.modal-container');
         if (modal) modal.classList.remove('active');
       });
@@ -91,15 +84,13 @@ class App {
   }
 
   bindAssessmentControls() {
-    // Drill selection cards
     document.querySelectorAll('.drill-select-card').forEach(card => {
-      card.addEventListener('click', (e) => {
+      card.addEventListener('click', () => {
         const drillId = card.getAttribute('data-drill-id');
         this.selectDrill(drillId);
       });
     });
 
-    // Start Analysis button
     const startBtn = document.getElementById('startAnalysisBtn');
     if (startBtn) {
       startBtn.addEventListener('click', () => {
@@ -107,7 +98,6 @@ class App {
       });
     }
 
-    // Video File Upload Input
     const fileInput = document.getElementById('videoFileInput');
     if (fileInput) {
       fileInput.addEventListener('change', (e) => {
@@ -117,29 +107,36 @@ class App {
       });
     }
 
-    // Webcam Toggle
     const webcamBtn = document.getElementById('webcamToggleBtn');
     if (webcamBtn) {
       webcamBtn.addEventListener('click', async () => {
         const res = await this.aiEngine.startWebcam();
         if (res.success) {
-          this.showNotification('Live combine webcam active. Stand in full frame view.');
+          this.showNotification('Live combine webcam active. Position athlete in full body view.');
           document.getElementById('videoSourceLabel').textContent = 'LIVE WEBCAM STREAM (60 FPS)';
         } else {
-          this.showNotification('Webcam inaccessible; loaded simulated combine feed.', 'warning');
+          this.showNotification('Webcam inaccessible; running standard combine simulation.', 'warning');
         }
       });
     }
 
-    // Tamper Simulation Toggle for Testing
-    const tamperCheckbox = document.getElementById('simulateTamperToggle');
-    if (tamperCheckbox) {
-      tamperCheckbox.addEventListener('change', (e) => {
-        this.showNotification(
-          e.target.checked 
-            ? 'Test Mode: AI Video Speed Tampering enabled (1.40x fake speedup simulation)' 
-            : 'Test Mode: Organic Authentic Video enabled'
-        );
+    const audioCoachBtn = document.getElementById('audioCoachBtn');
+    if (audioCoachBtn) {
+      audioCoachBtn.addEventListener('click', () => {
+        const comp = this.aiEngine.currentDrill?.componentAnalysis || SAMPLE_DATA.drills[0].componentAnalysis;
+        if (window.ruralAccess) {
+          window.ruralAccess.speakAnalysis(comp);
+        }
+      });
+    }
+
+    const whatsappBtn = document.getElementById('shareWhatsAppBtn');
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener('click', () => {
+        const comp = this.aiEngine.currentDrill?.componentAnalysis || SAMPLE_DATA.drills[0].componentAnalysis;
+        if (window.ruralAccess) {
+          window.ruralAccess.shareToWhatsApp(this.currentAthlete.name, comp);
+        }
       });
     }
   }
@@ -156,19 +153,31 @@ class App {
     const drill = this.aiEngine.loadDrill(drillId);
     if (!drill) return;
 
-    document.getElementById('videoSourceLabel').textContent = `${drill.sport.toUpperCase()} • ${drill.title.toUpperCase()}`;
-    document.getElementById('activeDrillTitle').textContent = drill.title;
-    document.getElementById('activeDrillSport').textContent = drill.sport;
-    document.getElementById('activeDrillDuration').textContent = drill.duration;
-
-    // Reset metrics on UI
-    document.getElementById('liveJumpHeight').textContent = '0.0"';
-    document.getElementById('liveDribbleSpeed').textContent = '0.0 Hz';
-    document.getElementById('liveSprintSpeed').textContent = '0.0 km/h';
-    document.getElementById('liveKneeAngle').textContent = '160°';
+    document.getElementById('videoSourceLabel').textContent = `${drill.sport.toUpperCase()} • ${drill.skillName.toUpperCase()}`;
     document.getElementById('analysisStatusText').textContent = 'READY TO ANALYZE';
     document.getElementById('deepfakeStatusBadge').className = 'status-pill';
     document.getElementById('deepfakeStatusBadge').textContent = 'PENDING INSPECTION';
+
+    // Populate Skill Table immediately with preset baseline
+    this.renderSkillAnalysisTable(drill.componentAnalysis, drill.skillName);
+  }
+
+  renderSkillAnalysisTable(comp, skillTitle) {
+    const titleEl = document.getElementById('skillAnalysisTableTitle');
+    if (titleEl) titleEl.textContent = `${(skillTitle || comp.skill || 'PENALTY').toUpperCase()} ANALYSIS`;
+
+    document.getElementById('valSkill').textContent = comp.skill;
+    document.getElementById('valShotResult').textContent = comp.shotResult;
+    document.getElementById('valShotSpeed').textContent = comp.shotSpeed;
+    document.getElementById('valAccuracy').textContent = comp.accuracy;
+    document.getElementById('valBallPlacement').textContent = comp.ballPlacement;
+    document.getElementById('valReactionTime').textContent = comp.reactionTime;
+    document.getElementById('valRunUpSpeed').textContent = comp.runUpSpeed;
+    document.getElementById('valPlantFoot').textContent = comp.plantFoot;
+    document.getElementById('valBalance').textContent = comp.balance;
+    document.getElementById('valFollowThrough').textContent = comp.followThrough;
+    document.getElementById('valContactQuality').textContent = comp.contactQuality;
+    document.getElementById('valBallCurve').textContent = comp.ballCurve;
   }
 
   handleCustomVideoUpload(file) {
@@ -185,19 +194,14 @@ class App {
   startDrillAnalysis() {
     const startBtn = document.getElementById('startAnalysisBtn');
     startBtn.disabled = true;
-    startBtn.textContent = '⚡ Analyzing Biomechanics & Deepfake Checks...';
-    document.getElementById('analysisStatusText').textContent = 'ANALYSIS IN PROGRESS...';
+    startBtn.textContent = '⚡ Analyzing Biomechanical Skill Components...';
+    document.getElementById('analysisStatusText').textContent = 'ANALYZING MOTION...';
 
     const simulateTamper = document.getElementById('simulateTamperToggle')?.checked || false;
-
     this.aiEngine.startAnalysis({ simulateTamper });
   }
 
   handleMetricsUpdate(state) {
-    document.getElementById('liveJumpHeight').textContent = `${state.currentJumpHeightInches}"`;
-    document.getElementById('liveDribbleSpeed').textContent = `${state.dribbleFrequencyHz} Hz`;
-    document.getElementById('liveSprintSpeed').textContent = `${state.currentSpeedKmh} km/h`;
-    document.getElementById('liveKneeAngle').textContent = `${state.kneeAngleDeg}°`;
     document.getElementById('analysisStatusText').textContent = `TRACKING: ${state.phase}`;
   }
 
@@ -209,7 +213,6 @@ class App {
     startBtn.textContent = '▶ Run AI Video Analysis';
     document.getElementById('analysisStatusText').textContent = 'ANALYSIS COMPLETE';
 
-    // Update Deepfake Badge on Assessment page
     const badge = document.getElementById('deepfakeStatusBadge');
     if (report.deepfakeForensics.isAuthentic) {
       badge.className = 'status-pill pill-success';
@@ -219,10 +222,10 @@ class App {
       badge.textContent = `⚠ TAMPERING FLAGGED (${report.deepfakeForensics.authenticityScore}%)`;
     }
 
-    // Populate Report Card Modal
+    this.renderSkillAnalysisTable(report.components, report.skillName);
     this.displayAssessmentReportModal(report);
     this.updateAthleteScorecard();
-    this.showNotification('AI Biomechanical Analysis & Deepfake Inspection completed!');
+    this.showNotification('Biomechanical Skill Analysis & Deepfake Inspection completed!');
   }
 
   displayAssessmentReportModal(report) {
@@ -232,14 +235,8 @@ class App {
     document.getElementById('reportDrillTitle').textContent = report.drillTitle;
     document.getElementById('reportSport').textContent = report.sport;
     document.getElementById('reportTimestamp').textContent = new Date(report.timestamp).toLocaleString();
-    document.getElementById('reportOverallScore').textContent = report.metrics.overallRating;
+    document.getElementById('reportOverallScore').textContent = report.components.overallRating || 94;
 
-    document.getElementById('repJumpHeight').textContent = `${report.metrics.jumpHeightInches}" (${report.metrics.jumpHeightCm} cm)`;
-    document.getElementById('repHangTime').textContent = `${report.metrics.hangTimeMs} ms`;
-    document.getElementById('repDribbleSpeed').textContent = `${report.metrics.dribbleSpeedHz} Hz (${report.metrics.totalDribbles} hits)`;
-    document.getElementById('repSprintSpeed').textContent = `${report.metrics.sprintTime40yd}s (${report.metrics.topSpeedKmh} km/h)`;
-
-    // Deepfake Section
     const df = report.deepfakeForensics;
     document.getElementById('repDeepfakeScore').textContent = `${df.authenticityScore}%`;
     document.getElementById('repDeepfakeStatus').textContent = df.isAuthentic ? 'PASSED: Zero Synthetic Artifacts' : 'FAILED: Speed/Splicing Tampered';
@@ -284,14 +281,12 @@ class App {
           targetDate = new Date(now.getTime() - 38 * 3600000);
         }
 
-        // Format to datetime-local format YYYY-MM-DDTHH:mm
         const formatted = targetDate.toISOString().slice(0, 16);
         const medInput = document.getElementById('medicalReportTimestampInput');
         if (medInput) medInput.value = formatted;
       });
     }
 
-    // File input for medical report
     const medFileInput = document.getElementById('medicalDocFileInput');
     if (medFileInput) {
       medFileInput.addEventListener('change', (e) => {
@@ -304,7 +299,6 @@ class App {
   }
 
   loadDefaultMedicalReport() {
-    const sample = SAMPLE_DATA.sampleMedicalReports[0];
     const now = new Date();
     const fourHoursAgo = new Date(now.getTime() - 4 * 3600000).toISOString().slice(0, 16);
     const videoTimeNow = now.toISOString().slice(0, 16);
@@ -334,7 +328,6 @@ class App {
 
     this.latestMedicalReport = verified;
 
-    // Render result card on Medical Tab
     const resultCard = document.getElementById('medicalVerificationResultCard');
     if (resultCard) {
       resultCard.style.display = 'block';
@@ -353,60 +346,25 @@ class App {
       }
 
       document.getElementById('medResultConclusion').textContent = verified.conclusion;
-
-      // Render substance table
-      const listContainer = document.getElementById('medSubstanceChecklist');
-      if (listContainer) {
-        listContainer.innerHTML = verified.substancesTested.map(s => `
-          <div class="substance-row">
-            <span class="sub-name">${s.name || s.category}</span>
-            <span class="sub-code">${s.code || 'WADA-S'}</span>
-            <span class="sub-result result-negative">NEGATIVE (CLEAN)</span>
-          </div>
-        `).join('');
-      }
     }
 
     this.updateAthleteScorecard();
-    this.showNotification(verified.isFullyCleared ? '24h Medical & Anti-Doping Verification Passed!' : 'Medical Verification Alert: Check timestamp compliance.', verified.isFullyCleared ? 'success' : 'warning');
+    this.showNotification(
+      verified.isFullyCleared ? '24h Medical & Anti-Doping Verification Passed!' : 'Medical Verification Alert: Check timestamp compliance.',
+      verified.isFullyCleared ? 'success' : 'warning'
+    );
   }
 
   updateAthleteScorecard() {
+    const comp = this.latestVideoReport ? this.latestVideoReport.components : SAMPLE_DATA.drills[0].componentAnalysis;
     const cardEl = document.getElementById('athleteUnifiedScorecard');
     if (!cardEl) return;
 
-    const jumpVal = this.latestVideoReport ? `${this.latestVideoReport.metrics.jumpHeightInches}"` : `36.4"`;
-    const dribbleVal = this.latestVideoReport ? `${this.latestVideoReport.metrics.dribbleSpeedHz} Hz` : `4.8 Hz`;
-    const sprintVal = this.latestVideoReport ? `${this.latestVideoReport.metrics.sprintTime40yd}s` : `4.42s`;
-    const overallVal = this.latestVideoReport ? this.latestVideoReport.metrics.overallRating : 94;
-
-    document.getElementById('cardJumpVal').textContent = jumpVal;
-    document.getElementById('cardDribbleVal').textContent = dribbleVal;
-    document.getElementById('cardSprintVal').textContent = sprintVal;
-    document.getElementById('cardOverallScore').textContent = overallVal;
-
-    // Badges update
-    const dfBadge = document.getElementById('cardDeepfakeBadge');
-    if (dfBadge) {
-      if (this.latestVideoReport && this.latestVideoReport.deepfakeForensics.isAuthentic) {
-        dfBadge.className = 'badge-tag badge-green';
-        dfBadge.textContent = '✓ AI Deepfake Free';
-      } else if (this.latestVideoReport && !this.latestVideoReport.deepfakeForensics.isAuthentic) {
-        dfBadge.className = 'badge-tag badge-danger';
-        dfBadge.textContent = '⚠ Tampered Video Flag';
-      }
-    }
-
-    const medBadge = document.getElementById('cardMedBadge');
-    if (medBadge) {
-      if (this.latestMedicalReport && this.latestMedicalReport.isFullyCleared) {
-        medBadge.className = 'badge-tag badge-cyan';
-        medBadge.textContent = '🛡 24h Medical Cleared';
-      } else if (this.latestMedicalReport && !this.latestMedicalReport.isFullyCleared) {
-        medBadge.className = 'badge-tag badge-danger';
-        medBadge.textContent = '⚠ Medical Expired/Flagged';
-      }
-    }
+    document.getElementById('cardSkillTested').textContent = comp.skill;
+    document.getElementById('cardShotSpeedVal').textContent = comp.shotSpeed;
+    document.getElementById('cardAccuracyVal').textContent = comp.accuracy;
+    document.getElementById('cardReactionVal').textContent = comp.reactionTime;
+    document.getElementById('cardOverallScore').textContent = comp.overallRating || 94;
   }
 
   printOrDownloadScorecard() {
@@ -419,17 +377,10 @@ class App {
 
     const toast = document.createElement('div');
     toast.className = `toast-pill toast-${type}`;
-    toast.innerHTML = `
-      <span class="toast-dot"></span>
-      <span class="toast-text">${message}</span>
-    `;
-
+    toast.innerHTML = `<span class="toast-text">${message}</span>`;
     container.appendChild(toast);
 
-    setTimeout(() => {
-      toast.classList.add('show');
-    }, 50);
-
+    setTimeout(() => toast.classList.add('show'), 50);
     setTimeout(() => {
       toast.classList.remove('show');
       setTimeout(() => toast.remove(), 300);
@@ -437,7 +388,6 @@ class App {
   }
 }
 
-// Instantiate and initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   window.app = new App();
   window.app.init();

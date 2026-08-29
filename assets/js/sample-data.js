@@ -1,86 +1,196 @@
 /**
- * ApexScout AI - Sample & Benchmark Dataset
- * Pre-configured drills, elite coaches, scout leaderboard, medical test profiles & helpline directory.
+ * ApexScout AI - Multi-Sport & Grassroots Dataset
+ * Comprehensive skills dataset covering Football/Soccer, Cricket, Kabaddi, Basketball, Athletics & Volleyball,
+ * designed for rural & grassroots talent identification with detailed biomechanical components.
  */
 
 const SAMPLE_DATA = {
-  // Preset Drills for Instant AI Testing
+  // Preset Multi-Sport Combine Drills with Granular 12-Component Biomechanics
   drills: [
     {
-      id: 'drill-bball-dribble',
-      sport: 'Basketball',
-      title: 'Crossover & Speed Dribble Combine',
-      duration: '15s',
-      targetMetrics: ['Dribble Speed (Hz)', 'Hand Symmetry', 'Ball Control Height', 'Reaction Time'],
-      videoPlaceholderText: 'Basketball Crossover Drill',
-      drillType: 'dribble',
-      simulatedMetrics: {
-        dribbleSpeedHz: 4.8, // 4.8 dribbles per second
-        totalDribbles: 58,
-        leftHandRatio: 48,
-        rightHandRatio: 52,
-        controlHeightCm: 68,
-        speedConsistency: 94,
-        overallRating: 92,
+      id: 'drill-soccer-penalty',
+      sport: 'Football / Soccer',
+      skillName: 'Penalty Kick',
+      category: 'Shooting & Ball Striking',
+      title: 'Precision Penalty Kick & Power Analysis',
+      duration: '8s',
+      targetMetrics: ['Shot Speed', 'Placement Accuracy', 'Plant Foot Stability', 'Ball Curve'],
+      drillType: 'penalty_kick',
+      videoPlaceholderText: 'Soccer Penalty Kick Combine',
+      // Exact breakdown matching user image
+      componentAnalysis: {
+        skill: 'Penalty Kick',
+        shotResult: 'Goal',
+        shotSpeed: '91 km/h',
+        shotSpeedNum: 91,
+        accuracy: '92%',
+        accuracyNum: 92,
+        ballPlacement: 'Bottom Left Corner',
+        placementZone: 'bottom-left',
+        reactionTime: '0.82 sec',
+        runUpSpeed: '18.4 km/h',
+        plantFoot: 'Good (Optimal 12cm from ball, 35° ankle angle)',
+        balance: 'Excellent (Center of mass stable over support leg)',
+        followThrough: 'Good (High knee extension, hips squared to target)',
+        contactQuality: 'Clean (Instep sweet-spot contact)',
+        ballCurve: 'Slight Inside Curve (Magnus effect 14 rad/s)',
+        overallRating: 94,
         deepfakeConfidence: 99.4,
         tamperingDetected: false
       }
     },
     {
-      id: 'drill-vertical-jump',
-      sport: 'Basketball / Athletics',
-      title: 'Max Vertical Leap & Apex Combine',
+      id: 'drill-cricket-bowling',
+      sport: 'Cricket',
+      skillName: 'Fast Bowling Release & Seam Action',
+      category: 'Pace Bowling & Seam',
+      title: 'Fast Bowling Velocity & Action Biomechanics',
       duration: '10s',
-      targetMetrics: ['Vertical Jump Height', 'Hang Time', 'Takeoff Velocity', 'Landing Angle'],
-      videoPlaceholderText: 'Max Vertical Jump Combine',
-      drillType: 'jump',
-      simulatedMetrics: {
-        jumpHeightInches: 36.4, // 36.4 inches (92.5 cm)
-        jumpHeightCm: 92.5,
-        hangTimeMs: 615,
-        takeoffVelocityMs: 4.25,
-        landingKneeFlexionDeg: 122,
-        explosivenessScore: 96,
-        overallRating: 95,
-        deepfakeConfidence: 98.8,
-        tamperingDetected: false
-      }
-    },
-    {
-      id: 'drill-soccer-agility',
-      sport: 'Football / Soccer',
-      title: 'Slalom Cone Dribble & Acceleration',
-      duration: '18s',
-      targetMetrics: ['Slalom Dribble Cadence', 'Sprint Speed', 'Agility Index', 'Ball Proximity'],
-      videoPlaceholderText: 'Soccer Slalom Agility Drill',
-      drillType: 'agility_dribble',
-      simulatedMetrics: {
-        dribbleSpeedHz: 3.9,
-        topSpeedKmh: 27.8,
-        coneTurnLatencyMs: 210,
-        ballTouchAccuracy: 91,
-        agilityScore: 89,
-        overallRating: 90,
-        deepfakeConfidence: 99.1,
-        tamperingDetected: false
-      }
-    },
-    {
-      id: 'drill-track-sprint',
-      sport: 'Athletics / Track',
-      title: '40-Yard Sprint & Acceleration Burst',
-      duration: '8s',
-      targetMetrics: ['40-Yard Time', 'Top Velocity', 'Stride Frequency', 'Ground Contact Time'],
-      videoPlaceholderText: '40-Yard Sprint Combine',
-      drillType: 'sprint',
-      simulatedMetrics: {
-        sprintTime40yd: 4.42,
-        topSpeedKmh: 33.6,
-        strideFrequencyHz: 4.5,
-        groundContactMs: 98,
-        sprintScore: 97,
+      targetMetrics: ['Release Speed', 'Arm Extension Angle', 'Front Foot Plant', 'Seam Position'],
+      drillType: 'cricket_bowling',
+      videoPlaceholderText: 'Cricket Fast Bowling Combine',
+      componentAnalysis: {
+        skill: 'Outswinger Fast Bowling',
+        shotResult: 'Hit Top of Off-Stump (Wicket)',
+        shotSpeed: '138.6 km/h',
+        shotSpeedNum: 138.6,
+        accuracy: '94%',
+        accuracyNum: 94,
+        ballPlacement: 'Good Length (Outside Off)',
+        placementZone: 'good-length-off',
+        reactionTime: '0.64 sec',
+        runUpSpeed: '24.8 km/h',
+        plantFoot: 'Excellent (Front foot braced at 178° lockout)',
+        balance: 'Optimal (Trunk hyperextension within safe limits)',
+        followThrough: 'Excellent (Complete rotation across left hip)',
+        contactQuality: 'Clean (Snap release at 2.15m height)',
+        ballCurve: 'Late Outswing (2.4° lateral deviation)',
         overallRating: 96,
-        deepfakeConfidence: 99.6,
+        deepfakeConfidence: 99.7,
+        tamperingDetected: false
+      }
+    },
+    {
+      id: 'drill-kabaddi-raid',
+      sport: 'Kabaddi',
+      skillName: 'Toe Touch & Dubki Evasion Raid',
+      category: 'Raiding & Quick Agility',
+      title: 'Grassroots Kabaddi Raid & Agility Combine',
+      duration: '14s',
+      targetMetrics: ['Foot Extension Reach', 'Evasion Velocity', 'Turn Latency', 'Balance Recovery'],
+      drillType: 'kabaddi_raid',
+      videoPlaceholderText: 'Kabaddi Raid Agility Combine',
+      componentAnalysis: {
+        skill: 'Toe Touch & Dubki Raid',
+        shotResult: 'Successful Touch (2 Touch Points)',
+        shotSpeed: '22.4 km/h (Burst Velocity)',
+        shotSpeedNum: 22.4,
+        accuracy: '96%',
+        accuracyNum: 96,
+        ballPlacement: 'Bonus Line / Right Corner Ankle',
+        placementZone: 'right-corner-ankle',
+        reactionTime: '0.38 sec',
+        runUpSpeed: '16.2 km/h',
+        plantFoot: 'Excellent (Low center of gravity, 45° ankle flex)',
+        balance: 'Superior (Instant ground recovery from squat)',
+        followThrough: 'Good (Rapid midline return to baulk line)',
+        contactQuality: 'Precise (Toe tap within 40ms contact window)',
+        ballCurve: 'Rapid Zig-Zag Deception Arc',
+        overallRating: 95,
+        deepfakeConfidence: 99.5,
+        tamperingDetected: false
+      }
+    },
+    {
+      id: 'drill-bball-dribble',
+      sport: 'Basketball',
+      skillName: 'Speed Crossover & Pull-up',
+      category: 'Ball Handling & Shooting',
+      title: 'Crossover Cadence & 3-Point Shot Mechanics',
+      duration: '12s',
+      targetMetrics: ['Dribble Speed (Hz)', 'Release Point', 'Jump Elevation', 'Balance'],
+      drillType: 'dribble_shot',
+      videoPlaceholderText: 'Basketball Crossover & Shot Combine',
+      componentAnalysis: {
+        skill: 'Crossover to 3-Point Shot',
+        shotResult: 'Swish (3-Points)',
+        shotSpeed: '4.8 Hz Dribble / 28 km/h Release',
+        shotSpeedNum: 28,
+        accuracy: '91%',
+        accuracyNum: 91,
+        ballPlacement: 'Top of the Key / Direct Net Center',
+        placementZone: 'top-key-center',
+        reactionTime: '0.45 sec',
+        runUpSpeed: '19.2 km/h',
+        plantFoot: 'Good (1-2 plant step with square shoulders)',
+        balance: 'Excellent (Zero lateral drift in mid-air)',
+        followThrough: 'Goose-Neck Locked (Clean backspin 3.2 rev/s)',
+        contactQuality: 'Clean (High release apex at 3.05m)',
+        ballCurve: 'High Parabolic Arc (48° entry angle)',
+        overallRating: 93,
+        deepfakeConfidence: 99.2,
+        tamperingDetected: false
+      }
+    },
+    {
+      id: 'drill-vertical-jump',
+      sport: 'Athletics / Track & Field',
+      skillName: 'Max Vertical Combine Leap',
+      category: 'Explosiveness & High Jump',
+      title: 'Max Vertical Leap & Takeoff Elevation',
+      duration: '10s',
+      targetMetrics: ['Apex Height', 'Hang Time', 'Takeoff Impulse', 'Landing Absorption'],
+      drillType: 'vertical_jump',
+      videoPlaceholderText: 'Max Vertical Jump Combine',
+      componentAnalysis: {
+        skill: 'Max Vertical Leap',
+        shotResult: 'Apex Reached (36.8 inches / 93.5 cm)',
+        shotSpeed: '4.35 m/s (Takeoff Velocity)',
+        shotSpeedNum: 93.5,
+        accuracy: '97%',
+        accuracyNum: 97,
+        ballPlacement: 'Vertical Ceiling Clearance',
+        placementZone: 'vertical-apex',
+        reactionTime: '0.29 sec (Ground Contact Latency)',
+        runUpSpeed: '12.6 km/h',
+        plantFoot: 'Excellent (Penultimate foot plant with 118° knee preload)',
+        balance: 'Superior (Vertical alignment through cervical spine)',
+        followThrough: 'Good (Triple extension through ankle, knee & hip)',
+        contactQuality: 'High Elastic Energy Transfer',
+        ballCurve: 'Pure Parabolic Gravitational Curve (g=9.81 m/s²)',
+        overallRating: 96,
+        deepfakeConfidence: 98.9,
+        tamperingDetected: false
+      }
+    },
+    {
+      id: 'drill-volleyball-spike',
+      sport: 'Volleyball',
+      skillName: 'Jump Spike & Power Strike',
+      category: 'Aerial Attack & Placement',
+      title: 'Volleyball Approach Jump & Spike Angle',
+      duration: '9s',
+      targetMetrics: ['Spike Speed', 'Court Placement', 'Approach Jump', 'Wrist Snap'],
+      drillType: 'volleyball_spike',
+      videoPlaceholderText: 'Volleyball Spike Combine',
+      componentAnalysis: {
+        skill: 'Power Cross-Court Spike',
+        shotResult: 'Kill Point (In Bounds)',
+        shotSpeed: '88.5 km/h',
+        shotSpeedNum: 88.5,
+        accuracy: '90%',
+        accuracyNum: 90,
+        ballPlacement: 'Deep Corner Line (Position 5)',
+        placementZone: 'deep-corner-line',
+        reactionTime: '0.55 sec',
+        runUpSpeed: '17.8 km/h',
+        plantFoot: 'Good (Dynamic block step conversion)',
+        balance: 'Excellent (Core stabilization during torso rotation)',
+        followThrough: 'Good (Full arm swing across chest)',
+        contactQuality: 'Solid (Palm-to-ball impact at maximum reach)',
+        ballCurve: 'Heavy Topspin Downward Angle (-28°)',
+        overallRating: 92,
+        deepfakeConfidence: 99.1,
         tamperingDetected: false
       }
     }
@@ -97,12 +207,12 @@ const SAMPLE_DATA = {
       rating: 4.95,
       reviewsCount: 128,
       location: 'Chicago, IL, USA',
-      specialties: ['Vertical Leap Optimization', 'Point Guard Dribble Mechanics', 'College Recruitment'],
+      specialties: ['Vertical Leap Optimization', 'Point Guard Dribble Mechanics', 'Grassroots Scouting'],
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       status: 'Accepting New Athletes',
       fee: 'Free Initial Assessment Review',
       badge: 'Verified NBA/NCAA Scout',
-      bio: 'Over 14 years evaluating elite high school and collegiate basketball prospects. Specializes in biomechanical breakdown and athletic combine preparation.'
+      bio: 'Over 14 years evaluating grassroots and collegiate prospects. Active scouting programs for rural and small-town talent.'
     },
     {
       id: 'coach-2',
@@ -112,16 +222,32 @@ const SAMPLE_DATA = {
       sport: 'Football / Soccer',
       rating: 4.92,
       reviewsCount: 94,
-      location: 'London, UK / Barcelona, Spain',
-      specialties: ['Winger Agility & Dribble Cadence', 'First-Touch Analytics', 'European Academy Trials'],
+      location: 'London, UK / São Paulo, Brazil',
+      specialties: ['Penalty Kick Placement', 'Winger Agility & Cadence', 'Rural Scouting Programs'],
       avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
       status: 'Accepting Video Submissions',
       fee: 'Free Scout Evaluation',
       badge: 'UEFA Pro Certified',
-      bio: 'Former youth academy director. Utilizes AI video telemetry to uncover undiscovered talent across South America, Europe, and Asia.'
+      bio: 'Former youth academy director passionate about discovering raw soccer talent in remote and underserved regions.'
     },
     {
       id: 'coach-3',
+      name: 'Rajeshwar Tyagi',
+      title: 'Senior Cricket & Kabaddi High-Performance Coach',
+      affiliation: 'National Rural Sports Federation & State Academy',
+      sport: 'Cricket / Kabaddi',
+      rating: 4.96,
+      reviewsCount: 175,
+      location: 'Haryana / Punjab / Maharashtra, India',
+      specialties: ['Fast Bowling Biomechanics', 'Kabaddi Raid Tactics', 'Village Talent Identification'],
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+      status: 'Reviewing State Talent',
+      fee: '100% Free Rural Talent Grants',
+      badge: 'Govt Sports Authority Scout',
+      bio: 'Discovered over 30 professional athletes from rural villages. Specializes in analyzing raw smartphone videos from clay courts and local grounds.'
+    },
+    {
+      id: 'coach-4',
       name: 'David O\'Connor',
       title: 'Olympic Sprint & Biomechanics Specialist',
       affiliation: 'USATF High Performance Center',
@@ -129,205 +255,132 @@ const SAMPLE_DATA = {
       rating: 4.98,
       reviewsCount: 160,
       location: 'Austin, TX, USA',
-      specialties: ['Sprint Acceleration Curve', 'Ground Reaction Force', 'Jump Mechanics'],
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+      specialties: ['Sprint Acceleration Curve', 'Ground Reaction Force', 'High Jump Biomechanics'],
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
       status: 'Open for Consultations',
       fee: 'Scholarship Sponsorship Track Available',
       badge: 'Olympic Coach',
-      bio: 'Coached multiple national champions in 100m, 200m, and long jump. Focuses on stride frequency efficiency and injury-preventative posture.'
-    },
-    {
-      id: 'coach-4',
-      name: 'Vikram Sengupta',
-      title: 'High-Performance Cricket Analyst & Scout',
-      affiliation: 'National Cricket Academy Talent Panel',
-      sport: 'Cricket',
-      rating: 4.88,
-      reviewsCount: 82,
-      location: 'Mumbai / Bangalore, India',
-      specialties: ['Fast Bowling Release Speed', 'Bat Speed & Footwork Latency', 'Fielding Agility'],
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-      status: 'Reviewing State Talent',
-      fee: 'Free Talent Assessment',
-      badge: 'BCCI Certified Analyst',
-      bio: 'Former first-class cricketer and current franchise scouting consultant. Passionate about grassroots cricket talent identification.'
-    },
-    {
-      id: 'coach-5',
-      name: 'Sarah Chen',
-      title: 'Strength & Conditioning Specialist (CSCS)',
-      affiliation: 'Athletics & Tennis Performance Lab',
-      sport: 'Tennis / Multi-Sport',
-      rating: 4.96,
-      reviewsCount: 110,
-      location: 'Melbourne, Australia',
-      specialties: ['Rotational Power', 'Lateral Quickness', 'Anti-Doping & Safe Supplementation'],
-      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
-      status: 'Accepting Video Submissions',
-      fee: 'Free Review for Verified Profiles',
-      badge: 'NSCA CSCS Master',
-      bio: 'Expert in tennis court coverage, serve explosiveness, and youth athletic longevity.'
+      bio: 'Coached multiple national champions in sprint and jump combines. Specializes in low-equipment athletic screening.'
     }
   ],
 
-  // Scout Leaderboard Athletes
+  // Scout Leaderboard Athletes with Grassroots Representation
   leaderboard: [
     {
       id: 'ath-1',
-      name: 'Kobe Alvarez',
-      sport: 'Basketball',
+      name: 'Ravi Kumar',
+      sport: 'Kabaddi',
+      originType: 'Rural Grassroots Talent (Sonipat, India)',
       age: 18,
-      height: '6 ft 4 in (193 cm)',
-      location: 'Los Angeles, USA',
-      jumpHeightInches: 38.2,
-      dribbleSpeedHz: 4.9,
-      sprint40yd: 4.48,
+      height: '5 ft 11 in (180 cm)',
+      location: 'Haryana, India',
+      skillTested: 'Dubki Raid & Toe Touch',
+      shotSpeed: '22.4 km/h',
+      accuracy: '96%',
+      reactionTime: '0.38 sec',
       overallScore: 96,
       deepfakeStatus: 'PASSED (99.8% Authentic)',
       medicalStatus: 'VERIFIED (Cleared within 24h)',
       medicalTimestamp: '2026-08-17 08:30 AM',
       videoTimestamp: '2026-08-17 02:15 PM',
-      scoutInterest: 14,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
+      scoutInterest: 24,
+      avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80'
     },
     {
       id: 'ath-2',
       name: 'Mateo Silva',
       sport: 'Football / Soccer',
+      originType: 'Grassroots Club (Minas Gerais, Brazil)',
       age: 17,
       height: '5 ft 10 in (178 cm)',
-      location: 'São Paulo, Brazil',
-      jumpHeightInches: 31.5,
-      dribbleSpeedHz: 5.2,
-      sprint40yd: 4.39,
+      location: 'Minas Gerais, Brazil',
+      skillTested: 'Penalty Kick (Bottom Left)',
+      shotSpeed: '91 km/h',
+      accuracy: '92%',
+      reactionTime: '0.82 sec',
       overallScore: 94,
       deepfakeStatus: 'PASSED (99.4% Authentic)',
       medicalStatus: 'VERIFIED (Cleared within 24h)',
       medicalTimestamp: '2026-08-16 11:00 AM',
       videoTimestamp: '2026-08-16 04:45 PM',
-      scoutInterest: 22,
+      scoutInterest: 31,
       avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80'
     },
     {
       id: 'ath-3',
-      name: 'Amina Diallo',
-      sport: 'Athletics / Track',
+      name: 'Simran Preet Kaur',
+      sport: 'Cricket',
+      originType: 'Rural Sports Academy (Moga, Punjab)',
       age: 19,
-      height: '5 ft 9 in (175 cm)',
-      location: 'Dakar, Senegal',
-      jumpHeightInches: 35.8,
-      dribbleSpeedHz: 3.4,
-      sprint40yd: 4.32,
+      height: '5 ft 8 in (173 cm)',
+      location: 'Punjab, India',
+      skillTested: 'Pace Bowling (Outswinger)',
+      shotSpeed: '128.4 km/h',
+      accuracy: '95%',
+      reactionTime: '0.62 sec',
       overallScore: 95,
       deepfakeStatus: 'PASSED (99.9% Authentic)',
       medicalStatus: 'VERIFIED (Cleared within 24h)',
       medicalTimestamp: '2026-08-17 09:15 AM',
       videoTimestamp: '2026-08-17 11:30 AM',
-      scoutInterest: 19,
+      scoutInterest: 18,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
     },
     {
       id: 'ath-4',
-      name: 'Arjun Verma',
-      sport: 'Cricket',
+      name: 'Kobe Alvarez',
+      sport: 'Basketball',
+      originType: 'Community High School Combine',
       age: 18,
-      height: '6 ft 1 in (185 cm)',
-      location: 'Delhi, India',
-      jumpHeightInches: 32.4,
-      dribbleSpeedHz: 4.1,
-      sprint40yd: 4.52,
-      overallScore: 91,
+      height: '6 ft 4 in (193 cm)',
+      location: 'Dallas, TX, USA',
+      skillTested: 'Crossover to 3-Point Shot',
+      shotSpeed: '4.8 Hz Dribble',
+      accuracy: '91%',
+      reactionTime: '0.45 sec',
+      overallScore: 93,
       deepfakeStatus: 'PASSED (99.2% Authentic)',
       medicalStatus: 'VERIFIED (Cleared within 24h)',
       medicalTimestamp: '2026-08-17 07:00 AM',
       videoTimestamp: '2026-08-17 01:20 PM',
-      scoutInterest: 11,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
-    },
-    {
-      id: 'ath-5',
-      name: 'Sophia Lindqvist',
-      sport: 'Tennis',
-      age: 16,
-      height: '5 ft 11 in (180 cm)',
-      location: 'Stockholm, Sweden',
-      jumpHeightInches: 30.2,
-      dribbleSpeedHz: 4.6,
-      sprint40yd: 4.46,
-      overallScore: 92,
-      deepfakeStatus: 'PASSED (99.5% Authentic)',
-      medicalStatus: 'VERIFIED (Cleared within 24h)',
-      medicalTimestamp: '2026-08-16 02:30 PM',
-      videoTimestamp: '2026-08-16 06:10 PM',
-      scoutInterest: 16,
-      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80'
+      scoutInterest: 15,
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
     }
   ],
 
-  // Preset Verified Medical & Anti-Doping Reports
-  sampleMedicalReports: [
-    {
-      id: 'med-rep-101',
-      athleteName: 'Kobe Alvarez',
-      reportType: 'WADA-Standard Anti-Doping & Physiological Clearance',
-      labName: 'Apex Olympic Certified Bio-Diagnostic Lab',
-      accreditationId: 'WADA-ISO/IEC-17025-CL492',
-      doctorName: 'Dr. Evelyn Reed, MD (Sports Medicine)',
-      timestamp: '2026-08-17 08:30:00',
-      validityHours: 24,
-      substancesTested: [
-        { category: 'Anabolic-Androgenic Steroids (AAS)', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Peptide Hormones & Growth Factors (EPO/hGH)', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Beta-2 Agonists & Bronchodilators', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Hormone & Metabolic Modulators', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Stimulants & Central Nervous System Agents', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Narcotics & Cannabinoids', result: 'NEGATIVE', status: 'CLEARED' },
-        { category: 'Glucocorticoids', result: 'NEGATIVE', status: 'CLEARED' }
-      ],
-      vitals: {
-        restingHeartRate: '52 bpm (Athletic Norm)',
-        bloodPressure: '118/74 mmHg (Optimal)',
-        vo2MaxEst: '58.4 mL/kg/min',
-        orthopedicJointScore: 'Grade A (Full Mobility, Zero Ligament Strain)'
-      },
-      conclusion: 'FIT FOR COMPETITION & SCOUT COMBINE. No prohibited performance enhancers detected. Certificate valid for 24-hour verification window.'
-    }
-  ],
-
-  // 24/7 Helpline Hotlines & Emergency Directory
+  // 24/7 Helpline Hotlines & Rural Grassroots Support
   helplines: [
     {
-      category: 'Sports Injury & Emergency First Aid',
+      category: 'Rural Sports & Grassroots Talent Toll-Free Hotline',
+      number: '1800-11-SPORTS (Toll-Free 24/7)',
+      altNumber: '+1 (800) 555-RURAL',
+      available: '24/7 Multi-Lingual Support',
+      description: 'Dedicated support for athletes from rural districts and small towns. Assistance with smartphone video recording on local grounds, scout connections, and free medical clearance camps.'
+    },
+    {
+      category: 'Sports Injury & Emergency First Aid Hotline',
       number: '+1 (800) 555-SPORTS (US/Global)',
-      altNumber: '+44 20 7946 0912 (UK/EU)',
+      altNumber: '+91 1800 200 4545 (Asia/India)',
       available: '24 Hours / 7 Days a Week',
-      description: 'Immediate tele-triage for acute ligament tears, sprains, muscle ruptures, and sports trauma by certified physiotherapists.'
+      description: 'Immediate tele-triage for acute sprains, knee trauma, ligament tears, and first aid guidance for coaches and players.'
     },
     {
-      category: 'Athlete Mental Wellness & Pressure Helpline',
-      number: '+1 (800) 273-TALK (Option 4 Athlete)',
-      altNumber: 'Text "PLAY" to 741741',
-      available: '24/7 Confidential',
-      description: 'Support for performance anxiety, burnout, scout trial stress, and student-athlete mental resilience counseling.'
-    },
-    {
-      category: 'Anti-Doping & Safe Supplement Advisory Hotline',
+      category: 'Anti-Doping & Safe Medication Helpline',
       number: '+1 (800) 223-0393 (CleanSport Hotline)',
       altNumber: 'support@wada-ama.org',
-      available: '24/7 Inquiry Support',
-      description: 'Verify if any over-the-counter medication, pre-workout, or prescription drug is on the prohibited list before trials.'
+      available: '24/7 Advisory Hotline',
+      description: 'Check if any local prescription medicine, fever medication, or supplement is WADA compliant before scout combine testing.'
     },
     {
-      category: 'Concussion & Head Trauma Emergency Protocol',
-      number: '+1 (888) CONCUSS (888-266-2877)',
-      altNumber: 'Immediate 911 / 112 for severe trauma',
-      available: '24/7 Immediate Protocol',
-      description: 'Step-by-step SCAT6 concussion assessment guidance and return-to-play protocol verification.'
+      category: 'Athlete Mental Wellness & Pressure Support',
+      number: '+1 (800) 273-TALK (Option 4 Athlete)',
+      altNumber: 'Text "PLAY" to 741741',
+      available: '24/7 Confidential Helpline',
+      description: 'Counseling for young athletes coping with trial anxiety, family pressure, and competitive performance stress.'
     }
   ]
 };
 
-// Expose globally
 if (typeof window !== 'undefined') {
   window.SAMPLE_DATA = SAMPLE_DATA;
 }
