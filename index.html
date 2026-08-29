@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ApexScout AI - Multi-Sport Talent Assessment Platform with Computer Vision Biomechanics, Deepfake Fraud Detection, 24h Medical Clearance, and Grassroots Rural Talent Support.">
-  <title>ApexScout AI | Sports Talent Assessment & Grassroots Combine</title>
+  <meta name="description" content="ApexScout AI - Vision-First Sports Scouting Ecosystem with Video Integrity Guard, Biomechanical Plausibility, 24-48h Medical SLA, Weekly AI Training Loops, and Peer Progression Arena.">
+  <title>ApexScout AI | Vision-First Sports Ecosystem & Scouting Arena</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -21,10 +21,13 @@
 
     <nav class="nav-links-container">
       <button class="nav-tab-btn active" data-tab-target="video-assessment">
-        🎥 Video & Skill Analysis
+        🎥 Video & AR Combine
       </button>
       <button class="nav-tab-btn" data-tab-target="medical-verification">
-        🛡 24h Medical Check
+        🛡 24-48h Medical SLA
+      </button>
+      <button class="nav-tab-btn" data-tab-target="weekly-training">
+        📈 Weekly AI Training & Duels
       </button>
       <button class="nav-tab-btn" data-tab-target="scout-leaderboard">
         🏆 Leaderboard
@@ -36,7 +39,7 @@
         📞 24/7 Helpline
       </button>
       <button class="nav-tab-btn" data-tab-target="athlete-card">
-        👤 My Scorecard
+        👤 Digital Passport
       </button>
     </nav>
 
@@ -59,17 +62,17 @@
   <main class="main-wrapper">
 
     <!-- ====================================================================
-         SECTION 1: AI VIDEO ASSESSMENT & MULTI-SPORT SKILL ANALYSIS
+         SECTION 1: AI VIDEO & AR COMBINE (PRD SECTION 2)
          ==================================================================== -->
     <section id="section-video-assessment" class="tab-content-section active">
       
-      <!-- Audio Coach & Rural Share Banner -->
+      <!-- Audio Coach Banner -->
       <div class="audio-coach-banner">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
           <span style="font-size: 1.5rem;">🎙️</span>
           <div>
             <strong style="color: #FFFFFF; font-size: 0.95rem;">Grassroots & Rural AI Audio Coach</strong>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Listen to your performance feedback aloud in your local language.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Listen to your biomechanical performance feedback aloud in your local language.</p>
           </div>
         </div>
         <div style="display: flex; gap: 0.6rem;">
@@ -84,8 +87,8 @@
 
       <div class="section-header-block">
         <div>
-          <h1>Multi-Sport Skill & Motion Analysis</h1>
-          <p>Automated computer vision extraction of shooting, bowling, raiding, and jumping mechanics from any smartphone video.</p>
+          <h1>Real-Time Vision Combine & AR Liveness Guard</h1>
+          <p>2D FFT frequency residue scan, physiological limit checks (<1000°/s knee velocity), and randomized AR gesture prompting.</p>
         </div>
         <div>
           <button id="startAnalysisBtn" class="btn btn-primary btn-lg">
@@ -95,10 +98,20 @@
       </div>
 
       <div class="assessment-layout-grid">
-        <!-- Left: Video Player & Canvas Overlay -->
+        <!-- Left: Video Player & AR Liveness Box -->
         <div>
           <div class="video-player-container">
             <span id="videoSourceLabel" class="video-source-pill">FOOTBALL / SOCCER • PENALTY KICK</span>
+            
+            <!-- AR Dynamic Liveness Challenge Overlay -->
+            <div id="arLivenessPromptBox" class="ar-liveness-prompt-box">
+              <span class="ar-liveness-badge">🔒 AR Dynamic Liveness Challenge</span>
+              <div id="livenessPromptText" class="ar-prompt-title">Touch Left Ear with Right Hand before drill</div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.35rem;">
+                Perform gesture on camera to verify live physical presence and block pre-recorded playback attacks.
+              </p>
+            </div>
+
             <video id="assessmentVideo" playsinline muted loop poster="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1000&auto=format&fit=crop&q=80"></video>
             <canvas id="assessmentCanvas"></canvas>
           </div>
@@ -106,7 +119,7 @@
           <div class="video-controls-bar">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <label for="videoFileInput" class="btn btn-outline btn-sm">
-                📁 Upload Smartphone Video (.mp4)
+                📁 Upload Combine Video (.mp4)
               </label>
               <input type="file" id="videoFileInput" class="input-file-hidden" accept="video/*">
               
@@ -117,17 +130,17 @@
 
             <div style="display: flex; gap: 0.75rem; align-items: center;">
               <span id="analysisStatusText" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan);">READY TO ANALYZE</span>
-              <span id="deepfakeStatusBadge" class="status-pill">PENDING INSPECTION</span>
+              <span id="deepfakeStatusBadge" class="status-pill">SECURITY PENDING</span>
             </div>
           </div>
         </div>
 
-        <!-- Right: Multi-Sport Combine Selector -->
+        <!-- Right: Multi-Sport Combine Selector & Security Box -->
         <div>
           <div class="glass-card">
             <h3>Select Sport & Skill Combine</h3>
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
-              Choose any sport (Football, Cricket, Kabaddi, Basketball, Athletics, Volleyball):
+              Choose any sport (Football, Cricket, Kabaddi, Athletics, Basketball, Volleyball):
             </p>
 
             <div class="drill-selection-list">
@@ -155,14 +168,6 @@
                 <span class="drill-duration-tag">14s Combine</span>
               </div>
 
-              <div class="drill-select-card" data-drill-id="drill-bball-dribble">
-                <div>
-                  <div class="drill-info-title">🏀 Basketball Crossover & 3-Point Shot</div>
-                  <div class="drill-info-sport">Dribble Cadence, Release Point & Backspin</div>
-                </div>
-                <span class="drill-duration-tag">12s Combine</span>
-              </div>
-
               <div class="drill-select-card" data-drill-id="drill-vertical-jump">
                 <div>
                   <div class="drill-info-title">🏃 Track & Field Max Vertical Leap</div>
@@ -170,37 +175,29 @@
                 </div>
                 <span class="drill-duration-tag">10s Combine</span>
               </div>
-
-              <div class="drill-select-card" data-drill-id="drill-volleyball-spike">
-                <div>
-                  <div class="drill-info-title">🏐 Volleyball Jump Spike</div>
-                  <div class="drill-info-sport">Approach Jump, Wrist Snap & Topspin Angle</div>
-                </div>
-                <span class="drill-duration-tag">9s Combine</span>
-              </div>
             </div>
           </div>
 
-          <!-- Deepfake & Anti-Tampering Filter -->
-          <div class="security-inspect-box">
+          <!-- Security & Integrity Box -->
+          <div class="glass-card" style="margin-top: 1.25rem; background: linear-gradient(135deg, rgba(14, 20, 32, 0.95) 0%, rgba(20, 28, 44, 0.95) 100%);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <strong style="font-size: 0.92rem; color: #FFFFFF;">🛡 AI Deepfake & Anti-Tampering Check</strong>
-              <span class="badge-mini badge-green">Active</span>
+              <strong style="font-size: 0.92rem; color: #FFFFFF;">🛡 Integrity & Bio-Plausibility Guard</strong>
+              <span class="badge-mini badge-green">PRD Active</span>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-secondary);">
-              Inspects video for artificial speedup (e.g. 1.25x fake pace) and generative AI synthesis.
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
-              <span>Simulate Speed Tampering Test</span>
+            <ul style="list-style: none; font-size: 0.78rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.35rem;">
+              <li>✓ <strong>2D FFT Spatial Residue:</strong> Detects diffusion & generative frame morphing.</li>
+              <li>✓ <strong>Bio-Plausibility Limits:</strong> Flags angular velocities exceeding 1000°/s.</li>
+              <li>✓ <strong>AR Liveness Prompt:</strong> Blocks pre-recorded video playback attacks.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
+              <span>Simulate Speed/Bio Tampering Spike</span>
               <input type="checkbox" id="simulateTamperToggle" style="cursor: pointer;">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ==================================================================
-           EXACT SKILL ANALYSIS TABLE (MATCHING USER'S SCREENSHOT)
-           ================================================================== -->
+      <!-- 12-Component Biomechanical Telemetry Table -->
       <div class="skill-analysis-container">
         <div class="skill-analysis-title">
           <span id="skillAnalysisTableTitle">PENALTY ANALYSIS</span>
@@ -209,54 +206,18 @@
 
         <table class="skill-analysis-table">
           <tbody>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Skill</td>
-              <td id="valSkill" class="skill-component-value">Penalty Kick</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Shot Result</td>
-              <td id="valShotResult" class="skill-component-value highlight-lime">Goal</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Shot Speed</td>
-              <td id="valShotSpeed" class="skill-component-value highlight-cyan">91 km/h</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Accuracy</td>
-              <td id="valAccuracy" class="skill-component-value">92%</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Ball Placement</td>
-              <td id="valBallPlacement" class="skill-component-value">Bottom Left Corner</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Reaction Time</td>
-              <td id="valReactionTime" class="skill-component-value">0.82 sec</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Run-up Speed</td>
-              <td id="valRunUpSpeed" class="skill-component-value">18.4 km/h</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Plant Foot</td>
-              <td id="valPlantFoot" class="skill-component-value">Good</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Balance</td>
-              <td id="valBalance" class="skill-component-value">Excellent</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Follow Through</td>
-              <td id="valFollowThrough" class="skill-component-value">Good</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Contact Quality</td>
-              <td id="valContactQuality" class="skill-component-value">Clean</td>
-            </tr>
-            <tr class="skill-analysis-row">
-              <td class="skill-component-label">Ball Curve</td>
-              <td id="valBallCurve" class="skill-component-value">Slight Inside Curve</td>
-            </tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Skill</td><td id="valSkill" class="skill-component-value">Penalty Kick</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Shot Result</td><td id="valShotResult" class="skill-component-value highlight-lime">Goal</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Shot Speed</td><td id="valShotSpeed" class="skill-component-value highlight-cyan">91 km/h</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Accuracy</td><td id="valAccuracy" class="skill-component-value">92%</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Ball Placement</td><td id="valBallPlacement" class="skill-component-value">Bottom Left Corner</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Reaction Time</td><td id="valReactionTime" class="skill-component-value">0.82 sec</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Run-up Speed</td><td id="valRunUpSpeed" class="skill-component-value">18.4 km/h</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Plant Foot</td><td id="valPlantFoot" class="skill-component-value">Good</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Balance</td><td id="valBalance" class="skill-component-value">Excellent</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Follow Through</td><td id="valFollowThrough" class="skill-component-value">Good</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Contact Quality</td><td id="valContactQuality" class="skill-component-value">Clean</td></tr>
+            <tr class="skill-analysis-row"><td class="skill-component-label">Ball Curve</td><td id="valBallCurve" class="skill-component-value">Slight Inside Curve</td></tr>
           </tbody>
         </table>
       </div>
@@ -264,21 +225,21 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 2: 24-HOUR MEDICAL & ANTI-DOPING VERIFICATION
+         SECTION 2: 24–48 HOUR MEDICAL & ANTI-DOPING SLA (PRD SECTION 2)
          ==================================================================== -->
     <section id="section-medical-verification" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>24-Hour Medical & Anti-Doping Clearance Hub</h1>
-          <p>Validates that medical and anti-doping testing occurred within 24 hours of video recording, checking WADA-prohibited substances.</p>
+          <h1>24–48 Hour Medical & Anti-Doping Compliance Engine</h1>
+          <p>Enforces strict 24-48h verification SLA. Automated OCR scans lab accreditation stamps, NADA/WADA numbers, and physician signatures.</p>
         </div>
       </div>
 
-      <div class="medical-grid-layout" style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem;">
+      <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem;">
         <div class="glass-card">
-          <h3>Medical Clearance Upload</h3>
-          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-            Upload medical certificate or fitness report from any clinic, hospital, or sports camp.
+          <h3>Upload Accredited Medical Certificate</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            Document OCR automatically parses lab stamps, doctor signatures, and testing timestamps.
           </p>
 
           <div class="form-group">
@@ -287,21 +248,21 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Upload Medical / Lab Report (PDF, JPG, PNG)</label>
+            <label class="form-label">Upload Medical / Drug Panel Certificate (PDF, PNG, JPG)</label>
             <label for="medicalDocFileInput" class="upload-dropzone">
               <div class="upload-icon">📄</div>
               <strong id="uploadedMedicalDocName">Click to browse or drop medical certificate</strong>
-              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">Fitness clearance & anti-doping panel</p>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">Automated OCR scans NADA/WADA accreditation</p>
             </label>
             <input type="file" id="medicalDocFileInput" class="input-file-hidden" accept=".pdf,image/*">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Simulation Preset</label>
+            <label class="form-label">SLA Window Simulation Preset</label>
             <select id="medTimePresetSelect" class="form-control">
-              <option value="fresh-4h">Tested 4 Hours Before Video (Valid & Verified)</option>
-              <option value="valid-18h">Tested 18 Hours Before Video (Valid within 24h Window)</option>
-              <option value="expired-38h">Tested 38 Hours Ago (Expired - Retest Required)</option>
+              <option value="fresh-4h">Tested 4 Hours Before Video (🟢 Green Tier: Verified <24h)</option>
+              <option value="pending-36h">Tested 36 Hours Before Video (🟡 Yellow Tier: Pending Review <48h Grace)</option>
+              <option value="expired-56h">Tested 56 Hours Ago (🔴 Red Tier: Flagged / Delisted >48h SLA)</option>
             </select>
           </div>
 
@@ -316,42 +277,46 @@
             </div>
           </div>
 
-          <button id="verifyMedicalBtn" class="btn btn-accent-lime" style="width: 100%; margin-top: 0.5rem;">
-            🛡 Run 24h Medical & Anti-Doping Validation
+          <button id="verifyMedicalBtn" class="btn btn-accent-lime" style="width: 100%;">
+            🛡 Run OCR Document & 48h SLA Validation
           </button>
         </div>
 
-        <!-- Verification Results Card -->
+        <!-- Verification Results & OCR Card -->
         <div id="medicalVerificationResultCard" class="cert-result-card">
           <div class="cert-header">
             <div>
               <span class="token-pill" id="medResultToken">APEX-MED-8492-7104</span>
               <h3 style="margin-top: 0.4rem;" id="medResultAthlete">Alex Rivera</h3>
-              <span style="font-size: 0.8rem; color: var(--text-secondary);">Accredited Sports Diagnostics Lab</span>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);" id="ocrLabStamp">Apex Olympic Bio-Diagnostics Center</span>
             </div>
-            <span id="medResultStatusBadge" class="status-pill pill-success">🛡 VERIFIED WITHIN 24H</span>
+            <span id="medResultStatusBadge" class="status-pill pill-success">🟢 VERIFIED (CLEARED <24H)</span>
           </div>
 
           <div style="font-size: 0.85rem; margin-bottom: 1rem;">
-            <strong style="color: var(--text-muted);">Timestamp Delta:</strong>
-            <span id="medResultTimeDiff" style="color: var(--accent-cyan); font-weight: 700;">4.0 hours apart (Within 24h Limit)</span>
+            <strong style="color: var(--text-muted);">SLA Timestamp Delta:</strong>
+            <span id="medResultTimeDiff" style="color: var(--accent-cyan); font-weight: 700;">4.0 hours apart (Within 24h Prime SLA)</span>
           </div>
 
-          <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">
-            WADA Prohibited Substances Screen:
-          </h4>
+          <div style="background: rgba(0,0,0,0.35); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.8rem; margin-bottom: 1rem;">
+            <div><strong>OCR Lab Registration:</strong> <span id="ocrNadaCode" style="color: var(--accent-cyan);">NADA-REG-749201</span></div>
+            <div style="margin-top: 0.2rem;"><strong>Physician Signature:</strong> <span id="ocrDoctorSign">Dr. Evelyn Reed, MD</span></div>
+          </div>
 
+          <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.5rem;">
+            WADA Prohibited Substances Panel:
+          </h4>
           <div class="substance-checklist-grid">
             <div class="substance-row"><span class="sub-name">Anabolic Steroids (AAS)</span><span class="sub-code">WADA-S1</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
             <div class="substance-row"><span class="sub-name">Peptide Hormones & EPO</span><span class="sub-code">WADA-S2</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
-            <div class="substance-row"><span class="sub-name">Beta-2 Agonists</span><span class="sub-code">WADA-S3</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
+            <div class="substance-row"><span class="sub-name">Beta-2 Agonists & SARMs</span><span class="sub-code">WADA-S3/S4</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
             <div class="substance-row"><span class="sub-name">Stimulants & Amphetamines</span><span class="sub-code">WADA-S6</span><span class="sub-result result-negative">NEGATIVE (CLEAN)</span></div>
           </div>
 
-          <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary); border-left: 3px solid var(--accent-lime); margin-top: 1rem;">
-            <strong style="color: #FFFFFF;">Doctor's Certification:</strong>
+          <div style="background: rgba(0, 0, 0, 0.4); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-secondary); border-left: 3px solid var(--accent-lime); margin-top: 1rem;">
+            <strong style="color: #FFFFFF;">Compliance Determination:</strong>
             <p id="medResultConclusion" style="margin-top: 0.25rem;">
-              FIT FOR COMPETITION & SCOUT RECRUITMENT. Clean anti-doping panel verified within 24-hour combine window.
+              FIT FOR COMPETITION & COMBINE TRIALS. WADA anti-doping panel and OCR stamp verified within strict 24-48h SLA.
             </p>
           </div>
         </div>
@@ -359,31 +324,111 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 3: SCOUT TALENT LEADERBOARD
+         SECTION 3: WEEKLY AI TRAINING & PEER ARENA (PRD SECTION 3)
+         ==================================================================== -->
+    <section id="section-weekly-training" class="tab-content-section">
+      <div class="section-header-block">
+        <div>
+          <h1>Weekly AI Training Loops & Peer Progression Arena</h1>
+          <p>Automated kinetic deficiency breakdowns, personalized 7-day drill regimen, multi-athlete trajectory graphs, and side-by-side skeletal duels.</p>
+        </div>
+      </div>
+
+      <!-- Top: Kinetic Deficiencies & 7-Day Plan Grid -->
+      <div class="training-arena-grid">
+        <div>
+          <div class="glass-card">
+            <h3>Automated Kinetic Deficiency Breakdown</h3>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              AI vision identifies specific biomechanical inefficiencies and prescribes corrective drills:
+            </p>
+
+            <div id="kineticDeficienciesList">
+              <!-- Rendered by training-progression.js -->
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="glass-card">
+            <h3>7-Day AI Corrective Regimen (Week 4)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Daily targeted training routine designed to fix flagged movement patterns:
+            </p>
+
+            <div id="weeklyScheduleContainer">
+              <!-- Rendered by training-progression.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle: Multi-Athlete Interactive Progression Graph -->
+      <div class="progression-chart-card" style="margin-top: 1.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+          <div>
+            <h3 id="progressionMetricTitle" style="font-size: 1.15rem;">Vertical Jump Progression (Weeks 1 to 8)</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">
+              Multi-Athlete Curves: <span style="color: var(--accent-cyan); font-weight: 700;">● You</span> | <span style="color: #64748B; font-weight: 600;">--- Peer Average</span> | <span style="color: var(--accent-gold); font-weight: 600;">● Elite Benchmark</span>
+            </span>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="progression-metric-pills">
+              <button class="progression-metric-btn active" data-metric="jumpHeightInches">Vertical Leap</button>
+              <button class="progression-metric-btn" data-metric="dribbleSpeedHz">Dribble Cadence</button>
+              <button class="progression-metric-btn" data-metric="sprint40ydSec">40-Yard Sprint</button>
+              <button class="progression-metric-btn" data-metric="symmetryIndex">Symmetry %</button>
+            </div>
+            <div style="background: rgba(0,242,254,0.1); border: 1px solid var(--border-active); padding: 0.35rem 0.75rem; border-radius: var(--radius-md); text-align: center;">
+              <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">CURRENT</span>
+              <strong id="currentAthleteProgVal" style="font-size: 1.2rem; color: var(--accent-cyan);">36.4"</strong>
+              <span id="progGrowthPct" style="font-size: 0.7rem; color: var(--accent-lime); display: block;">+16.6% since W1</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="progressionChartCanvas" class="chart-svg-wrapper">
+          <!-- Rendered dynamically as interactive SVG -->
+        </div>
+      </div>
+
+      <!-- Bottom: Head-to-Head Side-by-Side Dual Skeletal Challenge Arena -->
+      <div class="glass-card" style="margin-top: 1.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+          <div>
+            <h3>Head-to-Head Drill Duel Arena (Side-by-Side Skeletons)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">
+              Challenge peers to drill showdowns. AI overlays real-time skeletal motion side-by-side to compare kinematics.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <select id="duelPeerSelect" class="form-control" style="width: 220px;">
+              <option value="ath-2">Mateo Silva (Soccer Penalty - 91 km/h)</option>
+              <option value="ath-1">Ravi Kumar (Kabaddi Raid - 22.4 km/h)</option>
+              <option value="ath-3">Simran Preet (Cricket Pace - 138.6 km/h)</option>
+            </select>
+            <button id="playDuelBtn" class="btn btn-primary">
+              ⚔️ Run Head-to-Head Duel
+            </button>
+          </div>
+        </div>
+
+        <div class="duel-arena-box">
+          <canvas id="duelCanvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 4: SCOUT LEADERBOARD (PRD SECTION 4)
          ==================================================================== -->
     <section id="section-scout-leaderboard" class="tab-content-section">
       <div class="section-header-block">
         <div>
           <h1>Verified Grassroots & Elite Leaderboard</h1>
-          <p>Rankings of top talent with verified 12-component biomechanics and 24h medical clearance.</p>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-        <div style="display: flex; gap: 1rem;">
-          <select id="leaderboardSportFilter" class="form-control" style="width: 200px;">
-            <option value="All">All Sports</option>
-            <option value="Football / Soccer">Football / Soccer</option>
-            <option value="Cricket">Cricket</option>
-            <option value="Kabaddi">Kabaddi</option>
-            <option value="Basketball">Basketball</option>
-          </select>
-
-          <select id="leaderboardSortSelect" class="form-control" style="width: 220px;">
-            <option value="overallScore">Overall Talent Score</option>
-            <option value="shotSpeed">Velocity / Speed</option>
-            <option value="accuracy">Accuracy %</option>
-          </select>
+          <p>Rankings of top talent with verified 12-component biomechanics and 24-48h medical clearance badges.</p>
         </div>
       </div>
 
@@ -396,7 +441,7 @@
               <th>Skill Tested</th>
               <th>Speed / Velocity</th>
               <th>Accuracy</th>
-              <th>Trust Badges</th>
+              <th>48h Medical SLA Status</th>
               <th>Score</th>
               <th>Action</th>
             </tr>
@@ -407,7 +452,7 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 4: COACHES & SCOUTS MARKETPLACE
+         SECTION 5: COACHES & SCOUT MARKETPLACE (PRD SECTION 4)
          ==================================================================== -->
     <section id="section-coach-marketplace" class="tab-content-section">
       <div class="section-header-block">
@@ -424,13 +469,13 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 5: 24/7 HELPLINE & SPORTS PHYSIO
+         SECTION 6: 24/7 HELPLINE
          ==================================================================== -->
     <section id="section-helpline-hub" class="tab-content-section">
       <div class="section-header-block">
         <div>
           <h1>24/7 Athlete Helpline & Sports Physio AI</h1>
-          <p>Toll-free rural sports helpline, emergency sports injury hotline, and anti-doping advisory.</p>
+          <p>Toll-free rural sports hotline, sports trauma emergency triage, and WADA anti-doping advisory.</p>
         </div>
       </div>
 
@@ -493,13 +538,13 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 6: ATHLETE SCORECARD & EXPORT
+         SECTION 7: DIGITAL ATHLETE PASSPORT & VERIFIED SCORECARD
          ==================================================================== -->
     <section id="section-athlete-card" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>Athlete Digital Scorecard & Passport</h1>
-          <p>Official scout combine dossier with tamper-proof video telemetry and 24h medical clearance.</p>
+          <h1>Verifiable Digital Athlete Passport</h1>
+          <p>Official scout combine dossier with tamper-proof video telemetry, 24-48h medical clearance, and kinetic ratings.</p>
         </div>
         <div>
           <button class="btn btn-primary" onclick="window.app.printOrDownloadScorecard()">
@@ -540,7 +585,7 @@
           </div>
           <div style="text-align: right;">
             <div style="font-family: monospace; font-size: 0.8rem; color: var(--accent-cyan);">TOKEN: APEX-VERIFIED-RURAL-2026</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">✓ AI Deepfake Free | 🛡 24h Medical Cleared</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">✓ AI Deepfake Free | 🛡 24-48h Medical Cleared</div>
           </div>
         </div>
       </div>
@@ -571,10 +616,10 @@
         </div>
       </div>
 
-      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">🛡 AI Deepfake & Speed Tampering Audit</h3>
+      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">🛡 AI Deepfake & Bio-Plausibility Forensics</h3>
       <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <div id="repDeepfakeStatus" style="font-weight: 700; color: var(--accent-lime);">PASSED: Zero Synthetic Artifacts</div>
+          <div id="repDeepfakeStatus" style="font-weight: 700; color: var(--accent-lime);">PASSED: 2D FFT & Bio-Plausibility Clean</div>
           <div id="repDeepfakeSpeed" style="font-size: 0.8rem; color: var(--text-secondary);">1.00x Real-Time Speed Verified</div>
         </div>
         <div style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--accent-cyan);" id="repDeepfakeScore">99.4%</div>
@@ -584,7 +629,7 @@
 
       <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
         <button class="btn btn-primary" style="flex: 1;" onclick="window.app.switchTab('medical-verification')">
-          🛡 Proceed to 24h Medical Verification
+          🛡 Proceed to 24-48h Medical Verification
         </button>
         <button class="btn btn-outline modal-close">Close</button>
       </div>
@@ -625,8 +670,8 @@
       <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
         <ul style="list-style: none; font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.4rem;">
           <li>✓ 12-Component Biomechanical Skill Telemetry</li>
-          <li>✓ AI Deepfake Forensics Audit Certificate</li>
-          <li>✓ 24-Hour WADA Anti-Doping Clearance Token</li>
+          <li>✓ 2D FFT & Bio-Plausibility Forensics Certificate</li>
+          <li>✓ 24-48 Hour WADA Anti-Doping Clearance Token</li>
         </ul>
       </div>
       <div style="display: flex; gap: 0.75rem;">
@@ -642,6 +687,7 @@
   <script src="assets/js/sample-data.js"></script>
   <script src="assets/js/deepfake-detector.js"></script>
   <script src="assets/js/medical-verifier.js"></script>
+  <script src="assets/js/training-progression.js"></script>
   <script src="assets/js/rural-access.js"></script>
   <script src="assets/js/ai-engine.js"></script>
   <script src="assets/js/coaches.js"></script>

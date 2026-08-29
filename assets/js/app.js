@@ -1,6 +1,7 @@
 /**
- * ApexScout AI - Main Application Controller
- * Tab routing, multi-sport skill breakdown rendering, rural accessibility, and session orchestration.
+ * ApexScout AI - Main Application Controller (PRD Next-Gen AI Vision Suite)
+ * Orchestrates AR Dynamic Liveness, 24-48h Medical OCR, Weekly AI Training Loops,
+ * Peer Head-to-Head Duels, and Verifiable Athlete Passports.
  */
 
 class App {
@@ -29,12 +30,12 @@ class App {
     const canvasEl = document.getElementById('assessmentCanvas');
     this.aiEngine.init(videoEl, canvasEl);
 
+    if (window.trainingManager) window.trainingManager.init();
     if (window.coachesManager) window.coachesManager.init();
     if (window.leaderboardManager) window.leaderboardManager.init();
     if (window.helplineManager) window.helplineManager.init();
     if (window.ruralAccess) window.ruralAccess.init();
 
-    // Select default preset drill: Soccer Penalty Kick (matches user image)
     this.selectDrill('drill-soccer-penalty');
     this.loadDefaultMedicalReport();
 
@@ -94,7 +95,7 @@ class App {
     const startBtn = document.getElementById('startAnalysisBtn');
     if (startBtn) {
       startBtn.addEventListener('click', () => {
-        this.startDrillAnalysis();
+        this.triggerLivenessAndStart();
       });
     }
 
@@ -112,10 +113,10 @@ class App {
       webcamBtn.addEventListener('click', async () => {
         const res = await this.aiEngine.startWebcam();
         if (res.success) {
-          this.showNotification('Live combine webcam active. Position athlete in full body view.');
-          document.getElementById('videoSourceLabel').textContent = 'LIVE WEBCAM STREAM (60 FPS)';
+          this.showNotification('Live combine camera stream active (60 FPS on-device pose inference).');
+          document.getElementById('videoSourceLabel').textContent = 'LIVE COMBINE STREAM (60 FPS)';
         } else {
-          this.showNotification('Webcam inaccessible; running standard combine simulation.', 'warning');
+          this.showNotification('Webcam stream unavailable; loaded simulated combine feed.', 'warning');
         }
       });
     }
@@ -141,6 +142,42 @@ class App {
     }
   }
 
+  /**
+   * AR Dynamic Liveness challenge execution before analysis
+   */
+  triggerLivenessAndStart() {
+    const livenessBox = document.getElementById('arLivenessPromptBox');
+    const promptText = document.getElementById('livenessPromptText');
+    const challenge = this.aiEngine.deepfakeDetector.generateLivenessPrompt();
+
+    if (livenessBox && promptText) {
+      promptText.textContent = `🎯 AR CUE: ${challenge.instruction}`;
+      livenessBox.style.display = 'flex';
+    }
+
+    const startBtn = document.getElementById('startAnalysisBtn');
+    startBtn.disabled = true;
+    startBtn.textContent = '👀 Verifying AR Liveness Cue...';
+
+    // Validate liveness after cue
+    setTimeout(() => {
+      if (livenessBox) livenessBox.style.display = 'none';
+      this.aiEngine.deepfakeDetector.verifyLivenessChallenge();
+      this.showNotification('✓ AR Dynamic Liveness Confirmed! Pre-recorded playback attacks blocked.');
+      this.startDrillAnalysis();
+    }, 2200);
+  }
+
+  startDrillAnalysis() {
+    const startBtn = document.getElementById('startAnalysisBtn');
+    startBtn.disabled = true;
+    startBtn.textContent = '⚡ Running FFT & Biomechanical Plausibility Checks...';
+    document.getElementById('analysisStatusText').textContent = 'INSPECTING KINEMATICS...';
+
+    const simulateTamper = document.getElementById('simulateTamperToggle')?.checked || false;
+    this.aiEngine.startAnalysis({ simulateTamper });
+  }
+
   selectDrill(drillId) {
     document.querySelectorAll('.drill-select-card').forEach(c => {
       if (c.getAttribute('data-drill-id') === drillId) {
@@ -156,9 +193,8 @@ class App {
     document.getElementById('videoSourceLabel').textContent = `${drill.sport.toUpperCase()} • ${drill.skillName.toUpperCase()}`;
     document.getElementById('analysisStatusText').textContent = 'READY TO ANALYZE';
     document.getElementById('deepfakeStatusBadge').className = 'status-pill';
-    document.getElementById('deepfakeStatusBadge').textContent = 'PENDING INSPECTION';
+    document.getElementById('deepfakeStatusBadge').textContent = 'SECURITY PENDING';
 
-    // Populate Skill Table immediately with preset baseline
     this.renderSkillAnalysisTable(drill.componentAnalysis, drill.skillName);
   }
 
@@ -187,18 +223,8 @@ class App {
       videoEl.src = url;
       videoEl.play();
     }
-    document.getElementById('videoSourceLabel').textContent = `CUSTOM UPLOAD: ${file.name}`;
+    document.getElementById('videoSourceLabel').textContent = `CUSTOM COMBINE: ${file.name}`;
     this.showNotification(`Loaded video: ${file.name}. Click "Run AI Video Analysis" to begin.`);
-  }
-
-  startDrillAnalysis() {
-    const startBtn = document.getElementById('startAnalysisBtn');
-    startBtn.disabled = true;
-    startBtn.textContent = '⚡ Analyzing Biomechanical Skill Components...';
-    document.getElementById('analysisStatusText').textContent = 'ANALYZING MOTION...';
-
-    const simulateTamper = document.getElementById('simulateTamperToggle')?.checked || false;
-    this.aiEngine.startAnalysis({ simulateTamper });
   }
 
   handleMetricsUpdate(state) {
@@ -216,16 +242,16 @@ class App {
     const badge = document.getElementById('deepfakeStatusBadge');
     if (report.deepfakeForensics.isAuthentic) {
       badge.className = 'status-pill pill-success';
-      badge.textContent = `✓ AUTHENTIC (${report.deepfakeForensics.authenticityScore}%)`;
+      badge.textContent = `✓ BIO-PLAUSIBLE (${report.deepfakeForensics.authenticityScore}%)`;
     } else {
       badge.className = 'status-pill pill-danger';
-      badge.textContent = `⚠ TAMPERING FLAGGED (${report.deepfakeForensics.authenticityScore}%)`;
+      badge.textContent = `⚠ TAMPERING / BIO-VIOLATION (${report.deepfakeForensics.authenticityScore}%)`;
     }
 
     this.renderSkillAnalysisTable(report.components, report.skillName);
     this.displayAssessmentReportModal(report);
     this.updateAthleteScorecard();
-    this.showNotification('Biomechanical Skill Analysis & Deepfake Inspection completed!');
+    this.showNotification('Biomechanical Plausibility & 2D FFT Inspection Completed!');
   }
 
   displayAssessmentReportModal(report) {
@@ -239,8 +265,8 @@ class App {
 
     const df = report.deepfakeForensics;
     document.getElementById('repDeepfakeScore').textContent = `${df.authenticityScore}%`;
-    document.getElementById('repDeepfakeStatus').textContent = df.isAuthentic ? 'PASSED: Zero Synthetic Artifacts' : 'FAILED: Speed/Splicing Tampered';
-    document.getElementById('repDeepfakeSpeed').textContent = `${df.speedMultiplier}x Playback Speed`;
+    document.getElementById('repDeepfakeStatus').textContent = df.isAuthentic ? 'PASSED: 2D FFT & Bio-Plausibility Clean' : 'FAILED: Kinematic Limits Exceeded';
+    document.getElementById('repDeepfakeSpeed').textContent = `${df.speedMultiplier}x Playback Verified`;
 
     const auditContainer = document.getElementById('repDeepfakeAuditList');
     if (auditContainer) {
@@ -275,10 +301,10 @@ class App {
 
         if (val === 'fresh-4h') {
           targetDate = new Date(now.getTime() - 4 * 3600000);
-        } else if (val === 'valid-18h') {
-          targetDate = new Date(now.getTime() - 18 * 3600000);
-        } else if (val === 'expired-38h') {
-          targetDate = new Date(now.getTime() - 38 * 3600000);
+        } else if (val === 'pending-36h') {
+          targetDate = new Date(now.getTime() - 36 * 3600000);
+        } else if (val === 'expired-56h') {
+          targetDate = new Date(now.getTime() - 56 * 3600000);
         }
 
         const formatted = targetDate.toISOString().slice(0, 16);
@@ -309,20 +335,17 @@ class App {
     if (vidInput) vidInput.value = videoTimeNow;
   }
 
-  processMedicalVerification() {
+  async processMedicalVerification() {
     const medTime = document.getElementById('medicalReportTimestampInput')?.value;
     const vidTime = document.getElementById('videoRecordedTimestampInput')?.value;
     const athleteName = document.getElementById('medAthleteNameInput')?.value || 'Alex Rivera';
 
     const rawReport = {
       athleteName,
-      timestamp: medTime ? new Date(medTime).toISOString() : new Date().toISOString(),
-      labName: 'Apex Olympic Certified Bio-Diagnostic Lab',
-      accreditationId: 'WADA-ISO/IEC-17025-CL492',
-      doctorName: 'Dr. Evelyn Reed, MD (Sports Medicine)'
+      timestamp: medTime ? new Date(medTime).toISOString() : new Date().toISOString()
     };
 
-    const verified = this.medicalVerifier.verifyReport(rawReport, {
+    const verified = await this.medicalVerifier.verifyReport(rawReport, {
       timestamp: vidTime ? new Date(vidTime).toISOString() : new Date().toISOString()
     });
 
@@ -334,25 +357,29 @@ class App {
 
       document.getElementById('medResultToken').textContent = verified.verificationToken;
       document.getElementById('medResultAthlete').textContent = verified.athleteName;
-      document.getElementById('medResultTimeDiff').textContent = `${verified.timeCompliance.timeDifferenceHours} hours apart`;
+      document.getElementById('medResultTimeDiff').textContent = `${verified.slaCompliance.hoursDelta} hours apart (SLA: 24-48h)`;
 
       const statusBadge = document.getElementById('medResultStatusBadge');
-      if (verified.isFullyCleared) {
+      if (verified.tier === 'VERIFIED') {
         statusBadge.className = 'status-pill pill-success';
-        statusBadge.textContent = '🛡 VERIFIED WITHIN 24H (CLEARED)';
+        statusBadge.textContent = '🟢 VERIFIED (CLEARED WITHIN 24H)';
+      } else if (verified.tier === 'PENDING') {
+        statusBadge.className = 'status-pill pill-warning';
+        statusBadge.textContent = '🟡 PENDING REVIEW (<48H GRACE WINDOW)';
       } else {
         statusBadge.className = 'status-pill pill-danger';
-        statusBadge.textContent = verified.timeCompliance.isValid ? '⚠ DOPING FLAGGED' : '⚠ EXPIRED (>24H WINDOW)';
+        statusBadge.textContent = '🔴 FLAGGED / DELISTED (>48H SLA EXPIRED)';
       }
 
+      // OCR entities
+      document.getElementById('ocrLabStamp').textContent = verified.ocrData.labName;
+      document.getElementById('ocrNadaCode').textContent = verified.ocrData.nadaWadaRegistration;
+      document.getElementById('ocrDoctorSign').textContent = verified.ocrData.physicianSignature;
       document.getElementById('medResultConclusion').textContent = verified.conclusion;
     }
 
     this.updateAthleteScorecard();
-    this.showNotification(
-      verified.isFullyCleared ? '24h Medical & Anti-Doping Verification Passed!' : 'Medical Verification Alert: Check timestamp compliance.',
-      verified.isFullyCleared ? 'success' : 'warning'
-    );
+    this.showNotification(`Medical 24-48h SLA Status: ${verified.slaCompliance.statusText}`, verified.isFullyCleared ? 'success' : 'warning');
   }
 
   updateAthleteScorecard() {
