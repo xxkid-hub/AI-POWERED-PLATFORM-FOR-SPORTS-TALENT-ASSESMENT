@@ -15,45 +15,57 @@
   <!-- Top Navigation Bar -->
   <header class="top-navbar">
     <a href="#" class="navbar-brand" onclick="window.app.switchTab('video-assessment')">
-      <div class="brand-icon">⚡</div>
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
       <div class="brand-text">Apex<span>Scout</span> AI</div>
     </a>
 
     <nav class="nav-links-container">
       <button class="nav-tab-btn active" data-tab-target="video-assessment">
-        🎥 Video & AR Combine
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        Video & AR Combine
       </button>
       <button class="nav-tab-btn" data-tab-target="medical-verification">
-        🛡 24-48h Medical SLA
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Medical SLA
       </button>
       <button class="nav-tab-btn" data-tab-target="weekly-training">
-        📈 Weekly AI Training & Duels
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        Training & Duels
       </button>
       <button class="nav-tab-btn" data-tab-target="scout-leaderboard">
-        🏆 Leaderboard
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.45 1-1 1H7M14 14.66V17c0 .55.45 1 1 1h2M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        Leaderboard
       </button>
       <button class="nav-tab-btn" data-tab-target="coach-marketplace">
-        👥 Coaches & Scouts
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Coaches & Scouts
       </button>
       <button class="nav-tab-btn" data-tab-target="helpline-hub">
-        📞 24/7 Helpline
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        24/7 Helpline
       </button>
       <button class="nav-tab-btn" data-tab-target="athlete-card">
-        👤 Digital Passport
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Digital Passport
       </button>
     </nav>
 
     <!-- Rural & Grassroots Accessibility Bar -->
     <div class="rural-access-bar">
-      <select id="languageSelector" class="select-pill">
-        <option value="en">🌐 English</option>
-        <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
-        <option value="es">🇪🇸 Español</option>
+      <select id="languageSelector" class="select-pill" aria-label="Select Language">
+        <option value="en">English (EN)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="es">Español (ES)</option>
       </select>
 
-      <label style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+      <label style="font-size: 0.78rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
         <input type="checkbox" id="lowDataModeToggle">
-        <span>📶 2G/3G Low Data</span>
+        <svg class="btn-icon-svg" style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V4M22 20v-12"/></svg>
+        <span>Low Data Mode</span>
       </label>
     </div>
   </header>
@@ -68,19 +80,23 @@
       
       <!-- Audio Coach Banner -->
       <div class="audio-coach-banner">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <span style="font-size: 1.5rem;">🎙️</span>
+        <div style="display: flex; align-items: center; gap: 0.85rem;">
+          <div style="width: 38px; height: 38px; background: rgba(0,242,254,0.12); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan);">
+            <svg class="btn-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </div>
           <div>
             <strong style="color: #FFFFFF; font-size: 0.95rem;">Grassroots & Rural AI Audio Coach</strong>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Listen to your biomechanical performance feedback aloud in your local language.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Listen to your biomechanical performance feedback aloud in your preferred language.</p>
           </div>
         </div>
         <div style="display: flex; gap: 0.6rem;">
           <button id="audioCoachBtn" class="btn btn-outline btn-sm">
-            🔊 Listen to AI Voice Coach
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Listen to Voice Coach
           </button>
           <button id="shareWhatsAppBtn" class="btn btn-whatsapp btn-sm">
-            📲 Share to Coach on WhatsApp
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Share Report on WhatsApp
           </button>
         </div>
       </div>
@@ -88,11 +104,12 @@
       <div class="section-header-block">
         <div>
           <h1>Real-Time Vision Combine & AR Liveness Guard</h1>
-          <p>2D FFT frequency residue scan, physiological limit checks (<1000°/s knee velocity), and randomized AR gesture prompting.</p>
+          <p>2D FFT frequency residue scan, physiological limit checks (&lt;1000°/s knee velocity), and randomized AR gesture prompting.</p>
         </div>
         <div>
           <button id="startAnalysisBtn" class="btn btn-primary btn-lg">
-            ▶ Run AI Video Analysis
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Run AI Video Analysis
           </button>
         </div>
       </div>
@@ -105,7 +122,10 @@
             
             <!-- AR Dynamic Liveness Challenge Overlay -->
             <div id="arLivenessPromptBox" class="ar-liveness-prompt-box">
-              <span class="ar-liveness-badge">🔒 AR Dynamic Liveness Challenge</span>
+              <span class="ar-liveness-badge">
+                <svg class="btn-icon-svg" style="width: 13px; height: 13px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                AR Dynamic Liveness Challenge
+              </span>
               <div id="livenessPromptText" class="ar-prompt-title">Touch Left Ear with Right Hand before drill</div>
               <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.35rem;">
                 Perform gesture on camera to verify live physical presence and block pre-recorded playback attacks.
@@ -119,12 +139,14 @@
           <div class="video-controls-bar">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <label for="videoFileInput" class="btn btn-outline btn-sm">
-                📁 Upload Combine Video (.mp4)
+                <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Upload Combine Video (.mp4)
               </label>
               <input type="file" id="videoFileInput" class="input-file-hidden" accept="video/*">
               
               <button id="webcamToggleBtn" class="btn btn-outline btn-sm">
-                📷 Live Camera Combine
+                <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Live Camera Combine
               </button>
             </div>
 
@@ -139,14 +161,14 @@
         <div>
           <div class="glass-card">
             <h3>Select Sport & Skill Combine</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
-              Choose any sport (Football, Cricket, Kabaddi, Athletics, Basketball, Volleyball):
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Choose any standardized sport combine drill:
             </p>
 
             <div class="drill-selection-list">
               <div class="drill-select-card active" data-drill-id="drill-soccer-penalty">
                 <div>
-                  <div class="drill-info-title">⚽ Soccer Penalty Kick Analysis</div>
+                  <div class="drill-info-title">Soccer Penalty Kick Analysis</div>
                   <div class="drill-info-sport">Striking Speed, Placement, Plant Foot & Curve</div>
                 </div>
                 <span class="drill-duration-tag">8s Combine</span>
@@ -154,7 +176,7 @@
 
               <div class="drill-select-card" data-drill-id="drill-cricket-bowling">
                 <div>
-                  <div class="drill-info-title">🏏 Cricket Fast Bowling Release</div>
+                  <div class="drill-info-title">Cricket Fast Bowling Release</div>
                   <div class="drill-info-sport">Pace Velocity, Front Foot Brace & Outswing</div>
                 </div>
                 <span class="drill-duration-tag">10s Combine</span>
@@ -162,7 +184,7 @@
 
               <div class="drill-select-card" data-drill-id="drill-kabaddi-raid">
                 <div>
-                  <div class="drill-info-title">🤼 Kabaddi Toe Touch & Dubki Raid</div>
+                  <div class="drill-info-title">Kabaddi Toe Touch & Dubki Raid</div>
                   <div class="drill-info-sport">Agility Latency, Baulk Line Reach & Evasion</div>
                 </div>
                 <span class="drill-duration-tag">14s Combine</span>
@@ -170,7 +192,7 @@
 
               <div class="drill-select-card" data-drill-id="drill-vertical-jump">
                 <div>
-                  <div class="drill-info-title">🏃 Track & Field Max Vertical Leap</div>
+                  <div class="drill-info-title">Track & Field Max Vertical Leap</div>
                   <div class="drill-info-sport">Apex Elevation, Hang Time & Takeoff Force</div>
                 </div>
                 <span class="drill-duration-tag">10s Combine</span>
@@ -181,7 +203,10 @@
           <!-- Security & Integrity Box -->
           <div class="glass-card" style="margin-top: 1.25rem; background: linear-gradient(135deg, rgba(14, 20, 32, 0.95) 0%, rgba(20, 28, 44, 0.95) 100%);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <strong style="font-size: 0.92rem; color: #FFFFFF;">🛡 Integrity & Bio-Plausibility Guard</strong>
+              <strong style="font-size: 0.92rem; color: #FFFFFF; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="btn-icon-svg" style="width: 16px; height: 16px; stroke: var(--accent-cyan);" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Integrity & Bio-Plausibility Guard
+              </strong>
               <span class="badge-mini badge-green">PRD Active</span>
             </div>
             <ul style="list-style: none; font-size: 0.78rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.35rem;">
@@ -190,7 +215,7 @@
               <li>✓ <strong>AR Liveness Prompt:</strong> Blocks pre-recorded video playback attacks.</li>
             </ul>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
-              <span>Simulate Speed/Bio Tampering Spike</span>
+              <span>Simulate Speed / Bio-Tampering Spike</span>
               <input type="checkbox" id="simulateTamperToggle" style="cursor: pointer;">
             </div>
           </div>
@@ -230,7 +255,7 @@
     <section id="section-medical-verification" class="tab-content-section">
       <div class="section-header-block">
         <div>
-          <h1>24–48 Hour Medical & Anti-Doping Compliance Engine</h1>
+          <h1>24–48 Hour Medical & Anti-Doping Compliance Hub</h1>
           <p>Enforces strict 24-48h verification SLA. Automated OCR scans lab accreditation stamps, NADA/WADA numbers, and physician signatures.</p>
         </div>
       </div>
@@ -250,7 +275,9 @@
           <div class="form-group">
             <label class="form-label">Upload Medical / Drug Panel Certificate (PDF, PNG, JPG)</label>
             <label for="medicalDocFileInput" class="upload-dropzone">
-              <div class="upload-icon">📄</div>
+              <div class="upload-icon">
+                <svg class="btn-icon-svg" style="width: 28px; height: 28px; stroke: var(--accent-cyan);" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
               <strong id="uploadedMedicalDocName">Click to browse or drop medical certificate</strong>
               <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">Automated OCR scans NADA/WADA accreditation</p>
             </label>
@@ -260,9 +287,9 @@
           <div class="form-group">
             <label class="form-label">SLA Window Simulation Preset</label>
             <select id="medTimePresetSelect" class="form-control">
-              <option value="fresh-4h">Tested 4 Hours Before Video (🟢 Green Tier: Verified <24h)</option>
-              <option value="pending-36h">Tested 36 Hours Before Video (🟡 Yellow Tier: Pending Review <48h Grace)</option>
-              <option value="expired-56h">Tested 56 Hours Ago (🔴 Red Tier: Flagged / Delisted >48h SLA)</option>
+              <option value="fresh-4h">Fresh Clearance: Tested 4 Hours Before Video (Verified &lt;24h)</option>
+              <option value="pending-36h">Grace Window: Tested 36 Hours Before Video (Pending Review &lt;48h)</option>
+              <option value="expired-56h">Expired SLA: Tested 56 Hours Ago (Flagged / Delisted &gt;48h)</option>
             </select>
           </div>
 
@@ -278,7 +305,8 @@
           </div>
 
           <button id="verifyMedicalBtn" class="btn btn-accent-lime" style="width: 100%;">
-            🛡 Run OCR Document & 48h SLA Validation
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            Run OCR Document & 48h SLA Validation
           </button>
         </div>
 
@@ -290,7 +318,9 @@
               <h3 style="margin-top: 0.4rem;" id="medResultAthlete">Alex Rivera</h3>
               <span style="font-size: 0.8rem; color: var(--text-secondary);" id="ocrLabStamp">Apex Olympic Bio-Diagnostics Center</span>
             </div>
-            <span id="medResultStatusBadge" class="status-pill pill-success">🟢 VERIFIED (CLEARED <24H)</span>
+            <span id="medResultStatusBadge" class="status-pill pill-success">
+              <span class="status-dot green"></span> VERIFIED (CLEARED &lt;24H)
+            </span>
           </div>
 
           <div style="font-size: 0.85rem; margin-bottom: 1rem;">
@@ -404,13 +434,14 @@
           </div>
 
           <div style="display: flex; gap: 0.75rem; align-items: center;">
-            <select id="duelPeerSelect" class="form-control" style="width: 220px;">
+            <select id="duelPeerSelect" class="form-control" style="width: 240px;">
               <option value="ath-2">Mateo Silva (Soccer Penalty - 91 km/h)</option>
               <option value="ath-1">Ravi Kumar (Kabaddi Raid - 22.4 km/h)</option>
               <option value="ath-3">Simran Preet (Cricket Pace - 138.6 km/h)</option>
             </select>
             <button id="playDuelBtn" class="btn btn-primary">
-              ⚔️ Run Head-to-Head Duel
+              <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Run Head-to-Head Duel
             </button>
           </div>
         </div>
@@ -461,7 +492,7 @@
           <p>Connect directly with top coaches, state sports authorities, and collegiate scouts.</p>
         </div>
         <div>
-          <input type="text" id="coachSearchInput" class="form-control" placeholder="🔍 Search coaches or scouts..." style="width: 300px;">
+          <input type="text" id="coachSearchInput" class="form-control" placeholder="Search coaches by name, sport, or specialty..." style="width: 320px;">
         </div>
       </div>
 
@@ -499,7 +530,8 @@
                 <textarea id="ticketDesc" class="form-control" rows="3" placeholder="Describe acute pain, injury, or query..." required></textarea>
               </div>
               <button type="submit" class="btn btn-danger" style="width: 100%;">
-                🚨 Dispatch Emergency SOS Ticket
+                <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Dispatch Emergency SOS Ticket
               </button>
             </form>
           </div>
@@ -509,10 +541,14 @@
           <div class="ai-physio-box">
             <div class="chat-header-bar">
               <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">🤖</div>
+                <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.9rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
                 <div>
                   <h4 style="font-size: 0.95rem;">Apex AI Sports Physio & Anti-Doping Bot</h4>
-                  <span style="font-size: 0.75rem; color: var(--accent-lime);">● 24/7 Active Clinical Advisory</span>
+                  <span style="font-size: 0.75rem; color: var(--accent-lime); display: flex; align-items: center; gap: 0.35rem;">
+                    <span class="status-dot green"></span> 24/7 Active Clinical Advisory
+                  </span>
                 </div>
               </div>
             </div>
@@ -520,16 +556,16 @@
             <div id="aiPhysioChatContainer" class="chat-messages-body">
               <div class="chat-message message-incoming">
                 <div class="message-bubble physio-bubble">
-                  <div class="physio-badge">🤖 ApexScout Sports Physio & Anti-Doping AI</div>
+                  <div class="physio-badge">ApexScout Sports Physio & Anti-Doping AI</div>
                   <div class="physio-text">
-                    Hello! Ask me anything about <strong>injury rehab</strong>, <strong>plant foot stability</strong>, <strong>bowling/striking mechanics</strong>, or <strong>WADA medication clearance</strong>.
+                    Hello! Ask me anything about <strong>injury rehabilitation</strong>, <strong>plant foot biomechanics</strong>, <strong>bowling/striking kinetics</strong>, or <strong>WADA medication compliance</strong>.
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="chat-input-bar">
-              <input type="text" id="aiPhysioInput" class="form-control" placeholder="Ask sports doctor about injury or medicine...">
+              <input type="text" id="aiPhysioInput" class="form-control" placeholder="Ask sports physio about recovery or supplements...">
               <button id="aiPhysioSendBtn" class="btn btn-primary">Send</button>
             </div>
           </div>
@@ -548,7 +584,8 @@
         </div>
         <div>
           <button class="btn btn-primary" onclick="window.app.printOrDownloadScorecard()">
-            🖨 Print / Export PDF Scorecard
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print / Export PDF Scorecard
           </button>
         </div>
       </div>
@@ -585,7 +622,7 @@
           </div>
           <div style="text-align: right;">
             <div style="font-family: monospace; font-size: 0.8rem; color: var(--accent-cyan);">TOKEN: APEX-VERIFIED-RURAL-2026</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">✓ AI Deepfake Free | 🛡 24-48h Medical Cleared</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">✓ AI Deepfake Free | ✓ 24-48h Medical Cleared</div>
           </div>
         </div>
       </div>
@@ -616,7 +653,7 @@
         </div>
       </div>
 
-      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">🛡 AI Deepfake & Bio-Plausibility Forensics</h3>
+      <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">AI Deepfake & Bio-Plausibility Forensics</h3>
       <div style="background: rgba(0, 0, 0, 0.4); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
         <div>
           <div id="repDeepfakeStatus" style="font-weight: 700; color: var(--accent-lime);">PASSED: 2D FFT & Bio-Plausibility Clean</div>
@@ -629,7 +666,8 @@
 
       <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
         <button class="btn btn-primary" style="flex: 1;" onclick="window.app.switchTab('medical-verification')">
-          🛡 Proceed to 24-48h Medical Verification
+          <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Proceed to 24-48h Medical Verification
         </button>
         <button class="btn btn-outline modal-close">Close</button>
       </div>

@@ -151,13 +151,16 @@ class App {
     const challenge = this.aiEngine.deepfakeDetector.generateLivenessPrompt();
 
     if (livenessBox && promptText) {
-      promptText.textContent = `🎯 AR CUE: ${challenge.instruction}`;
+      promptText.textContent = `AR Liveness Cue: ${challenge.instruction}`;
       livenessBox.style.display = 'flex';
     }
 
     const startBtn = document.getElementById('startAnalysisBtn');
     startBtn.disabled = true;
-    startBtn.textContent = '👀 Verifying AR Liveness Cue...';
+    startBtn.innerHTML = `
+      <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Verifying AR Liveness Cue...
+    `;
 
     // Validate liveness after cue
     setTimeout(() => {
@@ -171,7 +174,10 @@ class App {
   startDrillAnalysis() {
     const startBtn = document.getElementById('startAnalysisBtn');
     startBtn.disabled = true;
-    startBtn.textContent = '⚡ Running FFT & Biomechanical Plausibility Checks...';
+    startBtn.innerHTML = `
+      <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      Running FFT & Kinematic Analysis...
+    `;
     document.getElementById('analysisStatusText').textContent = 'INSPECTING KINEMATICS...';
 
     const simulateTamper = document.getElementById('simulateTamperToggle')?.checked || false;
@@ -236,16 +242,19 @@ class App {
 
     const startBtn = document.getElementById('startAnalysisBtn');
     startBtn.disabled = false;
-    startBtn.textContent = '▶ Run AI Video Analysis';
+    startBtn.innerHTML = `
+      <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Run AI Video Analysis
+    `;
     document.getElementById('analysisStatusText').textContent = 'ANALYSIS COMPLETE';
 
     const badge = document.getElementById('deepfakeStatusBadge');
     if (report.deepfakeForensics.isAuthentic) {
       badge.className = 'status-pill pill-success';
-      badge.textContent = `✓ BIO-PLAUSIBLE (${report.deepfakeForensics.authenticityScore}%)`;
+      badge.innerHTML = `<span class="status-dot green"></span> BIO-PLAUSIBLE (${report.deepfakeForensics.authenticityScore}%)`;
     } else {
       badge.className = 'status-pill pill-danger';
-      badge.textContent = `⚠ TAMPERING / BIO-VIOLATION (${report.deepfakeForensics.authenticityScore}%)`;
+      badge.innerHTML = `<span class="status-dot red"></span> TAMPERING DETECTED (${report.deepfakeForensics.authenticityScore}%)`;
     }
 
     this.renderSkillAnalysisTable(report.components, report.skillName);
@@ -317,7 +326,7 @@ class App {
     if (medFileInput) {
       medFileInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files[0]) {
-          document.getElementById('uploadedMedicalDocName').textContent = `📄 ${e.target.files[0].name}`;
+          document.getElementById('uploadedMedicalDocName').textContent = e.target.files[0].name;
           this.showNotification(`Uploaded medical certificate: ${e.target.files[0].name}`);
         }
       });
@@ -362,13 +371,13 @@ class App {
       const statusBadge = document.getElementById('medResultStatusBadge');
       if (verified.tier === 'VERIFIED') {
         statusBadge.className = 'status-pill pill-success';
-        statusBadge.textContent = '🟢 VERIFIED (CLEARED WITHIN 24H)';
+        statusBadge.innerHTML = '<span class="status-dot green"></span> VERIFIED (CLEARED WITHIN 24H)';
       } else if (verified.tier === 'PENDING') {
         statusBadge.className = 'status-pill pill-warning';
-        statusBadge.textContent = '🟡 PENDING REVIEW (<48H GRACE WINDOW)';
+        statusBadge.innerHTML = '<span class="status-dot yellow"></span> PENDING REVIEW (<48H GRACE WINDOW)';
       } else {
         statusBadge.className = 'status-pill pill-danger';
-        statusBadge.textContent = '🔴 FLAGGED / DELISTED (>48H SLA EXPIRED)';
+        statusBadge.innerHTML = '<span class="status-dot red"></span> FLAGGED / DELISTED (>48H SLA EXPIRED)';
       }
 
       // OCR entities

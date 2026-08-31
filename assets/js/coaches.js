@@ -58,7 +58,9 @@ class CoachesManager {
     if (filtered.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="empty-icon">🔍</div>
+          <div class="empty-icon" style="color: var(--text-muted);">
+            <svg class="btn-icon-svg" style="width: 36px; height: 36px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
           <h3>No certified coaches found</h3>
           <p>Try adjusting your sport filter or search terms.</p>
         </div>
@@ -90,7 +92,7 @@ class CoachesManager {
           </div>
           <div class="meta-item">
             <span class="meta-label">Rating</span>
-            <span class="meta-value rating">★ ${coach.rating} <small>(${coach.reviewsCount})</small></span>
+            <span class="meta-value rating"><span style="color: var(--accent-gold);">★</span> ${coach.rating} <small>(${coach.reviewsCount})</small></span>
           </div>
           <div class="meta-item">
             <span class="meta-label">Combine Fee</span>
@@ -104,10 +106,12 @@ class CoachesManager {
 
         <div class="coach-actions">
           <button class="btn btn-outline btn-sm" onclick="window.coachesManager.openChat('${coach.id}')">
-            💬 Direct Message
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Direct Message
           </button>
           <button class="btn btn-primary btn-sm" onclick="window.coachesManager.openSendDossierModal('${coach.id}')">
-            📤 Send AI Assessment
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Send Assessment
           </button>
         </div>
       </div>
@@ -226,7 +230,7 @@ class CoachesManager {
       if (!this.chatMessages[coachId]) this.chatMessages[coachId] = [];
       this.chatMessages[coachId].push({
         sender: 'user',
-        text: `📄 [OFFICIAL DOSSIER SUBMISSION]: Sent verified AI assessment scorecard with 24-hour WADA Anti-Doping Medical Clearance.`,
+        text: `[OFFICIAL DOSSIER SUBMISSION]: Sent verified AI assessment scorecard with 24-hour WADA Anti-Doping Medical Clearance.`,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
       localStorage.setItem('apex_coach_chats', JSON.stringify(this.chatMessages));

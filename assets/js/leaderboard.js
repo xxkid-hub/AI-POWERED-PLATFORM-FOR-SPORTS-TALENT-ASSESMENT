@@ -81,15 +81,15 @@ class LeaderboardManager {
         <td class="badge-cell">
           <div class="badges-stack">
             <span class="badge-mini badge-green" title="${ath.deepfakeStatus}">✓ AI Authenticated</span>
-            <span class="badge-mini badge-cyan" title="${ath.medicalStatus}">🛡 24h Med Cleared</span>
+            <span class="badge-mini badge-cyan" title="${ath.medicalStatus}">✓ 24h Med Cleared</span>
           </div>
         </td>
         <td class="score-cell">
           <div class="overall-pill">${ath.overallScore}</div>
         </td>
         <td class="action-cell">
-          <button class="btn btn-icon btn-sm" title="View Full AI Dossier">
-            ➔
+          <button class="btn btn-icon btn-sm" title="View Full AI Dossier" aria-label="View Full AI Dossier">
+            <svg class="btn-icon-svg" style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </td>
       </tr>

@@ -115,7 +115,7 @@ class ApexScoutRequestHandler(http.server.SimpleHTTPRequestHandler):
 def run_server():
     with socketserver.TCPServer(("", PORT), ApexScoutRequestHandler) as httpd:
         print(f"============================================================")
-        print(f" ⚡ ApexScout AI - Sports Talent Assessment Platform")
+        print(f" ApexScout AI - Sports Talent Assessment Platform")
         print(f" Serving locally at: http://localhost:{PORT}")
         print(f" Press Ctrl+C to stop the server.")
         print(f"============================================================")

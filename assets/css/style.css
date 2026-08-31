@@ -109,8 +109,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  color: #080B11;
   box-shadow: 0 0 16px rgba(0, 242, 254, 0.4);
+}
+
+.brand-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 .brand-text {
@@ -151,6 +156,19 @@ a {
   transition: all var(--transition-fast);
 }
 
+.nav-tab-btn .nav-icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+  opacity: 0.85;
+  transition: transform var(--transition-fast);
+}
+
+.nav-tab-btn:hover .nav-icon {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 .nav-tab-btn:hover {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.05);
@@ -160,6 +178,74 @@ a {
   color: #080B11;
   background: var(--accent-cyan);
   box-shadow: 0 0 14px rgba(0, 242, 254, 0.4);
+}
+
+.nav-tab-btn.active .nav-icon {
+  opacity: 1;
+  stroke: #080B11;
+}
+
+/* Icon Utilities & Status Indicators */
+.icon-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.icon-svg svg {
+  width: 1em;
+  height: 1em;
+}
+
+.btn-icon-svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-dot.green {
+  background: #39FF14;
+  box-shadow: 0 0 8px #39FF14;
+}
+
+.status-dot.yellow {
+  background: #FFB800;
+  box-shadow: 0 0 8px #FFB800;
+}
+
+.status-dot.red {
+  background: #FF4757;
+  box-shadow: 0 0 8px #FF4757;
+}
+
+.status-dot.cyan {
+  background: #00F2FE;
+  box-shadow: 0 0 8px #00F2FE;
+}
+
+.sport-tag-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(0, 242, 254, 0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .rural-access-bar {

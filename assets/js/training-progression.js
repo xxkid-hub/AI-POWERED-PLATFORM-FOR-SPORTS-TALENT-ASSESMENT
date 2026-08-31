@@ -135,8 +135,8 @@ class TrainingProgressionManager {
           <span class="def-severity">${def.severity}</span>
           <h4 class="def-title">${def.title}</h4>
         </div>
-        <p class="def-impact">⚠️ <strong>Impact:</strong> ${def.impact}</p>
-        <div class="def-trace">📈 <code>${def.kineticTrace}</code></div>
+        <p class="def-impact"><strong>Biomechanical Impact:</strong> ${def.impact}</p>
+        <div class="def-trace"><code>Telemetry Trace: ${def.kineticTrace}</code></div>
         <div class="def-prescribed">
           <strong>AI Prescribed Drill:</strong> ${def.prescribedDrill}
         </div>
@@ -159,9 +159,9 @@ class TrainingProgressionManager {
     container.innerHTML = this.weeklySchedule.map(item => `
       <div class="schedule-day-row">
         <div class="day-badge">${item.day}</div>
-        <div class="day-content">
+        <div style="flex: 1; padding: 0 1rem;">
           <div class="day-focus">${item.focus}</div>
-          <div class="day-drills">${item.drills.map(d => `<span class="drill-chip">🎯 ${d}</span>`).join('')}</div>
+          <div class="day-drills">${item.drills.map(d => `<span class="drill-chip">${d}</span>`).join('')}</div>
         </div>
         <div class="day-duration">${item.duration}</div>
       </div>
@@ -259,7 +259,7 @@ class TrainingProgressionManager {
       } else {
         this.isDuelPlaying = false;
         if (playBtn) playBtn.disabled = false;
-        if (window.app) window.app.showNotification('🏆 Duel Completed! You won by +1.4" apex elevation!');
+        if (window.app) window.app.showNotification('Duel Completed! You won by +1.4" apex elevation!');
       }
     };
 

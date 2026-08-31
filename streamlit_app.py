@@ -15,7 +15,6 @@ from datetime import datetime, timedelta
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="ApexScout AI | Sports Talent Assessment",
-    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -102,7 +101,7 @@ st.markdown("""
 # SAMPLE DATASETS & DRILLS
 # -----------------------------------------------------------------------------
 DRILLS_DATA = {
-    "⚽ Football / Soccer - Penalty Kick": {
+    "Football / Soccer - Penalty Kick": {
         "skill": "Penalty Kick",
         "category": "Shooting & Striking",
         "shot_result": "Goal",
@@ -120,7 +119,7 @@ DRILLS_DATA = {
         "deepfake_confidence": "99.4% (Authentic)",
         "poster": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&auto=format&fit=crop&q=80"
     },
-    "🏏 Cricket - Fast Bowling Release": {
+    "Cricket - Fast Bowling Release": {
         "skill": "Outswinger Fast Bowling",
         "category": "Pace Bowling & Seam",
         "shot_result": "Hit Top of Off-Stump (Wicket)",
@@ -138,7 +137,7 @@ DRILLS_DATA = {
         "deepfake_confidence": "99.7% (Authentic)",
         "poster": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&auto=format&fit=crop&q=80"
     },
-    "🤼 Kabaddi - Toe Touch & Dubki Raid": {
+    "Kabaddi - Toe Touch & Dubki Raid": {
         "skill": "Toe Touch & Dubki Raid",
         "category": "Raiding & Agility",
         "shot_result": "2 Touch Points (Successful)",
@@ -156,7 +155,7 @@ DRILLS_DATA = {
         "deepfake_confidence": "99.5% (Authentic)",
         "poster": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop&q=80"
     },
-    "🏃 Track & Field - Max Vertical Leap": {
+    "Track & Field - Max Vertical Leap": {
         "skill": "Max Vertical Leap",
         "category": "Explosiveness & High Jump",
         "shot_result": "Apex Reached (36.8 inches / 93.5 cm)",
@@ -184,29 +183,29 @@ import os
 # SIDEBAR NAVIGATION & GRASSROOTS SUITE
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("## ⚡ **ApexScout AI**")
-    st.caption("Next-Gen AI Vision Sports Scouting Ecosystem")
+    st.markdown("## **ApexScout AI**")
+    st.caption("Vision-First Sports Scouting Ecosystem")
     st.divider()
 
     nav_choice = st.radio(
         "Navigation",
         [
-            "🎥 Video & AR Combine Analysis",
-            "🧠 Custom ML Model & Dataset Hub",
-            "🛡 24–48h Medical SLA & OCR",
-            "📈 Weekly AI Training & Peer Duels",
-            "🏆 Verified Scout Leaderboard",
-            "👥 Coaches & Scouts Marketplace",
-            "📞 24/7 Helpline & Sports Physio",
-            "👤 Verifiable Digital Passport"
+            "Video & AR Combine Analysis",
+            "Custom ML Model & Dataset Hub",
+            "24–48h Medical SLA & OCR",
+            "Weekly AI Training & Peer Duels",
+            "Verified Scout Leaderboard",
+            "Coaches & Scouts Marketplace",
+            "24/7 Helpline & Sports Physio",
+            "Verifiable Digital Passport"
         ],
         index=0
     )
 
     st.divider()
-    st.markdown("### 🌾 **Rural & Grassroots Suite**")
+    st.markdown("### **Rural & Grassroots Suite**")
     language = st.selectbox("Language / भाषा", ["English", "हिन्दी (Hindi)", "Español"])
-    low_data_mode = st.toggle("📶 2G/3G Low-Data Mode (<120 KB)", value=False)
+    low_data_mode = st.toggle("Low-Data Mode (<120 KB)", value=False)
     if low_data_mode:
         st.caption("✓ Video telemetry compressed for rural cellular networks.")
     
@@ -216,22 +215,22 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # TAB 1: VIDEO & AR COMBINE ANALYSIS (PRD SECTION 2)
 # -----------------------------------------------------------------------------
-if nav_choice == "🎥 Video & AR Combine Analysis":
-    st.title("🎥 Real-Time Vision Combine & AR Liveness Guard")
+if nav_choice == "Video & AR Combine Analysis":
+    st.title("Real-Time Vision Combine & AR Liveness Guard")
     st.markdown("Automated 2D FFT frequency residue scan, physiological movement limits check (<1000°/s knee angular velocity), and randomized AR gesture prompting.")
 
     col1, col2 = st.columns([1.5, 1])
 
     with col2:
-        st.markdown("### 🎯 **Select Combine Drill**")
+        st.markdown("### **Select Combine Drill**")
         selected_drill_key = st.selectbox("Choose Sport & Movement", list(DRILLS_DATA.keys()))
         selected_drill = DRILLS_DATA[selected_drill_key]
 
-        st.markdown("### 🔒 **AR Dynamic Liveness Challenge**")
-        st.info("🎯 **Active AR Cue:** *Touch Left Ear with Right Hand before sprint* (Prevents pre-recorded playback attacks)")
+        st.markdown("### **AR Dynamic Liveness Challenge**")
+        st.info("**Active AR Cue:** *Touch Left Ear with Right Hand before sprint* (Prevents pre-recorded playback attacks)")
         liveness_verified = st.checkbox("✓ Athlete Completed AR Liveness Gesture", value=True)
 
-        st.markdown("### 🛡 **Security & Tampering Simulation**")
+        st.markdown("### **Security & Tampering Simulation**")
         simulate_tamper = st.toggle("Simulate Artificial Speedup / FFT Anomaly", value=False)
 
     with col1:
@@ -243,7 +242,7 @@ if nav_choice == "🎥 Video & AR Combine Analysis":
         with c_up2:
             st.camera_input("Or Capture via Live Camera")
 
-        if st.button("▶ Run AI Biomechanical & FFT Inspection", type="primary", use_container_width=True):
+        if st.button("Run AI Biomechanical & FFT Inspection", type="primary", use_container_width=True):
             with st.spinner("1/3 Running 2D FFT Frequency residue scan..."):
                 time.sleep(0.4)
             with st.spinner("2/3 Checking Bio-Plausibility (<1000°/s human knee velocity)..."):
@@ -252,9 +251,9 @@ if nav_choice == "🎥 Video & AR Combine Analysis":
                 time.sleep(0.3)
             
             if simulate_tamper:
-                st.error("🚨 **INTEGRITY VIOLATION FLAGGED**: 1.45x Artificial Speedup & High FFT Diffusion Residue Detected! Knee velocity reached 1340°/s (Exceeds human max 1000°/s).")
+                st.error("INTEGRITY VIOLATION FLAGGED: 1.45x Artificial Speedup & High FFT Diffusion Residue Detected! Knee velocity reached 1340°/s (Exceeds human max 1000°/s).")
             else:
-                st.success("✅ **COMBINE AUTHENTICATED**: 2D FFT Clean (0.04% noise residue) • Bio-Plausibility Verified (<685°/s knee velocity) • AR Liveness Passed.")
+                st.success("COMBINE AUTHENTICATED: 2D FFT Clean (0.04% noise residue) • Bio-Plausibility Verified (<685°/s knee velocity) • AR Liveness Passed.")
 
     # 12-Component Biomechanical Telemetry Table (PRD Exact Match)
     st.markdown("---")
@@ -286,8 +285,8 @@ if nav_choice == "🎥 Video & AR Combine Analysis":
 # -----------------------------------------------------------------------------
 # TAB: CUSTOM ML MODEL & DATASET TRAINING HUB
 # -----------------------------------------------------------------------------
-elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
-    st.title("🧠 Custom Multi-Sport ML Model & Dataset Hub")
+elif nav_choice == "Custom ML Model & Dataset Hub":
+    st.title("Custom Multi-Sport ML Model & Dataset Hub")
     st.markdown("Inspect, test, and re-train your custom Machine Learning model directly on the **600+ sample expanded dataset** across all 6 sports.")
 
     # Load Evaluation Report
@@ -310,7 +309,7 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
     col_infer, col_stats = st.columns([1.2, 1])
 
     with col_infer:
-        st.markdown("### 🧪 **Live Custom Model Testing & Inference**")
+        st.markdown("### **Live Custom Model Testing & Inference**")
         st.caption("Upload any sports image or sample to pass it through your locally trained ensemble model.")
 
         uploaded_test_file = st.file_uploader("Upload Sports Image for AI Inference", type=["png", "jpg", "jpeg"])
@@ -342,7 +341,7 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
                 res = None
 
         if res and res.get("status") == "SUCCESS":
-            st.success(f"🎯 **Predicted Sport:** `{res['predicted_sport']}` ({res['confidence_percentage']}% Confidence)")
+            st.success(f"**Predicted Sport:** `{res['predicted_sport']}` ({res['confidence_percentage']}% Confidence)")
             
             p1, p2, p3 = st.columns(3)
             p1.metric("Action Skill", res["action_skill"])
@@ -353,7 +352,7 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
             st.markdown(f"**Plant Foot Biomechanics:** `{res['plant_foot']}`")
 
             # Probability Breakdown Chart
-            st.markdown("#### 📊 **Model Class Probability Distribution**")
+            st.markdown("#### **Model Class Probability Distribution**")
             prob_df = pd.DataFrame(
                 list(res["probabilities"].items()),
                 columns=["Sport", "Probability (%)"]
@@ -361,7 +360,7 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
             st.bar_chart(prob_df.set_index("Sport"))
 
     with col_stats:
-        st.markdown("### 📈 **Model Performance & Class Metrics**")
+        st.markdown("### **Model Performance & Class Metrics**")
         if eval_data and "classification_report" in eval_data:
             report_rows = []
             for sp in eval_data["classes"]:
@@ -376,7 +375,7 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
                     })
             st.dataframe(pd.DataFrame(report_rows), use_container_width=True, hide_index=True)
 
-        st.markdown("### 🗂 **Confusion Matrix Heatmap**")
+        st.markdown("### **Confusion Matrix Heatmap**")
         if eval_data and "confusion_matrix" in eval_data:
             cm_df = pd.DataFrame(
                 eval_data["confusion_matrix"],
@@ -386,35 +385,35 @@ elif nav_choice == "🧠 Custom ML Model & Dataset Hub":
             st.dataframe(cm_df, use_container_width=True)
 
         st.markdown("---")
-        st.markdown("### ⚡ **Trigger Live Re-Training**")
+        st.markdown("### **Trigger Live Re-Training**")
         st.caption("Click to re-scan dataset/ and retrain the model weights.")
-        if st.button("🚀 Re-Train Model on 600 Samples", type="primary", use_container_width=True):
+        if st.button("Re-Train Model on 600 Samples", type="primary", use_container_width=True):
             with st.spinner("Training Ensemble Model on dataset/..."):
                 from train_model import train_and_evaluate
                 train_and_evaluate()
-            st.success("✅ Model re-trained successfully! Weights and evaluation report updated.")
+            st.success("Model re-trained successfully! Weights and evaluation report updated.")
             st.rerun()
 
 # -----------------------------------------------------------------------------
 # TAB 2: 24-48H MEDICAL SLA & OCR ENGINE (PRD SECTION 2)
 # -----------------------------------------------------------------------------
-elif nav_choice == "🛡 24–48h Medical SLA & OCR":
-    st.title("🛡 24–48 Hour Medical & Anti-Doping Compliance Hub")
+elif nav_choice == "24–48h Medical SLA & OCR":
+    st.title("24–48 Hour Medical & Anti-Doping Compliance Hub")
     st.markdown("Athletes competing in verified scout trials or tournaments must submit accredited anti-doping & fitness clearance within a strict **24 to 48-hour SLA window**.")
 
     col_m1, col_m2 = st.columns([1.2, 1])
 
     with col_m1:
-        st.markdown("### 📄 **Medical Certificate Submission**")
+        st.markdown("### **Medical Certificate Submission**")
         athlete_name = st.text_input("Athlete Full Name", value="Alex Rivera")
         med_file = st.file_uploader("Upload Lab Certificate / Anti-Doping Panel (PDF/JPG)", type=["pdf", "png", "jpg", "jpeg"])
         
         sla_preset = st.selectbox(
             "SLA Timing Simulation Preset",
             [
-                "🟢 Fresh Clearance: Tested 4h Before Video (Verified <24h)",
-                "🟡 Grace Window: Tested 36h Before Video (Pending Review <48h)",
-                "🔴 Expired SLA: Tested 56h Ago (Flagged / Delisted >48h)"
+                "Fresh Clearance: Tested 4h Before Video (Verified <24h)",
+                "Grace Window: Tested 36h Before Video (Pending Review <48h)",
+                "Expired SLA: Tested 56h Ago (Flagged / Delisted >48h)"
             ]
         )
 
@@ -424,21 +423,21 @@ elif nav_choice == "🛡 24–48h Medical SLA & OCR":
         with t2:
             vid_time = st.text_input("Video Combine Timestamp", value=(datetime.now() - timedelta(hours=4)).strftime("%Y-%m-%d %H:%M"))
 
-        run_ocr = st.button("🛡 Run Automated Document OCR & 48h SLA Check", type="primary", use_container_width=True)
+        run_ocr = st.button("Run Automated Document OCR & 48h SLA Check", type="primary", use_container_width=True)
 
     with col_m2:
-        st.markdown("### 🏆 **OCR & Compliance Determination**")
+        st.markdown("### **OCR & Compliance Determination**")
         if "Fresh" in sla_preset:
-            st.markdown("<span class='status-badge-green'>🟢 VERIFIED (CLEARED < 24H SLA)</span>", unsafe_allow_html=True)
+            st.markdown("<span class='status-badge-green'>VERIFIED (CLEARED < 24H SLA)</span>", unsafe_allow_html=True)
             st.success("✓ Document OCR validated lab stamp, NADA registration, and physician signature.")
             status_text = "FIT FOR COMPETITION & COMBINE TRIALS. WADA anti-doping panel and OCR stamp verified within strict 24-48h SLA."
         elif "Grace" in sla_preset:
-            st.markdown("<span class='status-badge-yellow'>🟡 PENDING REVIEW (< 48H GRACE WINDOW)</span>", unsafe_allow_html=True)
-            st.warning("⚠️ Within 48-hour grace window. Provisional combine scores recorded awaiting medical board sign-off.")
+            st.markdown("<span class='status-badge-yellow'>PENDING REVIEW (< 48H GRACE WINDOW)</span>", unsafe_allow_html=True)
+            st.warning("Within 48-hour grace window. Provisional combine scores recorded awaiting medical board sign-off.")
             status_text = "UNDER REVIEW: Medical report within 48h grace window."
         else:
-            st.markdown("<span class='status-badge-red'>🔴 FLAGGED / DELISTED (> 48H SLA EXPIRED)</span>", unsafe_allow_html=True)
-            st.error("🚨 SLA EXPIRED: Medical report is older than 48 hours. Scores excluded from public leaderboards.")
+            st.markdown("<span class='status-badge-red'>FLAGGED / DELISTED (> 48H SLA EXPIRED)</span>", unsafe_allow_html=True)
+            st.error("SLA EXPIRED: Medical report is older than 48 hours. Scores excluded from public leaderboards.")
             status_text = "NON-COMPLIANT: 48h verification SLA expired. Athlete delisted from leaderboard."
 
         st.markdown("""
@@ -465,14 +464,14 @@ elif nav_choice == "🛡 24–48h Medical SLA & OCR":
 # -----------------------------------------------------------------------------
 # TAB 3: WEEKLY AI TRAINING & PEER ARENA (PRD SECTION 3)
 # -----------------------------------------------------------------------------
-elif nav_choice == "📈 Weekly AI Training & Peer Duels":
-    st.title("📈 Weekly AI Training Loops & Peer Progression Arena")
+elif nav_choice == "Weekly AI Training & Peer Duels":
+    st.title("Weekly AI Training Loops & Peer Progression Arena")
     st.markdown("Automated kinetic deficiency breakdown, 7-day corrective training regimen, multi-athlete trajectory graphs, and side-by-side skeletal duels.")
 
     col_t1, col_t2 = st.columns([1.2, 1])
 
     with col_t1:
-        st.markdown("### ⚠️ **Automated Kinetic Deficiency Breakdown**")
+        st.markdown("### **Automated Kinetic Deficiency Breakdown**")
         deficiencies = [
             {
                 "title": "Asymmetric Takeoff Ground Reaction Force",
@@ -497,13 +496,13 @@ elif nav_choice == "📈 Weekly AI Training & Peer Duels":
             }
         ]
         for def_item in deficiencies:
-            with st.expander(f"🔴 {def_item['title']} — {def_item['severity']}", expanded=True):
+            with st.expander(f"{def_item['title']} — {def_item['severity']}", expanded=True):
                 st.markdown(f"**Impact:** {def_item['impact']}")
                 st.code(def_item['trace'], language="text")
-                st.markdown(f"🎯 **AI Prescribed Drill:** `{def_item['drill']}`")
+                st.markdown(f"**AI Prescribed Drill:** `{def_item['drill']}`")
 
     with col_t2:
-        st.markdown("### 📅 **7-Day AI Corrective Plan (Week 4)**")
+        st.markdown("### **7-Day AI Corrective Plan (Week 4)**")
         schedule = [
             ("Day 1 (Mon)", "Unilateral Power & Symmetry", "Single-Leg Box Step-Ups (4x8)"),
             ("Day 2 (Tue)", "Speed Cadence & Reaction", "Tennis Ball Drop Reactions (5x)"),
@@ -517,7 +516,7 @@ elif nav_choice == "📈 Weekly AI Training & Peer Duels":
             st.markdown(f"**{day}**: `{focus}`<br/><small style='color:#94A3B8;'>{drill}</small>", unsafe_allow_html=True)
 
     st.markdown("---")
-    st.markdown("### 📊 **Multi-Athlete Peer Progression Trajectory Curves (Weeks 1 to 8)**")
+    st.markdown("### **Multi-Athlete Peer Progression Trajectory Curves (Weeks 1 to 8)**")
 
     chart_metric = st.selectbox("Select Progression Metric", ["Vertical Jump (inches)", "Dribble Cadence (Hz)", "40-Yard Sprint Time (sec)", "Kinetic Symmetry Index (%)"])
 
@@ -554,19 +553,19 @@ elif nav_choice == "📈 Weekly AI Training & Peer Duels":
     st.line_chart(df_chart)
 
     st.markdown("---")
-    st.markdown("### ⚔️ **Head-to-Head Drill Duel Arena (Side-by-Side Skeletons)**")
+    st.markdown("### **Head-to-Head Drill Duel Arena (Side-by-Side Skeletons)**")
     
     col_d1, col_d2 = st.columns([1, 2])
     with col_d1:
         duel_peer = st.selectbox("Select Peer Competitor", ["Mateo Silva (Soccer - 91 km/h)", "Ravi Kumar (Kabaddi - 22.4 km/h)", "Simran Preet (Cricket - 138.6 km/h)"])
         st.markdown("**Drill Type:** `Max Vertical Jump Showdown`")
-        if st.button("⚔️ Launch Head-to-Head Skeletal Duel", type="primary", use_container_width=True):
-            st.success("🏆 **DUEL OUTCOME**: You won the showdown against Mateo Silva with +1.4 inches higher apex elevation!")
+        if st.button("Launch Head-to-Head Skeletal Duel", type="primary", use_container_width=True):
+            st.success("DUEL OUTCOME: You won the showdown against Mateo Silva with +1.4 inches higher apex elevation!")
     
     with col_d2:
         st.markdown("""
         <div class='card-box' style='text-align:center;'>
-            <h4 style='color:#00F2FE;'>You (Alex Rivera) 36.4" Apex ⚡ VS ⚡ Mateo Silva 31.5" Apex</h4>
+            <h4 style='color:#00F2FE;'>You (Alex Rivera) 36.4" Apex VS Mateo Silva 31.5" Apex</h4>
             <p style='font-size:0.85rem;color:#94A3B8;'>Side-by-side skeletal kinematic overlay rendered in real-time combine.</p>
         </div>
         """, unsafe_allow_html=True)
@@ -574,23 +573,23 @@ elif nav_choice == "📈 Weekly AI Training & Peer Duels":
 # -----------------------------------------------------------------------------
 # TAB 4: VERIFIED SCOUT LEADERBOARD
 # -----------------------------------------------------------------------------
-elif nav_choice == "🏆 Verified Scout Leaderboard":
-    st.title("🏆 Verified Grassroots & Elite Leaderboard")
+elif nav_choice == "Verified Scout Leaderboard":
+    st.title("Verified Grassroots & Elite Leaderboard")
     st.markdown("Global rankings of top talent with verified 12-component biomechanics and **24–48h Medical SLA badges**.")
 
     leaderboard_data = [
-        {"Rank": "#1", "Athlete": "Ravi Kumar", "Sport": "Kabaddi", "Origin": "Rural Grassroots (Haryana, India)", "Speed": "22.4 km/h", "Accuracy": "96%", "Medical SLA": "🟢 Verified (<24h)", "Score": 96},
-        {"Rank": "#2", "Athlete": "Mateo Silva", "Sport": "Football / Soccer", "Origin": "Youth Club (Minas Gerais, Brazil)", "Speed": "91.0 km/h", "Accuracy": "92%", "Medical SLA": "🟢 Verified (<24h)", "Score": 94},
-        {"Rank": "#3", "Athlete": "Simran Preet Kaur", "Sport": "Cricket", "Origin": "Rural Academy (Punjab, India)", "Speed": "138.6 km/h", "Accuracy": "95%", "Medical SLA": "🟡 Pending Review (<48h)", "Score": 95},
-        {"Rank": "#4", "Athlete": "Kobe Alvarez", "Sport": "Basketball", "Origin": "Community High School (USA)", "Speed": "4.8 Hz Dribble", "Accuracy": "91%", "Medical SLA": "🟢 Verified (<24h)", "Score": 93}
+        {"Rank": "#1", "Athlete": "Ravi Kumar", "Sport": "Kabaddi", "Origin": "Rural Grassroots (Haryana, India)", "Speed": "22.4 km/h", "Accuracy": "96%", "Medical SLA": "Verified (<24h)", "Score": 96},
+        {"Rank": "#2", "Athlete": "Mateo Silva", "Sport": "Football / Soccer", "Origin": "Youth Club (Minas Gerais, Brazil)", "Speed": "91.0 km/h", "Accuracy": "92%", "Medical SLA": "Verified (<24h)", "Score": 94},
+        {"Rank": "#3", "Athlete": "Simran Preet Kaur", "Sport": "Cricket", "Origin": "Rural Academy (Punjab, India)", "Speed": "138.6 km/h", "Accuracy": "95%", "Medical SLA": "Pending Review (<48h)", "Score": 95},
+        {"Rank": "#4", "Athlete": "Kobe Alvarez", "Sport": "Basketball", "Origin": "Community High School (USA)", "Speed": "4.8 Hz Dribble", "Accuracy": "91%", "Medical SLA": "Verified (<24h)", "Score": 93}
     ]
     st.dataframe(pd.DataFrame(leaderboard_data), use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # TAB 5: COACHES & SCOUTS MARKETPLACE
 # -----------------------------------------------------------------------------
-elif nav_choice == "👥 Coaches & Scouts Marketplace":
-    st.title("👥 Certified Coaches & Grassroots Scout Portal")
+elif nav_choice == "Coaches & Scouts Marketplace":
+    st.title("Certified Coaches & Grassroots Scout Portal")
     st.markdown("Connect directly with verified collegiate scouts, UEFA/NBA development directors, and Olympic performance coaches.")
 
     coaches = [
@@ -609,46 +608,46 @@ elif nav_choice == "👥 Coaches & Scouts Marketplace":
             """, unsafe_allow_html=True)
             col_b1, col_b2 = st.columns(2)
             with col_b1:
-                if st.button(f"💬 Direct Message {c['name']}", key=f"msg_{c['name']}"):
+                if st.button(f"Direct Message {c['name']}", key=f"msg_{c['name']}"):
                     st.info(f"Opening encrypted chat with {c['name']}...")
             with col_b2:
-                if st.button(f"📤 Dispatch Verified Dossier to {c['name']}", key=f"dos_{c['name']}"):
+                if st.button(f"Dispatch Verified Dossier to {c['name']}", key=f"dos_{c['name']}"):
                     st.success(f"✓ Official Dossier (12-component telemetry + 48h medical token) dispatched to {c['name']}!")
 
 # -----------------------------------------------------------------------------
 # TAB 6: 24/7 HELPLINE & SPORTS PHYSIO
 # -----------------------------------------------------------------------------
-elif nav_choice == "📞 24/7 Helpline & Sports Physio":
-    st.title("📞 24/7 Athlete Helpline & Sports Physio AI")
+elif nav_choice == "24/7 Helpline & Sports Physio":
+    st.title("24/7 Athlete Helpline & Sports Physio AI")
     st.markdown("Toll-free rural sports hotline, acute injury first-aid tele-triage, and WADA anti-doping advisory.")
 
     col_h1, col_h2 = st.columns([1, 1.2])
 
     with col_h1:
-        st.markdown("### 🚨 **Emergency Hotlines**")
+        st.markdown("### **Emergency Hotlines**")
         st.markdown("""
         <div class='card-box'>
-            <strong>🌾 Rural Grassroots Talent Hotline:</strong><br/>
+            <strong>Rural Grassroots Talent Hotline:</strong><br/>
             <code>1800-11-SPORTS</code> (Toll-Free 24/7 Multi-Lingual)
         </div>
         <div class='card-box'>
-            <strong>🩹 Sports Injury & First Aid:</strong><br/>
+            <strong>Sports Injury & First Aid:</strong><br/>
             <code>+1 (800) 555-SPORTS</code> / <code>+91 1800 200 4545</code>
         </div>
         <div class='card-box'>
-            <strong>💊 CleanSport WADA Anti-Doping Hotline:</strong><br/>
+            <strong>CleanSport WADA Anti-Doping Hotline:</strong><br/>
             <code>+1 (800) 223-0393</code>
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("### 📋 **Submit Emergency Support Ticket**")
+        st.markdown("### **Submit Emergency Support Ticket**")
         ticket_name = st.text_input("Athlete Name", value="Alex Rivera")
         ticket_issue = st.text_area("Describe Acute Pain or Issue")
-        if st.button("🚨 Dispatch Priority SOS Ticket", type="primary"):
+        if st.button("Dispatch Priority SOS Ticket", type="primary"):
             st.success("✓ Emergency Ticket TICK-84920 dispatched to regional duty physician!")
 
     with col_h2:
-        st.markdown("### 🤖 **Apex AI Sports Physio & Anti-Doping Bot**")
+        st.markdown("### **Apex AI Sports Physio & Anti-Doping Bot**")
         if "messages" not in st.session_state:
             st.session_state.messages = [
                 {"role": "assistant", "content": "Hello! I am your 24/7 Sports Physiotherapy and CleanSport Anti-Doping Advisor. Ask me anything about injury rehab (RICE protocol), knee valgus correction, or WADA medication clearance."}
@@ -665,9 +664,9 @@ elif nav_choice == "📞 24/7 Helpline & Sports Physio":
 
             # Smart response
             if "knee" in prompt.lower() or "pain" in prompt.lower():
-                reply = "⚠️ **Sports Physio Protocol for Knee Pain**: Apply the P.R.I.C.E. protocol (Protect, Rest, Ice 15-20 min, Compress, Elevate). Reduce high-impact jumping drills and focus on isometric quad strengthening."
+                reply = "**Sports Clinical Protocol for Knee Pain**: Apply the P.R.I.C.E. protocol (Protect, Rest, Ice 15-20 min, Compress, Elevate). Reduce high-impact jumping drills and focus on isometric quad strengthening."
             elif "wada" in prompt.lower() or "supplement" in prompt.lower() or "medicine" in prompt.lower():
-                reply = "🛡️ **Anti-Doping Advisory**: Verify all supplements with NSF Certified for Sport or Informed-Sport. Submit a Therapeutic Use Exemption (TUE) for prescription asthma inhalers within your 24-48h medical report."
+                reply = "**Anti-Doping Advisory**: Verify all supplements with NSF Certified for Sport or Informed-Sport. Submit a Therapeutic Use Exemption (TUE) for prescription asthma inhalers within your 24-48h medical report."
             else:
                 reply = "Thank you for consulting ApexScout Sports Health AI. For acute pain, call our 24/7 emergency hotline at 1800-11-SPORTS."
 
@@ -678,8 +677,8 @@ elif nav_choice == "📞 24/7 Helpline & Sports Physio":
 # -----------------------------------------------------------------------------
 # TAB 7: VERIFIABLE DIGITAL ATHLETE PASSPORT
 # -----------------------------------------------------------------------------
-elif nav_choice == "👤 Verifiable Digital Passport":
-    st.title("👤 Verifiable Digital Athlete Passport")
+elif nav_choice == "Verifiable Digital Passport":
+    st.title("Verifiable Digital Athlete Passport")
     st.markdown("Official scout combine dossier with tamper-proof video telemetry, 24-48h medical clearance token, and kinetic skill matrix.")
 
     st.markdown("""
@@ -692,7 +691,7 @@ elif nav_choice == "👤 Verifiable Digital Passport":
             <div><strong>Top Shot Speed:</strong> 91.0 km/h</div>
             <div><strong>Accuracy:</strong> 92%</div>
             <div><strong>Reaction Time:</strong> 0.82 sec</div>
-            <div><strong>SLA Status:</strong> <span style='color:#39FF14;'>🟢 24-48h Verified</span></div>
+            <div><strong>SLA Status:</strong> <span style='color:#39FF14;'>✓ 24-48h Verified</span></div>
         </div>
         <hr style='border-color:rgba(255,255,255,0.08);'/>
         <div style='display:flex;justify-content:space-between;align-items:center;'>
@@ -703,7 +702,7 @@ elif nav_choice == "👤 Verifiable Digital Passport":
     """, unsafe_allow_html=True)
 
     st.download_button(
-        label="📥 Download Official JSON Passport Dossier",
+        label="Download Official JSON Passport Dossier",
         data=json.dumps({
             "athlete": "Alex Rivera",
             "sport": "Football / Soccer",

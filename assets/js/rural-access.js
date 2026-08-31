@@ -57,7 +57,7 @@ class RuralAccessibilityManager {
         if (window.app) {
           window.app.showNotification(
             this.isLowDataMode 
-              ? '📶 2G/3G Rural Low-Data Mode Enabled: Video telemetry compressed (<120 KB)' 
+              ? 'Low-Data Mode Enabled: Video telemetry compressed (<120 KB)' 
               : 'Standard High-Definition Streaming Active'
           );
         }
@@ -89,7 +89,7 @@ class RuralAccessibilityManager {
       this.speechSynth.cancel();
       this.isSpeaking = false;
       const btn = document.getElementById('audioCoachBtn');
-      if (btn) btn.textContent = '🔊 Listen to AI Voice Coach';
+      if (btn) btn.textContent = 'Listen to Voice Coach';
       return;
     }
 
@@ -111,20 +111,20 @@ class RuralAccessibilityManager {
     utterance.onstart = () => {
       this.isSpeaking = true;
       const btn = document.getElementById('audioCoachBtn');
-      if (btn) btn.textContent = '⏹ Stop Voice Audio';
-      if (window.app) window.app.showNotification('🔊 AI Voice Coach is reading your skill telemetry aloud...');
+      if (btn) btn.textContent = 'Stop Voice Audio';
+      if (window.app) window.app.showNotification('AI Voice Coach is reading your skill telemetry aloud...');
     };
 
     utterance.onend = () => {
       this.isSpeaking = false;
       const btn = document.getElementById('audioCoachBtn');
-      if (btn) btn.textContent = '🔊 Listen to AI Voice Coach';
+      if (btn) btn.textContent = 'Listen to Voice Coach';
     };
 
     utterance.onerror = () => {
       this.isSpeaking = false;
       const btn = document.getElementById('audioCoachBtn');
-      if (btn) btn.textContent = '🔊 Listen to AI Voice Coach';
+      if (btn) btn.textContent = 'Listen to Voice Coach';
     };
 
     this.speechSynth.speak(utterance);
@@ -134,14 +134,19 @@ class RuralAccessibilityManager {
    * Generate 1-Click WhatsApp Scout Dossier Link
    */
   shareToWhatsApp(athleteName, componentData) {
-    const text = `🏆 *APEXSCOUT AI - VERIFIED TALENT DOSSIER*\n` +
-      `👤 *Athlete*: ${athleteName || 'Alex Rivera'}\n` +
-      `⚡ *Skill*: ${componentData.skill || 'Penalty Kick'}\n` +
-      `🎯 *Result*: ${componentData.shotResult || 'Goal'}\n` +
-      `🚀 *Speed*: ${componentData.shotSpeed || '91 km/h'} | *Accuracy*: ${componentData.accuracy || '92%'}\n` +
-      `⏱ *Reaction Time*: ${componentData.reactionTime || '0.82 sec'}\n` +
-      `🛡 *Trust Badges*: ✓ AI Deepfake Free | 🛡 24h Medical Cleared\n` +
-      `🌐 *View Full Telemetry*: https://apexscout.ai/report?token=APEX-VERIFIED-RURAL-2026`;
+    const text = `*APEXSCOUT AI - VERIFIED TALENT DOSSIER*\n` +
+      `*Athlete*: ${athleteName || 'Alex Rivera'}\n` +
+      `*Skill*: ${componentData.skill || 'Penalty Kick'}\n` +
+      `*Result*: ${componentData.shotResult || 'Goal'}\n` +
+      `*Speed*: ${componentData.shotSpeed || '91 km/h'} | *Accuracy*: ${componentData.accuracy || '92%'}\n` +
+      `*Reaction Time*: ${componentData.reactionTime || '0.82 sec'}\n` +
+      `*Clearance*: ✓ AI Authenticated | ✓ 24-48h Medical Cleared\n` +
+      `*Full Telemetry*: https://apexscout.ai/report?token=APEX-VERIFIED-RURAL-2026`;
+
+    const encoded = encodeURIComponent(text);
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encoded}`;
+    window.open(whatsappUrl, '_blank');
+  }
 
     const encoded = encodeURIComponent(text);
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encoded}`;

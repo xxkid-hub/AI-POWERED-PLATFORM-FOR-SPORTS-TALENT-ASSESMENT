@@ -9,14 +9,14 @@ class HelplineManager {
     this.botResponses = {
       injury: {
         keywords: ['pain', 'injury', 'knee', 'ankle', 'sprain', 'tear', 'patellar', 'shin', 'hamstring', 'sore'],
-        response: `⚠️ **Sports Physio Protocol (Immediate First Response)**:
+        response: `**Sports Clinical Protocol (Immediate Response)**:
 1. **P.R.I.C.E. / P.O.L.I.C.E.**: Protect joint, Optimal Loading, Ice (15-20 min intervals), Compress, and Elevate.
 2. If experiencing acute swelling, inability to bear weight, or audible 'pop' in the knee/ankle, stop all drill activity immediately.
 3. For acute combine recovery, schedule an immediate ultrasound/MRI through our Emergency Sports Injury Hotline: **+1 (800) 555-SPORTS**.`
       },
       doping: {
         keywords: ['doping', 'medicine', 'wada', 'supplement', 'creatine', 'protein', 'pre-workout', 'steroid', 'drug', 'banned', 'pill', 'increase speed', 'power'],
-        response: `🛡️ **CleanSport & Anti-Doping Advisory**:
+        response: `**CleanSport & Anti-Doping Compliance**:
 1. All performance assessment submissions require a **24-hour synchronized medical clearance**.
 2. **Prohibited Substances**: WADA prohibits anabolic agents, peptide hormones (EPO, hGH), beta-2 agonists, hormone modulators, and central stimulants.
 3. **Supplements**: Only use supplements with third-party certification (*Informed-Sport* or *NSF Certified for Sport*).
@@ -24,21 +24,21 @@ class HelplineManager {
       },
       mental: {
         keywords: ['anxiety', 'stress', 'pressure', 'scout', 'nervous', 'burnout', 'fear', 'mental', 'confidence'],
-        response: `🧠 **Athlete Mental Resilience & Combine Preparation**:
+        response: `**Mental Resilience & Focus Protocol**:
 1. **Pre-Trial Reset Routine**: Practice 4-7-8 box breathing (4s inhale, 7s hold, 8s exhale) to lower sympathetic heart rate before recording drills.
 2. **Focus on Process**: Focus on biomechanical execution (foot plant, hip drive) rather than external scout ratings.
 3. Confidential 24/7 mental wellness counselors are on standby: **+1 (800) 273-TALK (Option 4)**.`
       },
       jump: {
         keywords: ['jump', 'vertical', 'hangtime', 'height', 'dunk', 'explosiveness'],
-        response: `⚡ **Biomechanical Jump Enhancement**:
+        response: `**Biomechanical Jump Enhancement**:
 1. Maximize triple extension (simultaneous extension of hips, knees, and ankles).
 2. Deepen kinetic arm-swing momentum (adds 10-15% to peak takeoff velocity).
 3. Land with minimum 30° knee flexion to absorb 3x-5x body weight and protect the ACL.`
       },
       dribble: {
         keywords: ['dribble', 'dribbling', 'crossover', 'ball control', 'hands'],
-        response: `🏀 **Ball Control & Cadence Optimization**:
+        response: `**Ball Control & Cadence Optimization**:
 1. Keep center of gravity low and keep eyes up (reduces reaction latency by 120ms).
 2. Use fingertips and wrist snap rather than the palm to achieve high frequency (> 4.5 Hz).
 3. Practice blindfolded sensory drills to develop subconscious muscle memory.`
@@ -58,7 +58,9 @@ class HelplineManager {
     container.innerHTML = this.helplines.map(line => `
       <div class="helpline-card glass-card">
         <div class="helpline-header">
-          <span class="helpline-icon">📞</span>
+          <span class="helpline-icon" style="color: var(--accent-cyan); display: flex; align-items: center;">
+            <svg class="btn-icon-svg" style="width: 22px; height: 22px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
           <div>
             <h4 class="helpline-cat">${line.category}</h4>
             <span class="helpline-avail">${line.available}</span>
@@ -67,10 +69,12 @@ class HelplineManager {
         <p class="helpline-desc">${line.description}</p>
         <div class="helpline-action-row">
           <a href="tel:${line.number.replace(/[^0-9+]/g, '')}" class="btn btn-primary btn-sm">
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Call ${line.number}
           </a>
           <button class="btn btn-outline btn-sm" onclick="window.helplineManager.copyNumber('${line.number}')">
-            📋 Copy Number
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Number
           </button>
         </div>
       </div>
@@ -143,7 +147,7 @@ class HelplineManager {
       botMsg.className = 'chat-message message-incoming';
       botMsg.innerHTML = `
         <div class="message-bubble physio-bubble">
-          <div class="physio-badge">🤖 ApexScout Sports Physio & Anti-Doping AI</div>
+          <div class="physio-badge">Apex AI Sports Physio & Anti-Doping Bot</div>
           <div class="physio-text">${this.formatMarkdown(bestResponse)}</div>
           <span class="message-time">Just now</span>
         </div>

@@ -184,7 +184,7 @@ const SAMPLE_DATA = {
       reactionTime: '0.38 sec',
       overallScore: 96,
       deepfakeStatus: 'PASSED (99.8% Authentic)',
-      medicalStatus: 'VERIFIED', // 🟢
+      medicalStatus: 'VERIFIED',
       medicalSlaBadge: 'badge-med-verified',
       medicalTimestamp: '2026-08-29 08:30 AM',
       videoTimestamp: '2026-08-29 02:15 PM',
@@ -205,7 +205,7 @@ const SAMPLE_DATA = {
       reactionTime: '0.82 sec',
       overallScore: 94,
       deepfakeStatus: 'PASSED (99.4% Authentic)',
-      medicalStatus: 'VERIFIED', // 🟢
+      medicalStatus: 'VERIFIED',
       medicalSlaBadge: 'badge-med-verified',
       medicalTimestamp: '2026-08-29 07:00 AM',
       videoTimestamp: '2026-08-29 11:30 AM',
@@ -226,7 +226,7 @@ const SAMPLE_DATA = {
       reactionTime: '0.62 sec',
       overallScore: 95,
       deepfakeStatus: 'PASSED (99.9% Authentic)',
-      medicalStatus: 'PENDING_REVIEW', // 🟡
+      medicalStatus: 'PENDING_REVIEW',
       medicalSlaBadge: 'badge-med-pending',
       medicalTimestamp: '2026-08-28 09:15 AM',
       videoTimestamp: '2026-08-29 01:30 PM',
