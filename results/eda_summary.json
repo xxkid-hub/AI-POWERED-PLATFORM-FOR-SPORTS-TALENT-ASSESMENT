@@ -1,0 +1,26 @@
+{
+  "dataset_path": "C:\\Users\\Malavika\\.gemini\\antigravity\\scratch\\sports-talent-ai\\dataset",
+  "classes": {
+    "Athletics": 100,
+    "Basketball": 100,
+    "Cricket": 100,
+    "Kabaddi": 100,
+    "Soccer": 100,
+    "Volleyball": 100
+  },
+  "total_images": 600,
+  "resolutions": {
+    "91x103": 24,
+    "88x103": 6,
+    "91x107": 24,
+    "88x107": 6
+  },
+  "class_balance_ratio": 1.0,
+  "feature_summary": {
+    "feature_dimension": 62,
+    "mean_feature_variance": 0.0067,
+    "min_feature_variance": 0.000113,
+    "max_feature_variance": 0.0259,
+    "missing_values_detected": 0
+  }
+}

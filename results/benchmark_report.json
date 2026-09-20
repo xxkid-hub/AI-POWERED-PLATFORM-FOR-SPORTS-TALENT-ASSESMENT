@@ -1,0 +1,17 @@
+{
+  "benchmark_name": "ApexScout Edge-AI Inference Latency Benchmark",
+  "iterations": 100,
+  "mean_latency_ms": 34.83,
+  "median_p50_ms": 33.72,
+  "p95_latency_ms": 42.71,
+  "p99_latency_ms": 45.21,
+  "min_latency_ms": 27.61,
+  "max_latency_ms": 47.6,
+  "throughput_fps": 28.7,
+  "breakdown": {
+    "avg_feature_extraction_ms": 4.51,
+    "avg_classifier_scoring_ms": 30.32
+  },
+  "target_sla_met": true,
+  "target_sub_100ms": "PASS"
+}

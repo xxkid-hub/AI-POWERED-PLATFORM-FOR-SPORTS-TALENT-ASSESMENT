@@ -1,14 +1,8 @@
 {
-  "model_name": "ApexScout Ensemble Multi-Sport Kinematic Classifier",
-  "algorithm": "VotingClassifier (RandomForest + ExtraTrees)",
-  "trained_at": "2026-09-20T22:17:54Z",
-  "training_duration_seconds": 5.84,
-  "random_seed": 42,
-  "total_samples": 600,
-  "train_samples": 480,
-  "test_samples": 120,
-  "feature_dimension": 62,
+  "evaluation_type": "Standalone Hold-Out Verification",
+  "total_test_samples": 120,
   "overall_accuracy": 0.875,
+  "overall_accuracy_percentage": "87.50%",
   "classes": [
     "Athletics",
     "Basketball",
@@ -117,5 +111,8 @@
       "f1-score": 0.8753851253851255,
       "support": 120.0
     }
+  },
+  "artifacts_generated": {
+    "confusion_matrix_plot": "C:\\Users\\Malavika\\.gemini\\antigravity\\scratch\\sports-talent-ai\\results\\confusion_matrix.png"
   }
 }
