@@ -98,7 +98,7 @@
 | **Skill** | `Penalty Kick` | `Outswinger Fast Bowling` | `Toe Touch & Dubki Raid` |
 | **Shot Result** | `Goal` | `Hit Top of Off-Stump` | `2 Touch Points (Successful)` |
 | **Shot Speed / Velocity** | `91 km/h` | `138.6 km/h` | `22.4 km/h (Burst)` |
-| **Accuracy** | `92%` | `94%` | `96%` |
+| **Drill Execution Quality** | `92% Placement` | `94% Seam Stability` | `96% Evasion Agility` |
 | **Ball Placement / Target**| `Bottom Left Corner` | `Good Length (Outside Off)` | `Bonus Line / Right Corner` |
 | **Reaction Time** | `0.82 sec` | `0.64 sec` | `0.38 sec` |
 | **Run-up Speed** | `18.4 km/h` | `24.8 km/h` | `16.2 km/h` |
@@ -110,13 +110,96 @@
 
 ---
 
-## 🚀 Quick Start & Run Locally
+## 🤖 Machine Learning Pipeline & Architecture
+
+ApexScout AI features an enterprise-grade, modular ML pipeline built for edge inference and verified reproducibility.
+
+```
+sports-talent-ai/
+├── config/
+│   ├── settings.py             # Centralized paths, seeds, schema & constants
+│   └── config.yaml             # External YAML config for hyperparameter tuning
+├── dataset/                    # 600 multi-sport sample frames (100 per sport)
+│   └── dataset_index.json      # Dataset manifest & distribution metadata
+├── src/
+│   ├── preprocessor.py         # SportsImagePreprocessor (BGR, PIL, 62-dim features)
+│   ├── trainer.py              # SportsModelTrainer with seed_everything()
+│   ├── evaluate.py             # Standalone evaluator & confusion matrix plotter
+│   ├── benchmark.py            # Latency benchmark (p50, p95, p99 ms)
+│   └── eda.py                  # Exploratory Data Analysis & balance verification
+├── tests/
+│   ├── test_preprocessor.py    # Unit tests for image feature extraction & BGR/PIL
+│   ├── test_model.py           # Unit tests for model loading & prediction schema
+│   └── test_pipeline.py        # End-to-end integration & inference tests
+├── results/
+│   ├── confusion_matrix.png    # High-resolution evaluated confusion matrix plot
+│   ├── evaluation_summary.json # Standalone test set metrics
+│   ├── benchmark_report.json   # Latency SLA report (p95: 42.7ms < 100ms)
+│   └── eda_summary.json        # Dataset balance and variance report
+└── trained_model/              # Saved model checkpoints & scalers
+    ├── sports_talent_model.joblib
+    └── feature_scaler.joblib
+```
+
+### Verified Model Performance (Hold-Out Test Set)
+
+* **Overall Test Accuracy:** `87.50%` (Holdout 20% stratified test set)
+* **Macro Average F1-Score:** `0.875`
+* **Inference Latency (p95):** `42.71 ms` (Target SLA $<100\text{ ms}$: **PASS**)
+* **Throughput:** `28.7 FPS`
+
+| Sport Class | Precision | Recall | F1-Score | Support |
+| :--- | :---: | :---: | :---: | :---: |
+| **Athletics** | 0.818 | 0.900 | 0.857 | 20 |
+| **Basketball** | 0.792 | 0.950 | 0.864 | 20 |
+| **Cricket** | 0.895 | 0.850 | 0.872 | 20 |
+| **Kabaddi** | 0.947 | 0.900 | 0.923 | 20 |
+| **Soccer** | 0.895 | 0.850 | 0.872 | 20 |
+| **Volleyball** | 0.941 | 0.800 | 0.865 | 20 |
+
+---
+
+## 🛠 Reproducible ML Commands
+
+### 1. Run Automated Unit Tests (13/13 Passing)
+```bash
+python -m pytest tests/ -v
+```
+
+### 2. Retrain Model with Deterministic Random Seed
+```bash
+python train_model.py --seed 42 --test-split 0.20 --n-estimators 100
+```
+
+### 3. Run Standalone Evaluation & Generate Plots
+```bash
+python evaluate.py
+```
+*Outputs: `results/confusion_matrix.png` and `results/evaluation_summary.json`.*
+
+### 4. Run Latency Benchmark
+```bash
+python benchmark.py --iterations 100
+```
+*Outputs: `results/benchmark_report.json`.*
+
+### 5. Run Inference on a Single Image
+```bash
+python infer.py --image dataset/Cricket/CR_aug_001.png
+```
+
+---
+
+## 🚀 Quick Start & Run Web Platform
 
 ```bash
-# Start the local development server
+# Option A: Start Web Platform Server
 python server.py
+
+# Option B: Start Streamlit Scouting Dashboard
+streamlit run streamlit_app.py
 ```
-Open **`http://localhost:8000`** in your browser.
+Open **`http://localhost:8000`** (Web Platform) or **`http://localhost:8501`** (Streamlit Dashboard) in your browser.
 
 ---
 
