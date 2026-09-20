@@ -3,6 +3,7 @@
 ApexScout AI - Custom Model Inference Module
 Loads the trained multi-sport ensemble model and generates live predictions,
 confidence scores, probability distributions, and biomechanical skill ratings.
+Enforces dynamic motion verification and returns explicit errors if no sports action is detected.
 """
 
 import os
@@ -26,6 +27,7 @@ from config.settings import (
     SKILL_MAPPING
 )
 from src.preprocessor import SportsImagePreprocessor, extract_features_from_image
+from src.motion_detector import verify_sports_image_motion
 
 MODEL_PATH = os.path.join(MODEL_DIR, "sports_talent_model.joblib")
 SCALER_PATH = os.path.join(MODEL_DIR, "feature_scaler.joblib")
@@ -60,11 +62,26 @@ def load_trained_model():
 def predict_sports_action(image_input):
     """
     Run inference on an image file path, PIL Image object, or numpy array.
-    Returns structured JSON with predicted sport, skill metrics, and probabilities.
+    Validates dynamic motion and athletic posture before scoring.
+    Returns structured JSON with predicted sport or explicit NO_SPORTS_MOTION error.
     """
+    # 1. Kinematic contrast and motion verification
+    is_motion_valid, motion_msg = verify_sports_image_motion(image_input)
+    if not is_motion_valid:
+        return {
+            "status": "ERROR",
+            "error_code": "NO_SPORTS_MOTION",
+            "message": motion_msg
+        }
+
+    # 2. Feature Extraction
     feat = _preprocessor.extract_features(image_input)
     if feat is None:
-        return {"status": "ERROR", "message": "Could not extract features from input image"}
+        return {
+            "status": "ERROR",
+            "error_code": "FEATURE_EXTRACTION_FAILED",
+            "message": "Could not extract kinematic features from input image."
+        }
 
     model, scaler, model_type = load_trained_model()
 
@@ -98,7 +115,19 @@ def predict_sports_action(image_input):
     else:
         return {
             "status": "ERROR",
+            "error_code": "MODEL_NOT_FOUND",
             "message": "Trained model not found. Please run 'python train_model.py' first."
+        }
+
+    # 3. Guard against unconfident noise (detects non-sports images with flat probability)
+    if confidence < 25.0:
+        return {
+            "status": "ERROR",
+            "error_code": "NO_SPORTS_MOTION",
+            "message": (
+                f"NO SPORTS-RELATED MOTION RECOGNIZED: Confidence is only {confidence:.1f}%. "
+                f"Movement pattern does not correlate with known athletic kinetic profiles."
+            )
         }
 
     skill_info = SKILL_MAPPING.get(predicted_sport, {})
