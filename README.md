@@ -190,16 +190,23 @@ python infer.py --image dataset/Cricket/CR_aug_001.png
 
 ---
 
-## 🚀 Quick Start & Run Web Platform
+## 🚀 Quick Start — Official Platform (Streamlit)
+
+ApexScout AI is officially powered by **Streamlit** as its primary, interactive full-stack platform:
 
 ```bash
-# Option A: Start Web Platform Server
-python server.py
-
-# Option B: Start Streamlit Scouting Dashboard
+# Launch the Official ApexScout AI Platform
 streamlit run streamlit_app.py
 ```
-Open **`http://localhost:8000`** (Web Platform) or **`http://localhost:8501`** (Streamlit Dashboard) in your browser.
+*Alternatively, run `streamlit run app.py`.*
+
+Open **`http://localhost:8501`** in your browser to access the complete application:
+- **Vision Combine & AR Liveness Guard:** Real-time 2D FFT scan & bio-plausibility checks.
+- **Custom ML Model & Dataset Hub:** Live image inference, probability charts, and 1-click model retraining.
+- **24–48h Medical SLA Engine:** WADA document OCR scanner & compliance timer.
+- **Progression Arena:** Weekly AI improvement trajectories and head-to-head peer duels.
+- **Scout Leaderboard & Passports:** Verifiable digital athlete passports and coach inbox.
+- **Grassroots Suite:** 2G/3G low-data mode, multilingual voiceover coach, and WhatsApp dossier dispatch.
 
 ---
 
