@@ -39,3 +39,9 @@ Thumbs.db
 
 # Logs & temp
 *.log
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+.mypy_cache/
+.ruff_cache/
