@@ -1,0 +1,183 @@
+"""
+ApexScout AI - UI Mock Data & Catalog Registry
+Centralizes static drill catalogs, peer progression trajectories,
+certified coach directories, and emergency helpline registries.
+"""
+
+from typing import Dict, Any, List
+
+DRILLS_DATA: Dict[str, Dict[str, Any]] = {
+    "Football / Soccer - Penalty Kick": {
+        "skill": "Penalty Kick",
+        "category": "Shooting & Striking",
+        "shot_result": "Goal",
+        "shot_speed": "91 km/h",
+        "accuracy": "92%",
+        "ball_placement": "Bottom Left Corner",
+        "reaction_time": "0.82 sec",
+        "run_up_speed": "18.4 km/h",
+        "plant_foot": "Good (35° ankle angle, 12cm lateral spacing)",
+        "balance": "Excellent (Center of mass stable over support leg)",
+        "follow_through": "Good (Hips squared to target)",
+        "contact_quality": "Clean (Instep sweet-spot strike)",
+        "ball_curve": "Slight Inside Curve (14 rad/s spin)",
+        "overall_rating": 94,
+        "deepfake_confidence": "99.4% (Authentic)",
+        "poster": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&auto=format&fit=crop&q=80",
+    },
+    "Cricket - Fast Bowling Release": {
+        "skill": "Outswinger Fast Bowling",
+        "category": "Pace Bowling & Seam",
+        "shot_result": "Hit Top of Off-Stump (Wicket)",
+        "shot_speed": "138.6 km/h",
+        "accuracy": "94%",
+        "ball_placement": "Good Length (Outside Off)",
+        "reaction_time": "0.64 sec",
+        "run_up_speed": "24.8 km/h",
+        "plant_foot": "Front foot braced (178° lockout)",
+        "balance": "Optimal (Trunk hyperextension controlled)",
+        "follow_through": "Complete hip rotation across left hip",
+        "contact_quality": "Clean (Snap release at 2.15m height)",
+        "ball_curve": "Late Outswing (2.4° lateral deviation)",
+        "overall_rating": 96,
+        "deepfake_confidence": "99.7% (Authentic)",
+        "poster": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&auto=format&fit=crop&q=80",
+    },
+    "Kabaddi - Toe Touch & Dubki Raid": {
+        "skill": "Toe Touch & Dubki Raid",
+        "category": "Raiding & Agility",
+        "shot_result": "2 Touch Points (Successful)",
+        "shot_speed": "22.4 km/h (Burst)",
+        "accuracy": "96%",
+        "ball_placement": "Bonus Line / Right Corner Ankle",
+        "reaction_time": "0.38 sec",
+        "run_up_speed": "16.2 km/h",
+        "plant_foot": "Low center of gravity (45° flex)",
+        "balance": "Superior (Rapid ground recovery from squat)",
+        "follow_through": "Rapid midline return to baulk line",
+        "contact_quality": "Precise (40ms touch tap)",
+        "ball_curve": "Rapid zig-zag evasion arc",
+        "overall_rating": 95,
+        "deepfake_confidence": "99.5% (Authentic)",
+        "poster": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop&q=80",
+    },
+    "Track & Field - Max Vertical Leap": {
+        "skill": "Max Vertical Leap",
+        "category": "Explosiveness & High Jump",
+        "shot_result": "Apex Reached (36.8 inches / 93.5 cm)",
+        "shot_speed": "4.35 m/s (Takeoff Velocity)",
+        "accuracy": "97%",
+        "ball_placement": "Vertical Apex Clearance",
+        "reaction_time": "0.29 sec",
+        "run_up_speed": "12.6 km/h",
+        "plant_foot": "Penultimate foot plant with 118° preload",
+        "balance": "Superior (Vertical alignment through cervical spine)",
+        "follow_through": "Triple extension (ankle, knee, hip)",
+        "contact_quality": "High Elastic Energy Transfer",
+        "ball_curve": "Pure Parabolic Gravitational Curve",
+        "overall_rating": 96,
+        "deepfake_confidence": "98.9% (Authentic)",
+        "poster": "https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=800&auto=format&fit=crop&q=80",
+    },
+}
+
+LEADERBOARD_RECORDS: List[Dict[str, Any]] = [
+    {
+        "Rank": "#1",
+        "Athlete": "Ravi Kumar",
+        "Sport": "Kabaddi",
+        "Origin": "Rural Grassroots (Haryana, India)",
+        "Speed": "22.4 km/h",
+        "Accuracy": "96%",
+        "Medical SLA": "Verified (<24h)",
+        "Score": 96,
+    },
+    {
+        "Rank": "#2",
+        "Athlete": "Mateo Silva",
+        "Sport": "Football / Soccer",
+        "Origin": "Youth Club (Minas Gerais, Brazil)",
+        "Speed": "91.0 km/h",
+        "Accuracy": "92%",
+        "Medical SLA": "Verified (<24h)",
+        "Score": 94,
+    },
+    {
+        "Rank": "#3",
+        "Athlete": "Simran Preet Kaur",
+        "Sport": "Cricket",
+        "Origin": "Rural Academy (Punjab, India)",
+        "Speed": "138.6 km/h",
+        "Accuracy": "95%",
+        "Medical SLA": "Pending Review (<48h)",
+        "Score": 95,
+    },
+    {
+        "Rank": "#4",
+        "Athlete": "Kobe Alvarez",
+        "Sport": "Basketball",
+        "Origin": "Community High School (USA)",
+        "Speed": "4.8 Hz Dribble",
+        "Accuracy": "91%",
+        "Medical SLA": "Verified (<24h)",
+        "Score": 93,
+    },
+]
+
+COACH_DIRECTORY: List[Dict[str, str]] = [
+    {
+        "name": "Marcus Vance",
+        "role": "Head Scout (NBA G-League Partner)",
+        "sport": "Basketball",
+        "loc": "Chicago, USA",
+        "fee": "Free Initial Review",
+    },
+    {
+        "name": "Elena Rostova",
+        "role": "UEFA Pro License Scout",
+        "sport": "Football / Soccer",
+        "loc": "London / São Paulo",
+        "fee": "Free Scout Evaluation",
+    },
+    {
+        "name": "Rajeshwar Tyagi",
+        "role": "Senior Rural High-Performance Coach",
+        "sport": "Cricket / Kabaddi",
+        "loc": "Haryana / Punjab",
+        "fee": "100% Free Rural Grants",
+    },
+]
+
+TRAINING_DEFICIENCIES: List[Dict[str, str]] = [
+    {
+        "title": "Asymmetric Takeoff Ground Reaction Force",
+        "severity": "Moderate (12% Right Bias)",
+        "impact": "Reduces peak vertical leap by ~2.4 inches; uneven joint loading",
+        "trace": "Left Ankle Ground Contact 115ms vs Right 98ms",
+        "drill": "Single-Leg Bulgarian Split Squats & Depth Drops",
+    },
+    {
+        "title": "Dynamic Knee Valgus during Landing Phase",
+        "severity": "Mild (14° Inward Collapse)",
+        "impact": "Increases ACL strain upon deceleration and slows transition speed",
+        "trace": "Knee Flexion Angle collapses inward at 0.62s timestamp",
+        "drill": "Banded Broad Jumps with Stick Landing",
+    },
+    {
+        "title": "Sub-Optimal Arm Swing Kinetic Latency",
+        "severity": "Low (95ms Arm Delay)",
+        "impact": "Misses 8-10% potential momentum boost during penultimate step",
+        "trace": "Shoulder extension peaks after hip lockout",
+        "drill": "Seated Arm Drive Sprint Cycles",
+    },
+]
+
+WEEKLY_SCHEDULE: List[tuple] = [
+    ("Day 1 (Mon)", "Unilateral Power & Symmetry", "Single-Leg Box Step-Ups (4x8)"),
+    ("Day 2 (Tue)", "Speed Cadence & Reaction", "Tennis Ball Drop Reactions (5x)"),
+    ("Day 3 (Wed)", "Rest & Biomechanical Recovery", "Hip Mobility Foam Rolling (25m)"),
+    ("Day 4 (Thu)", "Triple Extension & Apex Force", "Trap Bar Jumps (4x5)"),
+    ("Day 5 (Fri)", "Rotational Core Alignment", "Med Ball Wall Slams (3x10)"),
+    ("Day 6 (Sat)", "Head-to-Head Combine Test Run", "Peer Showdown Duel Recording"),
+    ("Day 7 (Sun)", "Weekly Progress Review", "AI Trajectory Audit"),
+]
