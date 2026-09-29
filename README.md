@@ -122,14 +122,35 @@ sports-talent-ai/
 ├── dataset/                    # 600 multi-sport sample frames (100 per sport)
 │   └── dataset_index.json      # Dataset manifest & distribution metadata
 ├── src/
+│   ├── biomechanics/           # Kinematics, angular velocity, and 12-component telemetry
+│   │   ├── kinematics.py       # Joint angles, valgus collapse, and bio-plausibility checks
+│   │   └── telemetry.py        # BiomechanicsTelemetry dataclass & score computation
+│   ├── security/               # 2D FFT spectral anti-deepfake & AR liveness guard
+│   │   ├── fft_detector.py     # Frequency residue energy ratio & tamper probability
+│   │   └── liveness.py         # Dynamic randomized AR action challenges
+│   ├── medical/                # Medical & Anti-Doping compliance engine
+│   │   └── sla_verifier.py     # 24–48h SLA verifier, WADA OCR scanner & 3-tier badges
+│   ├── server/                 # REST API & static web serving package
+│   │   └── handlers.py         # Request dispatcher for health, predict, and medical endpoints
+│   ├── ui/                     # Modular Streamlit UI presentation system
+│   │   ├── styles.py           # Athletic dark carbon theme & custom design tokens
+│   │   ├── mock_data.py        # Centralized catalogs, peer curves, and drill registers
+│   │   ├── audio.py            # Synthetic audio chime generator & multilingual voice scripts
+│   │   └── tabs/               # Specialized presentation tab modules
+│   ├── motion_detector.py      # Optical flow & video motion energy filter
 │   ├── preprocessor.py         # SportsImagePreprocessor (BGR, PIL, 62-dim features)
 │   ├── trainer.py              # SportsModelTrainer with seed_everything()
 │   ├── evaluate.py             # Standalone evaluator & confusion matrix plotter
 │   ├── benchmark.py            # Latency benchmark (p50, p95, p99 ms)
 │   └── eda.py                  # Exploratory Data Analysis & balance verification
-├── tests/
-│   ├── test_preprocessor.py    # Unit tests for image feature extraction & BGR/PIL
-│   ├── test_model.py           # Unit tests for model loading & prediction schema
+├── tests/                      # 38 passing unit and integration tests
+│   ├── test_biomechanics.py    # Joint kinematics and telemetry scoring tests
+│   ├── test_security.py        # 2D FFT spectral and dynamic AR liveness tests
+│   ├── test_medical.py         # 24-48h SLA verifier and WADA OCR tests
+│   ├── test_server.py          # Server and REST endpoint unit tests
+│   ├── test_ui_modules.py      # UI data structures and audio chime tests
+│   ├── test_preprocessor.py    # Image feature extraction & BGR/PIL tests
+│   ├── test_model.py           # Model loading & prediction schema tests
 │   └── test_pipeline.py        # End-to-end integration & inference tests
 ├── results/
 │   ├── confusion_matrix.png    # High-resolution evaluated confusion matrix plot
@@ -161,7 +182,7 @@ sports-talent-ai/
 
 ## 🛠 Reproducible ML Commands
 
-### 1. Run Automated Unit Tests (13/13 Passing)
+### 1. Run Automated Unit & Modular Tests (38/38 Passing)
 ```bash
 python -m pytest tests/ -v
 ```
