@@ -54,6 +54,28 @@ SPORTS_TECH_CSS = """
         display: inline-block;
     }
     
+    .status-badge-blue {
+        background-color: rgba(0, 242, 254, 0.15);
+        color: #00F2FE;
+        border: 1px solid #00F2FE;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: inline-block;
+    }
+
+    .status-badge-amber {
+        background-color: rgba(255, 184, 0, 0.15);
+        color: #FFB800;
+        border: 1px solid #FFB800;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: inline-block;
+    }
+    
     .status-badge-yellow {
         background-color: rgba(255, 184, 0, 0.15);
         color: #FFB800;
