@@ -26,11 +26,10 @@ from src.ui.tabs import (
 )
 
 # -----------------------------------------------------------------------------
-# PAGE CONFIGURATION
+# PAGE CONFIGURATION (Clean, professional, emoji-free)
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="ApexScout AI | Sports Talent Assessment",
-    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -42,7 +41,7 @@ inject_custom_styles()
 # SIDEBAR NAVIGATION & GRASSROOTS SUITE
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("## ⚡ **ApexScout AI**")
+    st.markdown("## **ApexScout AI**")
     st.caption("Vision-First Sports Scouting Ecosystem")
     st.divider()
 
@@ -66,7 +65,7 @@ with st.sidebar:
     language = st.selectbox("Language / भाषा", ["English", "हिन्दी (Hindi)", "Español"])
     low_data_mode = st.toggle("Low-Data Mode (<120 KB)", value=False)
     if low_data_mode:
-        st.caption("✓ Video telemetry compressed for rural cellular networks.")
+        st.caption("[ACTIVE] Video telemetry compressed for rural cellular networks.")
     
     st.markdown("---")
     st.caption("Logged in as: **Alex Rivera (Athlete)**")
