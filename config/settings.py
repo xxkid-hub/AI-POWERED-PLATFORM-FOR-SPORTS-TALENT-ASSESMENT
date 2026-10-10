@@ -7,6 +7,7 @@ import os
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = BASE_DIR
 DATASET_DIR = os.path.join(BASE_DIR, "dataset")
 DATASETS_DIR = os.path.join(BASE_DIR, "datasets")
 MODEL_DIR = os.path.join(BASE_DIR, "trained_model")
