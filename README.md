@@ -231,8 +231,24 @@ python server.py
 
 ---
 
+## Multi-Sport Biomechanical Skill Matrices
+
+ApexScout AI classifies and analyzes specialized kinematics tailored to 6 core sports:
+
+| Sport | Action Skill | Category | Analyzed Skill Dimensions |
+| :--- | :--- | :--- | :--- |
+| **Cricket** | Outswinger Fast Bowling | Pace Bowling & Seam | Run-up momentum, front-knee lockout (178°), release apex (2.15m), outswing deviation (2.4°), upright seam backspin |
+| **Basketball** | Crossover 3-Point Jump Shot | Elevation & Arc | 4.8 Hz dribble separation, square 1-2 foot plant, 24.5" vertical rise, 48° entry launch angle, gooseneck wrist snap |
+| **Football / Soccer** | Precision Penalty Strike | Striking & Kinematics | 45° angled approach, 35° ankle plant foot angle, 42° hip torque, instep sweet-spot strike, 14 rad/s Magnus spin |
+| **Kabaddi** | Toe Touch & Dubki Raid | Agility & Evasion | 16.2 km/h baulk approach, 142cm leg reach extension, 45° low-squat dubki flex, 22.4 km/h burst recovery |
+| **Athletics** | Explosive High Jump / Leap | Vertical Impulse | J-curve cadence, 118° penultimate step preload, 172° takeoff block, triple extension, 4.35 m/s vertical impulse |
+| **Volleyball** | Power Cross-Court Spike | Aerial Attack | 4-step approach, heel-to-toe block step, 31.2" net clearance, 55° thoracic coil, -28° downward topspin penetration |
+
+---
+
 ## License
 This project is open-source under the [MIT License](LICENSE).
+
 
 
 
