@@ -10,7 +10,13 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 from infer import predict_sports_action
-from config.settings import ROOT_DIR
+
+try:
+    from config.settings import BASE_DIR
+    ROOT_DIR = BASE_DIR
+except Exception:
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    ROOT_DIR = BASE_DIR
 
 
 def render_ml_hub_tab():
@@ -87,10 +93,10 @@ def render_ml_hub_tab():
             st.bar_chart(prob_df.set_index("Sport"))
 
         elif res and res.get("status") == "ERROR":
-            st.error(f"🚨 **{res.get('message', 'NO SPORTS-RELATED MOTION DETECTED')}**")
+            st.error(f"[REJECTED] {res.get('message', 'NO SPORTS-RELATED MOTION DETECTED')}")
             st.markdown(f"""
             <div style='background: rgba(255, 71, 87, 0.12); border: 2px solid #FF4757; border-radius: 12px; padding: 1.25rem; margin-top: 1rem;'>
-                <h4 style='color: #FF4757; margin-top: 0;'>⚠️ Rejection: Non-Sports or Motionless Input</h4>
+                <h4 style='color: #FF4757; margin-top: 0;'>[ALERT] Rejection: Non-Sports or Motionless Input</h4>
                 <p style='color: #F1F5F9; font-size: 0.95rem;'>
                     The ApexScout multi-sport neural classifier could not detect valid athletic action posture or kinetic limb displacement in this frame.
                 </p>
@@ -98,7 +104,7 @@ def render_ml_hub_tab():
                     <span style='color: #94A3B8; font-size: 0.85rem;'>Diagnostic Code:</span> <code>{res.get('error_code', 'NO_SPORTS_MOTION')}</code><br/>
                     <span style='color: #94A3B8; font-size: 0.85rem;'>Error Reason:</span> <span style='color: #FF6B6B;'>{res.get('message')}</span>
                 </div>
-                <strong style='color: #F8FAFC;'>💡 Tips for valid input:</strong>
+                <strong style='color: #F8FAFC;'>Guidelines for valid input:</strong>
                 <ul style='color: #CBD5E1; font-size: 0.85rem; margin-top: 0.25rem;'>
                     <li>Upload a clear photo capturing an athlete actively in motion.</li>
                     <li>Avoid uploading solid backgrounds, screenshots with text, or static inanimate objects.</li>
