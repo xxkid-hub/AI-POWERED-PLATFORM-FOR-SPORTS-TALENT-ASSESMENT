@@ -2,6 +2,7 @@
 ApexScout AI - Kinematics & Biomechanical Plausibility Engine
 Validates human movement against physiological anatomical limits
 to detect physics violations, splicing, or diffusion-generated movement anomalies.
+Supports sport-specific kinematic boundary evaluation across all 6 core sports.
 """
 
 import math
@@ -17,6 +18,48 @@ class KinematicLimits:
     max_hip_angular_velocity_deg_s: float = 850.0     # <= 850 deg/sec
     max_valgus_inward_collapse_deg: float = 18.0      # <= 18 deg risk limit
     min_contact_time_ms: float = 30.0                 # >= 30ms ground reaction time
+
+
+# Sport-specific kinematic benchmarks for professional athletic assessment
+SPORT_KINEMATIC_BENCHMARKS = {
+    "Cricket": {
+        "bowling_arm_apex_min_m": 1.95,
+        "bowling_arm_apex_max_m": 2.45,
+        "front_knee_brace_angle_optimal_deg": 175.0,
+        "safe_trunk_lateral_flex_max_deg": 18.0,
+        "max_plausible_bowling_speed_kmh": 165.0,
+    },
+    "Soccer": {
+        "ankle_plant_angle_optimal_deg": 35.0,
+        "hip_rotation_torque_optimal_deg": 42.0,
+        "safe_valgus_inward_dev_max_deg": 15.0,
+        "max_plausible_strike_speed_kmh": 140.0,
+    },
+    "Kabaddi": {
+        "dubki_squat_compression_angle_deg": 45.0,
+        "baulk_reach_extension_min_cm": 120.0,
+        "max_plausible_burst_speed_kmh": 32.0,
+        "reaction_latency_elite_max_sec": 0.45,
+    },
+    "Athletics": {
+        "triple_extension_ankle_deg": 125.0,
+        "triple_extension_knee_deg": 175.0,
+        "triple_extension_hip_deg": 180.0,
+        "max_plausible_takeoff_velocity_m_s": 6.5,
+    },
+    "Basketball": {
+        "shooting_launch_angle_min_deg": 45.0,
+        "shooting_launch_angle_max_deg": 55.0,
+        "release_elevation_apex_min_m": 2.30,
+        "max_plausible_release_speed_kmh": 40.0,
+    },
+    "Volleyball": {
+        "spike_approach_step_count_min": 3,
+        "spike_arm_cocking_angle_min_deg": 50.0,
+        "spike_net_clearance_min_inches": 24.0,
+        "max_plausible_spike_speed_kmh": 135.0,
+    }
+}
 
 
 @dataclass
@@ -69,7 +112,6 @@ def evaluate_valgus_collapse(hip: Tuple[float, float], knee: Tuple[float, float]
     """
     Estimates dynamic knee valgus inward collapse angle relative to mechanical axis line.
     """
-    # Deviation from vertical leg alignment
     leg_angle = calculate_joint_angle(hip, knee, ankle)
     deviation = abs(180.0 - leg_angle)
     return deviation
