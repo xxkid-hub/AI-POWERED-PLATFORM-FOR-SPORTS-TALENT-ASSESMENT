@@ -6,39 +6,51 @@
 [![Medical SLA](https://img.shields.io/badge/Medical%20SLA-24--48h%20WADA%20OCR-FF6B00.svg)](#)
 [![Progression Arena](https://img.shields.io/badge/Progression%20Arena-Weekly%20AI%20%26%20Duels-9B51E0.svg)](#)
 
-> **ApexScout AI** is a real-time, vision-first sports scouting and development ecosystem. The platform enforces strict video integrity (anti-deepfake, biomechanical plausibility, anti-doping verification) while driving athlete engagement via weekly AI training, coach matching, and an open peer-to-peer progression arena.
+> **ApexScout AI** is an autonomous, vision-first sports talent scouting and progression ecosystem. The platform ingests raw sports video footage with zero manual preset selection, automatically infers the sport and specific action skill, extracts real-time kinematic telemetry, evaluates the athlete's personal score and performance tier, and enforces rigorous anti-deepfake (2D FFT) and anti-doping (24–48h SLA) compliance.
 
 ---
 
-## 🏗 System Architecture & PRD Functional Matrix
+## 🏗 System Architecture & Autonomous Video Pipeline
 
 ```
-+-------------------------------------------------------------------+
-|                        Client Layer (Mobile App)                  |
-|  - Real-Time Camera Stream   - AR Dynamic Liveness Prompts        |
-|  - On-Device Pose Inference  - Medical Document Upload (Camera/PDF|
-+-------------------------------------------------------------------+
-                                  │
-                                  ▼
-+-------------------------------------------------------------------+
-|                     Security & Ingestion Gateway                  |
-|  - Deepfake / Frame Tampering Filter (FFT & Diffusion Detection)  |
-|  - Biomechanical Human Movement Plausibility Check                |
-|  - Anti-Doping Expiration Timer (24-48h Strict SLA)               |
-+-------------------------------------------------------------------+
-                                  │
-                                  ▼
-+─────────────────────────────────+    +────────────────────────────+
-|     AI Vision & Analytics Engine|    |     Medical OCR & Admin    |
-|  - Frame-by-Frame Kinematics    |    |  - WADA/Lab Signature OCR  |
-|  - Weekly Improvement Modeler   |    |  - Tamper & Timestamp Check|
-+─────────────────────────────────+    +────────────────────────────+
-                                  │
-                                  ▼
-+-------------------------------------------------------------------+
-|                    Community & Scouting Portal                    |
-|  - Peer-to-Peer Progress Graphs  - Scout Filters & Direct Inbox   |
-+-------------------------------------------------------------------+
++─────────────────────────────────────────────────────────────────────────+
+│                    Raw Video Ingestion Layer (Zero-Preset)              │
+│  - Raw Video File Upload (.mp4, .mov, .avi, .webm)                      │
+│  - Live Athlete Camera Stream Ingestion                                 │
+│  - 6-Sport Benchmark Action Dataset Testing                             │
++─────────────────────────────────────────────────────────────────────────+
+                                     │
+                                     ▼
++─────────────────────────────────────────────────────────────────────────+
+│                   Temporal Kinematics & Motion Engine                   │
+│  - Optical Flow Displacement & Velocity Telemetry (km/h)                │
+│  - Active Frame Density (%) & Reaction Onset Latency (sec)              │
+│  - Peak Kinetic Energy Keyframe Extraction                              │
+│  - Stationary / Non-Sports Motion Rejection Guard                       │
++─────────────────────────────────────────────────────────────────────────+
+                                     │
+                                     ▼
++─────────────────────────────────────────────────────────────────────────+
+│              Multi-Modal Neural Vision & Domain Fusion Engine           │
+│  - 6-Class VotingClassifier Ensemble (RandomForest + ExtraTrees)        │
+│  - Domain Signature Fusion:                                             │
+│    * Cricket: Longitudinal tan pitch strip flanked by green grass       │
+│    * Soccer: Uniform full-field green natural turf                      │
+│    * Athletics: Terracotta / blue synthetic track with lane markings    │
+│    * Basketball: Hardwood amber parquet court                           │
+│    * Kabaddi: Interlocking dual-zone EVA foam mat                       │
+│    * Volleyball: Indoor court with high net boundary                    │
++─────────────────────────────────────────────────────────────────────────+
+                                     │
+                                     ▼
++─────────────────────────────────────────────────────────────────────────+
+│                 Athlete Personal Scorecard & Biomechanics               │
+│  - Overall Talent Composite Rating (0-100)                              │
+│  - Performance Classification Tiers (Tier 1 Elite, Tier 2, Tier 3)      │
+│  - 4 Dimensional Sub-Scores: Power, Accuracy, Reaction, Joint Safety    │
+│  - 8-Component Skill-by-Skill Kinematic Breakdown Table                 │
+│  - Scout Talent Evaluation & AI Coach Action Prescription               │
++─────────────────────────────────────────────────────────────────────────+
 ```
 
 ---
@@ -47,7 +59,7 @@
 
 ### Deepfake & Video Tampering Detection
 * **Temporal & Frequency Artifact Analysis:** Runs spatial-frequency 2D FFT residue checks across frames to detect face swaps, diffusion-generated artifacts (Sora/Runway), and frame-rate splicing.
-* **Biomechanical Plausibility Filter:** Compares physical acceleration against physiological human limits (maximum angular velocity of knee flexion $\le 1000^\circ/\text{sec}$, acceleration $\le 12.5\text{ m/s}^2$). Unnatural kinematic spikes trigger automated flags.
+* **Biomechanical Plausibility Filter:** Compares physical acceleration against physiological human limits (maximum angular velocity of knee flexion $\le 1000^\circ/\text{sec}$, acceleration $\le 12.5\text{ m/s}^2$, valgus inward collapse $< 18^\circ$).
 * **Liveness & Dynamic Prompting:** Prompts the athlete with randomized AR cues during recording (e.g. *"Touch Left Ear with Right Hand before sprint"*) to block pre-recorded playback attacks.
 
 ### Medical & Anti-Doping Compliance Engine
@@ -91,28 +103,22 @@
 
 ---
 
-## 🎯 12-Component Biomechanical Telemetry Matrix
+## 🎯 Multi-Sport Biomechanical Skill Matrices & Dimensions
 
-| Component | Football / Soccer (Penalty) | Cricket (Fast Bowling) | Kabaddi (Raid & Evasion) |
+ApexScout AI classifies and analyzes specialized kinematics tailored to 6 core sports:
+
+| Sport | Primary Action Skill | Domain Category | Key Kinematic Dimensions Analyzed |
 | :--- | :--- | :--- | :--- |
-| **Skill** | `Penalty Kick` | `Outswinger Fast Bowling` | `Toe Touch & Dubki Raid` |
-| **Shot Result** | `Goal` | `Hit Top of Off-Stump` | `2 Touch Points (Successful)` |
-| **Shot Speed / Velocity** | `91 km/h` | `138.6 km/h` | `22.4 km/h (Burst)` |
-| **Drill Execution Quality** | `92% Placement` | `94% Seam Stability` | `96% Evasion Agility` |
-| **Ball Placement / Target**| `Bottom Left Corner` | `Good Length (Outside Off)` | `Bonus Line / Right Corner` |
-| **Reaction Time** | `0.82 sec` | `0.64 sec` | `0.38 sec` |
-| **Run-up Speed** | `18.4 km/h` | `24.8 km/h` | `16.2 km/h` |
-| **Plant Foot** | `Good (35° ankle angle)` | `Front foot braced (178° lockout)` | `Low center of gravity (45° flex)`|
-| **Balance** | `Excellent` | `Optimal trunk stabilization` | `Superior ground recovery` |
-| **Follow Through** | `Good (Hips squared)` | `Complete hip rotation` | `Rapid midline return` |
-| **Contact Quality** | `Clean (Instep sweet-spot)` | `Clean 2.15m snap release` | `Precise 40ms touch tap` |
-| **Ball Curve / Trajectory**| `Slight Inside Curve` | `Late 2.4° lateral outswing`| `Rapid zig-zag evasion arc` |
+| **Cricket** | Outswinger Fast Bowling Action | Pace Bowling & Seam | Run-up momentum, front-knee lockout (178°), release apex (2.15m), outswing deviation (2.4°), upright seam backspin |
+| **Basketball** | Crossover to 3-Point Jump Shot | Elevation & Shooting Arc | 4.8 Hz dribble separation, square 1-2 foot plant, 24.5" vertical rise, 48° entry launch angle, gooseneck wrist snap |
+| **Football / Soccer** | Precision Penalty Strike & Placement | Striking & Kinematics | 45° angled approach, 35° ankle plant foot angle, 42° hip torque, instep sweet-spot strike, 14 rad/s Magnus spin |
+| **Kabaddi** | Toe Touch & Low-Squat Dubki Raid | Agility & Evasion | 16.2 km/h baulk approach, 142cm leg reach extension, 45° low-squat dubki flex, 22.4 km/h burst recovery |
+| **Athletics** | Explosive High Jump & Vertical Leap | Vertical Impulse | J-curve cadence, 118° penultimate step preload, 172° takeoff block, triple extension, 4.35 m/s vertical impulse |
+| **Volleyball** | Power Cross-Court Aerial Spike | Aerial Attack | 4-step approach, heel-to-toe block step, 31.2" net clearance, 55° thoracic coil, -28° downward topspin penetration |
 
 ---
 
 ## 🤖 Machine Learning Pipeline & Architecture
-
-ApexScout AI features an enterprise-grade, modular ML pipeline built for edge inference and verified reproducibility.
 
 ```
 sports-talent-ai/
@@ -143,14 +149,14 @@ sports-talent-ai/
 │   ├── evaluate.py             # Standalone evaluator & confusion matrix plotter
 │   ├── benchmark.py            # Latency benchmark (p50, p95, p99 ms)
 │   └── eda.py                  # Exploratory Data Analysis & balance verification
-├── tests/                      # 38 passing unit and integration tests
+├── tests/                      # 40 passing unit and integration tests
 │   ├── test_biomechanics.py    # Joint kinematics and telemetry scoring tests
 │   ├── test_security.py        # 2D FFT spectral and dynamic AR liveness tests
 │   ├── test_medical.py         # 24-48h SLA verifier and WADA OCR tests
 │   ├── test_server.py          # Server and REST endpoint unit tests
 │   ├── test_ui_modules.py      # UI data structures and audio chime tests
 │   ├── test_preprocessor.py    # Image feature extraction & BGR/PIL tests
-│   ├── test_model.py           # Model loading & prediction schema tests
+│   ├── test_model.py           # Model loading, domain signature fusion & prediction tests
 │   └── test_pipeline.py        # End-to-end integration & inference tests
 ├── results/
 │   ├── confusion_matrix.png    # High-resolution evaluated confusion matrix plot
@@ -162,27 +168,11 @@ sports-talent-ai/
     └── feature_scaler.joblib
 ```
 
-### Verified Model Performance (Hold-Out Test Set)
-
-* **Overall Test Accuracy:** `87.50%` (Holdout 20% stratified test set)
-* **Macro Average F1-Score:** `0.875`
-* **Inference Latency (p95):** `42.71 ms` (Target SLA $<100\text{ ms}$: **PASS**)
-* **Throughput:** `28.7 FPS`
-
-| Sport Class | Precision | Recall | F1-Score | Support |
-| :--- | :---: | :---: | :---: | :---: |
-| **Athletics** | 0.818 | 0.900 | 0.857 | 20 |
-| **Basketball** | 0.792 | 0.950 | 0.864 | 20 |
-| **Cricket** | 0.895 | 0.850 | 0.872 | 20 |
-| **Kabaddi** | 0.947 | 0.900 | 0.923 | 20 |
-| **Soccer** | 0.895 | 0.850 | 0.872 | 20 |
-| **Volleyball** | 0.941 | 0.800 | 0.865 | 20 |
-
 ---
 
-## 🛠 Reproducible ML Commands
+## 🛠 Reproducible Commands
 
-### 1. Run Automated Unit & Modular Tests (38/38 Passing)
+### 1. Run Automated Unit & Integration Tests (40/40 Passing)
 ```bash
 python -m pytest tests/ -v
 ```
@@ -192,19 +182,17 @@ python -m pytest tests/ -v
 python train_model.py --seed 42 --test-split 0.20 --n-estimators 100
 ```
 
-### 3. Run Standalone Evaluation & Generate Plots
+### 3. Run Standalone Evaluation & Generate Confusion Matrix
 ```bash
 python evaluate.py
 ```
-*Outputs: `results/confusion_matrix.png` and `results/evaluation_summary.json`.*
 
 ### 4. Run Latency Benchmark
 ```bash
 python benchmark.py --iterations 100
 ```
-*Outputs: `results/benchmark_report.json`.*
 
-### 5. Run Inference on a Single Image
+### 5. Run Live Inference on a Sports Image
 ```bash
 python infer.py --image dataset/Cricket/CR_aug_001.png
 ```
@@ -213,7 +201,7 @@ python infer.py --image dataset/Cricket/CR_aug_001.png
 
 ## Quick Start — Streamlit Platform Server (Port 8501)
 
-ApexScout AI runs exclusively on the **Streamlit Port** ([http://localhost:8501](http://localhost:8501)) with all vision combine, ML hub, medical verification, and scouting tools:
+ApexScout AI runs exclusively on the **Streamlit Port** ([http://localhost:8501](http://localhost:8501)):
 
 ```bash
 # Launch the Streamlit Platform (Serves on http://localhost:8501)
@@ -221,34 +209,15 @@ python server.py
 ```
 *Alternatively, run `python app.py` or `streamlit run streamlit_app.py`.*
 
-### Platform Features on [http://localhost:8501](http://localhost:8501):
-- **Vision Combine & AR Liveness Guard:** Real-time 2D FFT scan, bio-plausibility checks, and kinematics HUD.
-- **Custom ML Model & Dataset Hub:** Live image inference, probability charts, and model evaluation metrics.
-- **24–48h Medical SLA Engine:** WADA document OCR scanner & compliance timer.
-- **Progression Arena:** Weekly AI improvement trajectories and head-to-head peer duels.
-- **Scout Leaderboard & Digital Passports:** Verifiable athlete passports and coaches marketplace.
-- **24/7 Helpline & Grassroots Suite:** Low-data mode, multilingual voiceover coach, and WhatsApp dossier dispatch.
-
----
-
-## Multi-Sport Biomechanical Skill Matrices
-
-ApexScout AI classifies and analyzes specialized kinematics tailored to 6 core sports:
-
-| Sport | Action Skill | Category | Analyzed Skill Dimensions |
-| :--- | :--- | :--- | :--- |
-| **Cricket** | Outswinger Fast Bowling | Pace Bowling & Seam | Run-up momentum, front-knee lockout (178°), release apex (2.15m), outswing deviation (2.4°), upright seam backspin |
-| **Basketball** | Crossover 3-Point Jump Shot | Elevation & Arc | 4.8 Hz dribble separation, square 1-2 foot plant, 24.5" vertical rise, 48° entry launch angle, gooseneck wrist snap |
-| **Football / Soccer** | Precision Penalty Strike | Striking & Kinematics | 45° angled approach, 35° ankle plant foot angle, 42° hip torque, instep sweet-spot strike, 14 rad/s Magnus spin |
-| **Kabaddi** | Toe Touch & Dubki Raid | Agility & Evasion | 16.2 km/h baulk approach, 142cm leg reach extension, 45° low-squat dubki flex, 22.4 km/h burst recovery |
-| **Athletics** | Explosive High Jump / Leap | Vertical Impulse | J-curve cadence, 118° penultimate step preload, 172° takeoff block, triple extension, 4.35 m/s vertical impulse |
-| **Volleyball** | Power Cross-Court Spike | Aerial Attack | 4-step approach, heel-to-toe block step, 31.2" net clearance, 55° thoracic coil, -28° downward topspin penetration |
+### Platform Tabs on [http://localhost:8501](http://localhost:8501):
+1. **Autonomous Video & AR Combine Analysis:** Ingests raw video, classifies sport and skill, computes personal score, and renders the 8-component kinematic analysis table.
+2. **Custom ML Model & Dataset Hub:** Live image inference, multi-class probability charts, and model evaluation metrics.
+3. **24–48h Medical SLA Engine:** WADA document OCR scanner & compliance timer.
+4. **Progression Arena:** Weekly AI improvement trajectories and head-to-head peer duels.
+5. **Verified Scout Leaderboard & Passports:** Verifiable athlete passports and coaches marketplace.
+6. **24/7 Helpline & Grassroots Suite:** Low-data mode, multilingual voiceover coach, and WhatsApp dossier dispatch.
 
 ---
 
 ## License
 This project is open-source under the [MIT License](LICENSE).
-
-
-
-
