@@ -104,5 +104,5 @@ def inject_custom_styles():
 
 def render_brand_header():
     """Renders the top title and branding badges."""
-    st.title("⚡ ApexScout AI — Next-Gen AI Vision Sports Ecosystem")
-    st.caption("Real-Time Kinematics • FFT Deepfake Guard • 24–48h Medical SLA • Weekly Training Loops • P2P Progression Arena")
+    st.title("ApexScout AI — Next-Gen AI Vision Sports Ecosystem")
+    st.caption("Real-Time Kinematics | FFT Deepfake Guard | 24–48h Medical SLA | Weekly Training Loops | P2P Progression Arena")
