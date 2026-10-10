@@ -35,7 +35,7 @@ def render_helpline_tab(language: str = "English"):
         audio_info = get_audio_coach_script("Football", "Penalty Kick", 94.0, language=language)
         st.caption(f"**{audio_info['title']}**: {audio_info['intro']}")
         
-        if st.button("🔊 Play Combine Chime & Audio Feedback", key="btn_play_chime"):
+        if st.button("Play Combine Chime & Audio Feedback", key="btn_play_chime"):
             chime_bytes = generate_combine_start_chime()
             st.audio(chime_bytes, format="audio/wav")
             st.info(f"Coach advice: {audio_info['advice']}")
@@ -44,7 +44,7 @@ def render_helpline_tab(language: str = "English"):
         ticket_name = st.text_input("Athlete Name", value="Alex Rivera")
         ticket_issue = st.text_area("Describe Acute Pain or Issue")
         if st.button("Dispatch Priority SOS Ticket", type="primary"):
-            st.success("✓ Emergency Ticket TICK-84920 dispatched to regional duty physician!")
+            st.success("Emergency Ticket TICK-84920 dispatched to regional duty physician!")
 
     with col_h2:
         st.markdown("### **Apex AI Sports Physio & Anti-Doping Bot**")
