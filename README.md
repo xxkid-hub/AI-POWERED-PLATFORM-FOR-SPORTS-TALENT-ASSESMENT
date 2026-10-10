@@ -211,25 +211,28 @@ python infer.py --image dataset/Cricket/CR_aug_001.png
 
 ---
 
-## 🚀 Quick Start — Official Platform (Streamlit)
+## Quick Start — Streamlit Platform Server (Port 8501)
 
-ApexScout AI is officially powered by **Streamlit** as its primary, interactive full-stack platform:
+ApexScout AI runs exclusively on the **Streamlit Port** ([http://localhost:8501](http://localhost:8501)) with all vision combine, ML hub, medical verification, and scouting tools:
 
 ```bash
-# Launch the Official ApexScout AI Platform
-streamlit run streamlit_app.py
+# Launch the Streamlit Platform (Serves on http://localhost:8501)
+python server.py
 ```
-*Alternatively, run `streamlit run app.py`.*
+*Alternatively, run `python app.py` or `streamlit run streamlit_app.py`.*
 
-Open **`http://localhost:8501`** in your browser to access the complete application:
-- **Vision Combine & AR Liveness Guard:** Real-time 2D FFT scan & bio-plausibility checks.
-- **Custom ML Model & Dataset Hub:** Live image inference, probability charts, and 1-click model retraining.
+### Platform Features on [http://localhost:8501](http://localhost:8501):
+- **Vision Combine & AR Liveness Guard:** Real-time 2D FFT scan, bio-plausibility checks, and kinematics HUD.
+- **Custom ML Model & Dataset Hub:** Live image inference, probability charts, and model evaluation metrics.
 - **24–48h Medical SLA Engine:** WADA document OCR scanner & compliance timer.
 - **Progression Arena:** Weekly AI improvement trajectories and head-to-head peer duels.
-- **Scout Leaderboard & Passports:** Verifiable digital athlete passports and coach inbox.
-- **Grassroots Suite:** 2G/3G low-data mode, multilingual voiceover coach, and WhatsApp dossier dispatch.
+- **Scout Leaderboard & Digital Passports:** Verifiable athlete passports and coaches marketplace.
+- **24/7 Helpline & Grassroots Suite:** Low-data mode, multilingual voiceover coach, and WhatsApp dossier dispatch.
 
 ---
 
-## 📄 License
+## License
 This project is open-source under the [MIT License](LICENSE).
+
+
+
