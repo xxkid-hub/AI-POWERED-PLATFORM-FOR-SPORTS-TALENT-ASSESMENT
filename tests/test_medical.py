@@ -88,3 +88,83 @@ def test_verify_medical_document_helper():
     res = verify_medical_document(text, athlete_id="ATH-200", timestamp_hours_ago=8.0)
     assert res.status == ComplianceStatus.VERIFIED
     assert isinstance(res.to_dict(), dict)
+
+
+# =====================================================================
+# Sports Injury Advisor & Emergency Tele-Triage Unit Tests
+# =====================================================================
+
+from src.medical import (
+    detect_serious_injury,
+    get_emergency_response,
+    solve_basic_sports_injury,
+    get_sports_physio_response,
+    EMERGENCY_HOTLINE_NUMBER,
+    AMBULANCE_NUMBER,
+)
+
+
+def test_detect_serious_injury_triggers():
+    # Various serious trauma phrases
+    assert detect_serious_injury("I think my teammate has a bone fracture") == "fracture"
+    assert detect_serious_injury("His leg bone snapped in a tackle") in ["bone", "snap"]
+    assert detect_serious_injury("Dislocation of the shoulder out of socket") == "dislocat"
+    assert detect_serious_injury("He suffered a severe concussion and passed out") == "concussion"
+    assert detect_serious_injury("Felt a loud pop and tore his ACL") == "pop"
+    
+    # Mild/basic injuries should not trigger serious red flag
+    assert detect_serious_injury("im having sprained ankle from playing football") is None
+    assert detect_serious_injury("jammed finger from catching volleyball") is None
+    assert detect_serious_injury("mild hamstring tightness after cricket match") is None
+
+
+def test_serious_injury_emergency_hotline_response():
+    prompt = "Player leg snapped bone deformed cannot walk"
+    response = get_sports_physio_response(prompt)
+    assert "CRITICAL EMERGENCY MEDICAL ALERT" in response
+    assert EMERGENCY_HOTLINE_NUMBER in response  # "1800-11-SPORTS"
+    assert "Toll-Free" in response
+    assert AMBULANCE_NUMBER in response  # "112 / 108"
+    assert "DO NOT MOVE" in response
+
+
+def test_football_basic_injury_solution():
+    prompt = "im having sprained ankle from playing football"
+    response = get_sports_physio_response(prompt)
+    assert "Football Inversion Ankle Sprain" in response
+    assert "P.R.I.C.E." in response
+    assert "Ice" in response
+    assert "Rehabilitation" in response
+    assert EMERGENCY_HOTLINE_NUMBER in response  # Mentioned in escalation safety notice
+
+
+def test_volleyball_basic_injury_solution():
+    prompt = "having jumper knee patellar tendinopathy from volleyball jumping"
+    response = get_sports_physio_response(prompt)
+    assert "Volleyball Jumper's Knee" in response
+    assert "tendon" in response.lower()
+    assert "ice" in response.lower()
+
+
+def test_basketball_basic_injury_solution():
+    prompt = "jammed finger trying to catch basketball pass"
+    response = get_sports_physio_response(prompt)
+    assert "Basketball Jammed Finger" in response
+    assert "buddy-tape" in response.lower() or "ice" in response.lower()
+
+
+def test_kabaddi_basic_injury_solution():
+    prompt = "defender caught my ankle in kabaddi ankle hold and twisted it"
+    response = get_sports_physio_response(prompt)
+    assert "Kabaddi Ankle Twist" in response
+    assert "P.R.I.C.E." in response
+    assert "rehabilitation" in response.lower()
+
+
+def test_cricket_basic_injury_solution():
+    prompt = "sharp side strain during fast bowling stride in cricket"
+    response = get_sports_physio_response(prompt)
+    assert "Cricket Fast Bowler's Side Strain" in response
+    assert "oblique" in response.lower()
+    assert "bowling" in response.lower()
+

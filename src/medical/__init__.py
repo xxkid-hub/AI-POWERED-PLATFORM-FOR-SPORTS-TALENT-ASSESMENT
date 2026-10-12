@@ -11,6 +11,14 @@ from .sla_verifier import (
     ComplianceResult,
     verify_medical_document,
 )
+from .sports_injury_advisor import (
+    get_sports_physio_response,
+    detect_serious_injury,
+    solve_basic_sports_injury,
+    get_emergency_response,
+    EMERGENCY_HOTLINE_NUMBER,
+    AMBULANCE_NUMBER,
+)
 
 __all__ = [
     "MedicalSLAVerifier",
@@ -18,4 +26,10 @@ __all__ = [
     "MedicalRecord",
     "ComplianceResult",
     "verify_medical_document",
+    "get_sports_physio_response",
+    "detect_serious_injury",
+    "solve_basic_sports_injury",
+    "get_emergency_response",
+    "EMERGENCY_HOTLINE_NUMBER",
+    "AMBULANCE_NUMBER",
 ]
