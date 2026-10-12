@@ -52,7 +52,6 @@ def render_ml_hub_tab():
                 os.path.join("dataset", "Cricket", "CR001 - Copy.png"),
                 os.path.join("dataset", "Kabaddi", "KA001.png"),
                 os.path.join("dataset", "Soccer", "SO001.png"),
-                os.path.join("dataset", "Athletics", "AT001.png"),
                 os.path.join("dataset", "Basketball", "BA001.png"),
                 os.path.join("dataset", "Volleyball", "VB001.png"),
             ]
@@ -86,8 +85,9 @@ def render_ml_hub_tab():
             st.markdown(f"**Plant Foot Biomechanics:** `{res['plant_foot']}`")
 
             st.markdown("#### **Model Class Probability Distribution**")
+            clean_res_probs = {k: v for k, v in res["probabilities"].items() if "athletic" not in k.lower()}
             prob_df = pd.DataFrame(
-                list(res["probabilities"].items()),
+                list(clean_res_probs.items()),
                 columns=["Sport", "Probability (%)"]
             ).sort_values("Probability (%)", ascending=False)
             st.bar_chart(prob_df.set_index("Sport"))

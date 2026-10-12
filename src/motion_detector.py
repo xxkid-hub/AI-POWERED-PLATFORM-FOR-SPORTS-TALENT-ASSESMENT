@@ -75,6 +75,8 @@ def analyze_video_motion(video_input, sample_fps=15, max_frames=300):
     active_frames = 0
     max_energy = 0.0
     best_frame_rgb = None
+    candidate_frames = []
+    last_candidate_frame_idx = -999
 
     frame_idx = 0
     step = max(1, int(fps / sample_fps))
@@ -111,6 +113,10 @@ def analyze_video_motion(video_input, sample_fps=15, max_frames=300):
 
                 if diff_mean >= MIN_MOTION_ENERGY_THRESHOLD:
                     active_frames += 1
+                    # Collect keyframes spaced at least 6 frames apart
+                    if (frame_idx - last_candidate_frame_idx) >= 6 and len(candidate_frames) < 8:
+                        candidate_frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                        last_candidate_frame_idx = frame_idx
 
                 if diff_mean > max_energy:
                     max_energy = diff_mean
@@ -175,6 +181,7 @@ def analyze_video_motion(video_input, sample_fps=15, max_frames=300):
 
     # Best keyframe PIL Image for subsequent classifier inspection
     keyframe_pil = Image.fromarray(best_frame_rgb) if best_frame_rgb is not None else None
+    candidate_keyframes = [Image.fromarray(f) for f in candidate_frames] if candidate_frames else ([keyframe_pil] if keyframe_pil else [])
 
     return {
         "status": "SUCCESS",
@@ -189,7 +196,8 @@ def analyze_video_motion(video_input, sample_fps=15, max_frames=300):
         "total_video_frames": total_frames,
         "duration_sec": round(duration_sec, 2),
         "motion_timeline": motion_energies,
-        "keyframe_pil": keyframe_pil
+        "keyframe_pil": keyframe_pil,
+        "candidate_keyframes": candidate_keyframes
     }
 
 

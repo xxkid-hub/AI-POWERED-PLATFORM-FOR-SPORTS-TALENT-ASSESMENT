@@ -2,7 +2,7 @@
 ApexScout AI - Kinematics & Biomechanical Plausibility Engine
 Validates human movement against physiological anatomical limits
 to detect physics violations, splicing, or diffusion-generated movement anomalies.
-Supports sport-specific kinematic boundary evaluation across all 6 core sports.
+Supports sport-specific kinematic boundary evaluation across all 5 core sports.
 """
 
 import math
@@ -40,12 +40,6 @@ SPORT_KINEMATIC_BENCHMARKS = {
         "baulk_reach_extension_min_cm": 120.0,
         "max_plausible_burst_speed_kmh": 32.0,
         "reaction_latency_elite_max_sec": 0.45,
-    },
-    "Athletics": {
-        "triple_extension_ankle_deg": 125.0,
-        "triple_extension_knee_deg": 175.0,
-        "triple_extension_hip_deg": 180.0,
-        "max_plausible_takeoff_velocity_m_s": 6.5,
     },
     "Basketball": {
         "shooting_launch_angle_min_deg": 45.0,

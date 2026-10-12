@@ -1,14 +1,13 @@
 {
   "dataset_path": "C:\\Users\\Malavika\\.gemini\\antigravity\\scratch\\sports-talent-ai\\dataset",
   "classes": {
-    "Athletics": 100,
     "Basketball": 100,
     "Cricket": 100,
     "Kabaddi": 100,
     "Soccer": 100,
     "Volleyball": 100
   },
-  "total_images": 600,
+  "total_images": 500,
   "resolutions": {
     "91x103": 24,
     "88x103": 6,

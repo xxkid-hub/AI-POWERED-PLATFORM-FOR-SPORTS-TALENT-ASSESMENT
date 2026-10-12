@@ -32,11 +32,10 @@
                                      ▼
 +─────────────────────────────────────────────────────────────────────────+
 │              Multi-Modal Neural Vision & Domain Fusion Engine           │
-│  - 6-Class VotingClassifier Ensemble (RandomForest + ExtraTrees)        │
+│  - 5-Class VotingClassifier Ensemble (RandomForest + ExtraTrees)        │
 │  - Domain Signature Fusion:                                             │
 │    * Cricket: Longitudinal tan pitch strip flanked by green grass       │
 │    * Soccer: Uniform full-field green natural turf                      │
-│    * Athletics: Terracotta / blue synthetic track with lane markings    │
 │    * Basketball: Hardwood amber parquet court                           │
 │    * Kabaddi: Interlocking dual-zone EVA foam mat                       │
 │    * Volleyball: Indoor court with high net boundary                    │
@@ -105,7 +104,7 @@
 
 ## 🎯 Multi-Sport Biomechanical Skill Matrices & Dimensions
 
-ApexScout AI classifies and analyzes specialized kinematics tailored to 6 core sports:
+ApexScout AI classifies and analyzes specialized kinematics tailored to 5 core sports:
 
 | Sport | Primary Action Skill | Domain Category | Key Kinematic Dimensions Analyzed |
 | :--- | :--- | :--- | :--- |
@@ -113,7 +112,6 @@ ApexScout AI classifies and analyzes specialized kinematics tailored to 6 core s
 | **Basketball** | Crossover to 3-Point Jump Shot | Elevation & Shooting Arc | 4.8 Hz dribble separation, square 1-2 foot plant, 24.5" vertical rise, 48° entry launch angle, gooseneck wrist snap |
 | **Football / Soccer** | Precision Penalty Strike & Placement | Striking & Kinematics | 45° angled approach, 35° ankle plant foot angle, 42° hip torque, instep sweet-spot strike, 14 rad/s Magnus spin |
 | **Kabaddi** | Toe Touch & Low-Squat Dubki Raid | Agility & Evasion | 16.2 km/h baulk approach, 142cm leg reach extension, 45° low-squat dubki flex, 22.4 km/h burst recovery |
-| **Athletics** | Explosive High Jump & Vertical Leap | Vertical Impulse | J-curve cadence, 118° penultimate step preload, 172° takeoff block, triple extension, 4.35 m/s vertical impulse |
 | **Volleyball** | Power Cross-Court Aerial Spike | Aerial Attack | 4-step approach, heel-to-toe block step, 31.2" net clearance, 55° thoracic coil, -28° downward topspin penetration |
 
 ---
@@ -125,7 +123,7 @@ sports-talent-ai/
 ├── config/
 │   ├── settings.py             # Centralized paths, seeds, schema & constants
 │   └── config.yaml             # External YAML config for hyperparameter tuning
-├── dataset/                    # 600 multi-sport sample frames (100 per sport)
+├── dataset/                    # 500 multi-sport sample frames (100 per sport)
 │   └── dataset_index.json      # Dataset manifest & distribution metadata
 ├── src/
 │   ├── biomechanics/           # Kinematics, angular velocity, and 12-component telemetry

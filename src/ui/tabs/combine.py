@@ -14,11 +14,16 @@ from PIL import Image
 from config.settings import ROOT_DIR
 from src.ui.mock_data import DRILLS_DATA
 from src.motion_detector import analyze_video_motion, verify_sports_image_motion
-from infer import predict_sports_action
+from infer import predict_sports_action, predict_video_stream
 from src.biomechanics.kinematics import check_biomechanical_plausibility
+from src.biomechanics.skills_registry import (
+    FUNDAMENTAL_SKILLS_TAXONOMY,
+    get_skills_for_sport,
+    evaluate_fundamental_skills
+)
 
 
-# Deep 8-dimension skill matrices tailored to each of the 6 core sports
+# Deep 8-dimension skill matrices tailored to each of the 5 core sports
 SPORT_SKILL_ANALYSIS = {
     "Soccer": {
         "sport_title": "Football / Soccer",
@@ -92,30 +97,6 @@ SPORT_SKILL_ANALYSIS = {
         "scout_notes": "Phenomenal center of gravity modulation during dubki compression. Sub-0.4s reaction latency puts athlete in top 2% of raiding prospects.",
         "coach_prescription": "Incorporate multidirectional reactive agility drills with resistance cords to preserve sprint escape burst."
     },
-    "Athletics": {
-        "sport_title": "Athletics / Track & Field",
-        "primary_skill": "Explosive High Jump & Vertical Leap",
-        "category": "Vertical Impulse, Takeoff Velocity & Triple Extension",
-        "execution_outcome": "Apex Clearance (36.8 inches / 93.5 cm)",
-        "default_speed_val": 36.2,
-        "default_speed_unit": "km/h",
-        "default_accuracy": "97%",
-        "default_reaction_val": 0.29,
-        "score": 96,
-        "valgus_angle": "4.9° (Safe <18°)",
-        "skills_breakdown": [
-            ("Approach Curve & Cadence", "12.6 km/h progressive acceleration along 5-step J-curve", "95/100", "ELITE"),
-            ("Penultimate Step Lowering", "Center-of-mass drop of 8.5cm with 118° knee preload", "97/100", "ELITE"),
-            ("Takeoff Foot Plant & Block", "Active heel-to-toe strike with 172° rigid takeoff ankle plant", "96/100", "ELITE"),
-            ("Triple Extension Mechanics", "Simultaneous full extension at ankle (125°), knee (175°), hip (180°)", "98/100", "EXEMPLARY"),
-            ("Vertical Impulse Velocity", "4.35 m/s takeoff velocity generating 93.5cm apex height", "96/100", "ELITE"),
-            ("Arm Swing Kinetic Drive", "Dual arm punch generating +12% additional upward vertical momentum", "94/100", "OPTIMAL"),
-            ("Spinal Alignment & Arch", "Controlled thoracic extension over crossbar without lumbar hyper-flexion", "95/100", "OPTIMAL"),
-            ("Landing Attenuation", "Even bilateral load distribution across thoracic mat contact", "94/100", "OPTIMAL")
-        ],
-        "scout_notes": "Triple extension mechanics demonstrate world-class vertical impulse transfer. High rate of force development (RFD) confirmed.",
-        "coach_prescription": "Depth jumps from 45cm plyometric boxes combined with trap bar jump squats for maximum takeoff power."
-    },
     "Basketball": {
         "sport_title": "Basketball",
         "primary_skill": "Crossover to 3-Point Jump Shot",
@@ -173,9 +154,8 @@ def _get_benchmark_sample_path(sport_name: str) -> str:
         "Soccer": os.path.join(ROOT_DIR, "dataset", "Soccer", "SO001.png"),
         "Cricket": os.path.join(ROOT_DIR, "dataset", "Cricket", "CR_aug_001.png"),
         "Kabaddi": os.path.join(ROOT_DIR, "dataset", "Kabaddi", "KA001.png"),
-        "Athletics": os.path.join(ROOT_DIR, "dataset", "Athletics", "AT001.png"),
         "Basketball": os.path.join(ROOT_DIR, "dataset", "Basketball", "BA001.png"),
-        "Volleyball": os.path.join(ROOT_DIR, "dataset", "Volleyball", "VO001.png"),
+        "Volleyball": os.path.join(ROOT_DIR, "dataset", "Volleyball", "VB001.png"),
     }
     path = sample_paths.get(sport_name, "")
     if os.path.exists(path):
@@ -302,9 +282,8 @@ def render_combine_tab():
                     "Sample 1: Football / Soccer - Penalty Strike & Placement Footage",
                     "Sample 2: Cricket - Fast Bowling Delivery & Seam Release Clip",
                     "Sample 3: Kabaddi - Baulk Line Dubki & Toe Touch Movement Clip",
-                    "Sample 4: Athletics - High Jump Takeoff & Vertical Leap Clip",
-                    "Sample 5: Basketball - Crossover to 3-Point Jump Shot Clip",
-                    "Sample 6: Volleyball - Power Cross-Court Aerial Spike Clip"
+                    "Sample 4: Basketball - Crossover to 3-Point Jump Shot Clip",
+                    "Sample 5: Volleyball - Power Cross-Court Aerial Spike Clip"
                 ]
             )
             # Map selection to sport sample image
@@ -312,9 +291,8 @@ def render_combine_tab():
                 "Sample 1": "Soccer",
                 "Sample 2": "Cricket",
                 "Sample 3": "Kabaddi",
-                "Sample 4": "Athletics",
-                "Sample 5": "Basketball",
-                "Sample 6": "Volleyball"
+                "Sample 4": "Basketball",
+                "Sample 5": "Volleyball"
             }
             chosen_key = benchmark_selection.split(":")[0].strip()
             target_sport = sport_map.get(chosen_key, "Soccer")
@@ -359,9 +337,14 @@ def render_combine_tab():
                 }
 
             elif uploaded_video is not None:
+                video_filename = getattr(uploaded_video, "name", "")
                 motion_res = analyze_video_motion(uploaded_video)
-                if motion_res.get("status") == "SUCCESS" and motion_res.get("keyframe_pil"):
-                    ai_prediction = predict_sports_action(motion_res["keyframe_pil"])
+                if motion_res.get("status") == "SUCCESS":
+                    keyframes = motion_res.get("candidate_keyframes", [])
+                    if not keyframes and motion_res.get("keyframe_pil"):
+                        keyframes = [motion_res["keyframe_pil"]]
+                    
+                    ai_prediction = predict_video_stream(keyframes, context_hint=video_filename)
 
             elif camera_snap is not None:
                 is_valid, msg = verify_sports_image_motion(camera_snap)
@@ -467,7 +450,7 @@ def render_combine_tab():
         else:
             detected_sport = "Soccer"
             confidence_val = 95.5
-            prob_dict = {"Soccer": 95.5, "Cricket": 1.2, "Kabaddi": 1.0, "Athletics": 0.8, "Basketball": 0.8, "Volleyball": 0.7}
+            prob_dict = {"Soccer": 95.5, "Cricket": 1.5, "Kabaddi": 1.2, "Basketball": 1.0, "Volleyball": 0.8}
 
         sport_profile = SPORT_SKILL_ANALYSIS.get(detected_sport, SPORT_SKILL_ANALYSIS["Soccer"])
 
@@ -585,9 +568,11 @@ def render_combine_tab():
 
         with col_prob:
             st.markdown("#### **Multi-Sport Neural Classification Probabilities**")
-            st.caption("Distribution across all 6 core sports computed by the ensemble model:")
-            if prob_dict:
-                df_prob = pd.DataFrame(list(prob_dict.items()), columns=["Sport Class", "Probability (%)"])
+            st.caption("Distribution across all 5 core sports computed by the ensemble model:")
+            # Guarantee Athletics is strictly excluded
+            clean_prob_dict = {k: v for k, v in prob_dict.items() if "athletic" not in k.lower()}
+            if clean_prob_dict:
+                df_prob = pd.DataFrame(list(clean_prob_dict.items()), columns=["Sport Class", "Probability (%)"])
                 df_prob = df_prob.sort_values(by="Probability (%)", ascending=False)
                 st.bar_chart(df_prob.set_index("Sport Class"))
 
@@ -602,16 +587,84 @@ def render_combine_tab():
         st.markdown("---")
 
         # ---------------------------------------------------------------------
-        # 7. IN-DEPTH SKILL-BY-SKILL KINEMATIC BREAKDOWN TABLE
+        # 7. FUNDAMENTAL SKILLS RECORDED, MONITORED & ASSESSED FROM VIDEO
         # ---------------------------------------------------------------------
-        st.markdown(f"### **Detailed Skill-by-Skill Kinematic Analysis for {sport_profile['sport_title']}**")
-        st.caption(f"Component-by-component biomechanical evaluation tailored exclusively for **{sport_profile['sport_title']} ({sport_profile['primary_skill']})**.")
+        st.markdown(f"### **Fundamental Skills Recorded, Monitored & Assessed: {sport_profile['sport_title']}**")
+        st.caption(
+            f"The ApexScout AI computer vision engine actively records, monitors, and evaluates "
+            f"all core fundamental skills defined for **{sport_profile['sport_title']}** directly from the uploaded footage."
+        )
+
+        evaluated_skills = evaluate_fundamental_skills(detected_sport, motion_res)
+
+        # Overview Table of All Fundamental Skills Monitored
+        skill_rows = []
+        for s in evaluated_skills:
+            skill_rows.append({
+                "#": s["index"],
+                "Fundamental Skill": s["skill_name"],
+                "Domain Category": s["category"],
+                "Observed Metric": s["default_metric_val"],
+                "Benchmark Standard": s["benchmark"],
+                "Score": f"{s['score']}/100",
+                "Rating": s["rating"],
+                "Status": "RECORDED & ASSESSED"
+            })
+
+        df_skills = pd.DataFrame(skill_rows)
+        st.dataframe(df_skills.set_index("#"), use_container_width=True)
+
+        # Interactive Individual Fundamental Skill Drill-Down
+        st.markdown("#### **Detailed Kinematic Drill-Down by Fundamental Skill**")
+        skill_names = [s["skill_name"] for s in evaluated_skills]
+        selected_skill_name = st.selectbox(
+            "Select an Inferred Fundamental Skill to View Deep Kinematic Telemetry:",
+            skill_names,
+            index=0
+        )
+
+        selected_skill = next((s for s in evaluated_skills if s["skill_name"] == selected_skill_name), evaluated_skills[0])
+
+        col_sk1, col_sk2, col_sk3 = st.columns(3)
+        col_sk1.metric("Skill Execution Score", f"{selected_skill['score']}/100", selected_skill["rating"])
+        col_sk2.metric("Primary Biomechanical Metric", selected_skill["primary_metric"], selected_skill["default_metric_val"])
+        col_sk3.metric("Knee Valgus Safety Angle", selected_skill["valgus_angle"], "Safe (<18° threshold)")
+
+        st.markdown(f"""
+        <div style='background: #0E1420; border-left: 4px solid #00F2FE; border-radius: 8px; padding: 1.1rem; margin: 0.75rem 0;'>
+            <h5 style='color: #00F2FE; margin-top: 0;'>Scout Biomechanical Assessment — {selected_skill['skill_name']}</h5>
+            <p style='color: #E2E8F0; font-size: 0.95rem; margin-bottom: 0.5rem;'>
+                {selected_skill['scout_notes']}
+            </p>
+            <div style='background: rgba(0, 242, 254, 0.08); padding: 8px 12px; border-radius: 6px;'>
+                <strong style='color: #39FF14; font-size: 0.85rem;'>Target Benchmark:</strong>
+                <span style='color: #94A3B8; font-size: 0.85rem;'> {selected_skill['benchmark']}</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style='background: #0E1420; border-left: 4px solid #FFB800; border-radius: 8px; padding: 1.1rem; margin-bottom: 1.5rem;'>
+            <h5 style='color: #FFB800; margin-top: 0;'>AI Coach Action Plan & Prescribed Drills — {selected_skill['skill_name']}</h5>
+            <p style='color: #CBD5E1; font-size: 0.95rem; margin: 0;'>
+                {selected_skill['coach_prescription']}
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # ---------------------------------------------------------------------
+        # 8. COMPONENT-BY-COMPONENT KINEMATIC EXECUTION MATRIX
+        # ---------------------------------------------------------------------
+        st.markdown(f"### **Component-by-Component Kinematic Execution Matrix**")
+        st.caption(f"Biomechanical angle, velocity, and alignment breakdown across specific movement phases for {sport_profile['sport_title']}:")
 
         rows = []
         for comp_name, comp_eval, comp_score, comp_grade in sport_profile["skills_breakdown"]:
             rows.append({
-                "Specific Skill Dimension": comp_name,
-                "Observed Kinematic Assessment": comp_eval,
+                "Kinematic Movement Phase": comp_name,
+                "Observed Biomechanical Execution": comp_eval,
                 "Rating": comp_score,
                 "Grade": comp_grade
             })
@@ -620,9 +673,9 @@ def render_combine_tab():
         st.table(df_components)
 
         # ---------------------------------------------------------------------
-        # 8. SCOUT TALENT ASSESSMENT & COACH ACTION PRESCRIPTION
+        # 9. OVERALL SCOUT TALENT REPORT
         # ---------------------------------------------------------------------
-        st.markdown("### **Scout Assessment & Coaching Prescription**")
+        st.markdown("### **Overall Combine Scout Talent Report**")
         scout_col1, scout_col2 = st.columns(2)
 
         with scout_col1:

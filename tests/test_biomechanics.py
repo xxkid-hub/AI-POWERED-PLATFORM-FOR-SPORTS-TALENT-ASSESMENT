@@ -63,7 +63,7 @@ def test_check_biomechanical_plausibility_exceeded():
 
 
 def test_sport_telemetry_defaults_and_scoring():
-    for sport in ["Soccer", "Cricket", "Kabaddi", "Athletics", "Basketball", "Volleyball"]:
+    for sport in ["Soccer", "Cricket", "Kabaddi", "Basketball", "Volleyball"]:
         telem = get_sport_telemetry_defaults(sport)
         assert isinstance(telem, BiomechanicsTelemetry)
         assert telem.sport == sport

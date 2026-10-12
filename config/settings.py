@@ -17,9 +17,8 @@ CONFIG_DIR = os.path.join(BASE_DIR, "config")
 os.makedirs(MODEL_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
-# Standardized Sports Categories (6 Core Classes)
+# Standardized Sports Categories (5 Core Classes)
 SPORTS_CATEGORIES = [
-    "Athletics",
     "Basketball",
     "Cricket",
     "Kabaddi",
@@ -33,13 +32,6 @@ TEST_SPLIT = 0.20
 
 # Biomechanical Skill and Kinematic Telemetry Mapping
 SKILL_MAPPING = {
-    "Athletics": {
-        "skill": "Explosive High Jump & Vertical Leap",
-        "category": "Explosiveness & High Jump",
-        "key_metric": "Takeoff Velocity: 4.35 m/s | Apex: 36.8 in",
-        "plant_foot_expected": "Penultimate foot plant (118° preload)",
-        "ideal_balance_score": 96
-    },
     "Basketball": {
         "skill": "Crossover to 3-Point Jump Shot",
         "category": "Ball Handling & Shooting Arc",

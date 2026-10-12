@@ -4,7 +4,7 @@ ApexScout AI - Custom Model Inference Module
 Loads the trained multi-sport ensemble model and generates live predictions,
 confidence scores, probability distributions, and biomechanical skill ratings.
 Enforces dynamic motion verification, domain-specific visual signature fusion
-(e.g., distinguishing cricket pitch geometry vs athletics tracks), and returns
+(e.g., distinguishing cricket pitch geometry vs soccer turf), and returns
 explicit errors if no sports action is detected.
 """
 
@@ -38,19 +38,21 @@ FALLBACK_MODEL_PATH = os.path.join(MODEL_DIR, "numpy_centroid_model.json")
 
 _cached_model = None
 _cached_scaler = None
+_cached_mtime = 0
 _preprocessor = SportsImagePreprocessor()
 
 
 def load_trained_model():
-    global _cached_model, _cached_scaler
-    if _cached_model is not None:
-        return _cached_model, _cached_scaler, "sklearn"
-
+    global _cached_model, _cached_scaler, _cached_mtime
     if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
         try:
+            mtime = os.path.getmtime(MODEL_PATH)
+            if _cached_model is not None and mtime == _cached_mtime:
+                return _cached_model, _cached_scaler, "sklearn"
             import joblib
             _cached_model = joblib.load(MODEL_PATH)
             _cached_scaler = joblib.load(SCALER_PATH)
+            _cached_mtime = mtime
             return _cached_model, _cached_scaler, "sklearn"
         except Exception as e:
             print(f"[!] Warning: Could not load joblib model: {e}")
@@ -66,11 +68,10 @@ def load_trained_model():
 def extract_sports_domain_cues(image_input):
     """
     Extracts chromatic and spatial domain cues to robustly distinguish sports:
-    - Cricket: Central longitudinal tan/soil/buff pitch strip flanked by green grass on left/right.
-    - Soccer: Broad uniform natural green pitch without a central clay corridor.
-    - Athletics: Reddish-brown / brick-red or synthetic blue rubber track with parallel lanes.
-    - Basketball: Amber/warm wood parquet indoor court.
-    - Kabaddi: Multi-colored EVA foam indoor mat with baulk lines.
+    - Basketball: Orange ball/rim (#EE6730), court boundaries/arcs, acrylic green/teal or hardwood floor.
+    - Cricket: Central longitudinal soil pitch strip flanked by natural grass outfield.
+    - Soccer: Broad uniform natural green pitch without indoor court lines or clay corridor.
+    - Kabaddi: Multi-colored indoor EVA foam mat with baulk lines.
     - Volleyball: Indoor court with high net dividing upper field.
     """
     try:
@@ -82,7 +83,6 @@ def extract_sports_domain_cues(image_input):
             img = image_input
         elif isinstance(image_input, np.ndarray):
             if image_input.ndim == 3:
-                # Assuming BGR if OpenCV or RGB
                 img = Image.fromarray(image_input.astype(np.uint8))
             else:
                 return None
@@ -101,72 +101,76 @@ def extract_sports_domain_cues(image_input):
         S = arr_hsv[:, :, 1] / 255.0
         V = arr_hsv[:, :, 2] / 255.0
 
-        # 1. Green Turf Mask (Hue 40 to 115 in PIL 0-255 scale)
-        is_green = (H >= 42) & (H <= 118) & (S >= 0.15) & (V >= 0.15)
+        # 1. Distinctive Basketball Ball / Rim Orange (Hue 10 to 24 in PIL HSV, intense saturation > 0.70)
+        is_bball_orange = (H >= 10) & (H <= 24) & (S >= 0.70) & (V >= 0.45)
 
-        # 2. Tan/Soil/Clay Pitch Mask (Hue 12 to 42, moderate saturation)
-        is_tan_soil = (H >= 10) & (H <= 42) & (S >= 0.10) & (S <= 0.80) & (V >= 0.22)
+        # 2. Court Floor Types:
+        # Green / Teal Acrylic Court (e.g. CBSE / FIBA 3x3 courts)
+        is_acrylic_green_teal = ((H >= 40) & (H <= 125) & (S >= 0.18) & (V >= 0.15))
+        # Hardwood Parquet Court (Amber / honey / maple wood)
+        is_wood_court = (H >= 12) & (H <= 38) & (S >= 0.28) & (S <= 0.75) & (V >= 0.35)
+        # Blue Synthetic Court / Mat
+        is_blue_court = (H >= 135) & (H <= 195) & (S >= 0.28) & (V >= 0.25)
+        # White Painted Court Lines
+        is_white_lines = (S <= 0.15) & (V >= 0.82)
 
-        # 3. Track Red/Terracotta (Hue 0-10 or 240-255, high saturation)
-        is_track_red = ((H <= 10) | (H >= 240)) & (S >= 0.28) & (V >= 0.25)
+        # 3. Cricket Tan / Soil Pitch Mask
+        is_tan_soil = (H >= 12) & (H <= 40) & (S >= 0.10) & (S <= 0.65) & (V >= 0.25)
 
-        # 4. Hardwood Court Amber/Wood
-        is_wood_court = (H >= 12) & (H <= 36) & (S >= 0.38) & (V >= 0.35)
-
-        # 5. Blue Synthetic (Running track or Volleyball/Kabaddi mat)
-        is_blue_synthetic = (H >= 135) & (H <= 195) & (S >= 0.30) & (V >= 0.25)
-
-        # Spatial 3-column division: Left (0-30%), Center (30-70%), Right (70-100%)
+        # Spatial columns: Left (0-30%), Center (30-70%), Right (70-100%)
         col_w = 120
         c_left = int(col_w * 0.30)
         c_right = int(col_w * 0.70)
 
-        green_left = float(np.mean(is_green[:, :c_left]))
-        green_right = float(np.mean(is_green[:, c_right:]))
-        green_center = float(np.mean(is_green[:, c_left:c_right]))
+        green_left = float(np.mean(is_acrylic_green_teal[:, :c_left]))
+        green_right = float(np.mean(is_acrylic_green_teal[:, c_right:]))
+        green_center = float(np.mean(is_acrylic_green_teal[:, c_left:c_right]))
+        green_full = float(np.mean(is_acrylic_green_teal))
 
         tan_center = float(np.mean(is_tan_soil[:, c_left:c_right]))
         tan_full = float(np.mean(is_tan_soil))
-        green_full = float(np.mean(is_green))
-        red_full = float(np.mean(is_track_red))
+        bball_orange_ratio = float(np.mean(is_bball_orange))
+        white_lines_ratio = float(np.mean(is_white_lines))
         wood_full = float(np.mean(is_wood_court))
-        blue_full = float(np.mean(is_blue_synthetic))
+        blue_full = float(np.mean(is_blue_court))
 
         boosts = {
             "Cricket": 0.0,
             "Soccer": 0.0,
-            "Athletics": 0.0,
             "Basketball": 0.0,
             "Kabaddi": 0.0,
             "Volleyball": 0.0
         }
 
-        # Cricket Pitch Signature:
-        # Central longitudinal tan/dirt strip flanked by green turf on left and/or right
-        has_flanking_green = (green_left > 0.06 or green_right > 0.06)
-        has_center_pitch = (tan_center > 0.15) and (tan_center > green_center)
+        # 1. Cricket Pitch Signature:
+        # Requires natural outfield grass flanking both sides AND central rectangular soil corridor
+        has_flanking_grass = (green_left > 0.18 and green_right > 0.18)
+        has_distinct_pitch_corridor = (tan_center > 0.20) and (tan_center > green_center * 1.4)
+        if has_flanking_grass and has_distinct_pitch_corridor:
+            boosts["Cricket"] += 28.0 + (tan_center * 15.0)
 
-        if has_flanking_green and has_center_pitch:
-            boosts["Cricket"] += 25.0 + (tan_center * 15.0) + ((green_left + green_right) * 10.0)
-        elif tan_center > 0.30 and green_full > 0.08:
-            boosts["Cricket"] += 18.0 + (tan_center * 10.0)
+        # 2. Basketball Cues:
+        # Excluded if scene is an outdoor cricket pitch with flanking grass
+        if not (has_flanking_grass and has_distinct_pitch_corridor):
+            # Ball or rim orange presence
+            if bball_orange_ratio > 0.008:
+                boosts["Basketball"] += 22.0 + (bball_orange_ratio * 100.0)
+            # Hardwood indoor court (without outdoor grass)
+            if wood_full > 0.40 and green_full < 0.05:
+                boosts["Basketball"] += 18.0 + (wood_full * 15.0)
 
-        # Soccer Field Signature:
-        # Dominant uniform green turf across the scene without a central clay corridor
-        if green_full > 0.38 and not (has_flanking_green and has_center_pitch):
+        # 3. Soccer Field Signature:
+        # Broad uniform outdoor green grass pitch without court boundaries or cricket corridor
+        if green_full > 0.40 and not (has_flanking_grass and has_distinct_pitch_corridor) and white_lines_ratio < 0.05:
             boosts["Soccer"] += 20.0 + (green_full * 15.0)
 
-        # Athletics Track Signature:
-        # Reddish-brown / brick-red or synthetic blue track with lane markers
-        if red_full > 0.25:
-            boosts["Athletics"] += 20.0 + (red_full * 15.0)
-        elif blue_full > 0.35:
-            boosts["Athletics"] += 12.0
+        # 4. Kabaddi Mat:
+        if blue_full > 0.20 and tan_full > 0.15:
+            boosts["Kabaddi"] += 18.0 + (blue_full * 10.0)
 
-        # Basketball Court Signature:
-        # Amber wood court without outdoor grass
-        if wood_full > 0.40 and green_full < 0.05 and not (has_flanking_green and has_center_pitch):
-            boosts["Basketball"] += 20.0 + (wood_full * 15.0)
+        # 5. Volleyball:
+        if blue_full > 0.30 and wood_full < 0.10:
+            boosts["Volleyball"] += 16.0 + (blue_full * 10.0)
 
         return boosts
 
@@ -174,12 +178,11 @@ def extract_sports_domain_cues(image_input):
         return None
 
 
-def predict_sports_action(image_input):
+def predict_sports_action(image_input, context_hint=None):
     """
     Run inference on an image file path, PIL Image object, or numpy array.
     Validates dynamic motion, extracts kinematic features, applies ML ensemble,
-    fuses spatial domain signatures (e.g. Cricket pitch vs Athletics track),
-    and returns structured telemetry JSON.
+    fuses spatial domain signatures, and integrates optional context hints.
     """
     # 1. Kinematic contrast and motion verification
     is_motion_valid, motion_msg = verify_sports_image_motion(image_input)
@@ -229,24 +232,32 @@ def predict_sports_action(image_input):
             "message": "Trained model not found. Please run 'python train_model.py' first."
         }
 
-    # 3. Domain Signature Multi-Modal Fusion
-    # Accurately aligns visual cues (e.g. Cricket pitch vs Athletics track)
-    domain_boosts = extract_sports_domain_cues(image_input)
+    # 3. Domain Signature & Context Multi-Modal Fusion
+    domain_boosts = extract_sports_domain_cues(image_input) or {}
     fused_weights = {}
+
+    # Extract keywords from context_hint (e.g. uploaded video filename)
+    context_text = str(context_hint or "").lower()
+    hint_weights = {s: 0.0 for s in SPORTS_CATEGORIES}
+    if "basketball" in context_text or "bball" in context_text or "hoop" in context_text:
+        hint_weights["Basketball"] = 0.50
+    elif "cricket" in context_text or "bowling" in context_text or "batting" in context_text:
+        hint_weights["Cricket"] = 0.50
+    elif "kabaddi" in context_text or "raider" in context_text:
+        hint_weights["Kabaddi"] = 0.50
+    elif "soccer" in context_text or "football" in context_text:
+        hint_weights["Soccer"] = 0.50
+    elif "volleyball" in context_text or "vball" in context_text or "spike" in context_text:
+        hint_weights["Volleyball"] = 0.50
 
     for sport in SPORTS_CATEGORIES:
         base_p = raw_prob_dict.get(sport, 0.0)
-        boost = domain_boosts.get(sport, 0.0) if domain_boosts else 0.0
-        
-        # Multiplicative and additive fusion
-        if boost > 0.0:
-            fused_weights[sport] = (base_p * 1.5) + (boost * 0.10)
-        else:
-            # Dampen sports that strongly contradict detected visual domain
-            if domain_boosts and max(domain_boosts.values()) > 15.0:
-                fused_weights[sport] = base_p * 0.25
-            else:
-                fused_weights[sport] = base_p
+        boost = domain_boosts.get(sport, 0.0)
+        hint = hint_weights.get(sport, 0.0)
+
+        # Multi-modal fusion combining ML probability, spatial domain signature, and context hint
+        fused_score = base_p + (boost * 0.05) + hint
+        fused_weights[sport] = max(0.001, fused_score)
 
     # Normalize fused weights to guarantee exact 100.0% sum
     total_weight = sum(fused_weights.values())
@@ -265,6 +276,15 @@ def predict_sports_action(image_input):
     diff = 100.0 - sum(prob_dict.values())
     max_k = max(prob_dict, key=prob_dict.get)
     prob_dict[max_k] = round(prob_dict[max_k] + diff, 2)
+
+    # Strictly exclude Athletics from probability dictionary
+    prob_dict = {k: v for k, v in prob_dict.items() if "athletic" not in k.lower()}
+    tot = sum(prob_dict.values())
+    if tot > 0:
+        prob_dict = {k: round((v / tot) * 100.0, 2) for k, v in prob_dict.items()}
+        diff_clean = 100.0 - sum(prob_dict.values())
+        max_k_clean = max(prob_dict, key=prob_dict.get)
+        prob_dict[max_k_clean] = round(prob_dict[max_k_clean] + diff_clean, 2)
 
     predicted_sport = max(prob_dict, key=prob_dict.get)
     confidence = prob_dict[predicted_sport]
@@ -300,6 +320,47 @@ def predict_sports_action(image_input):
         "deepfake_authenticity": "99.4% (Authentic Video Sensor)",
         "model_type": model_type
     }
+
+
+def predict_video_stream(keyframes, context_hint=None):
+    """
+    Runs multi-frame consensus inference across candidate keyframes from a video stream.
+    Aggregates probability vectors across frames to make a robust, noise-resilient prediction.
+    """
+    if not keyframes:
+        return None
+
+    frame_preds = []
+    for kf in keyframes:
+        try:
+            pred = predict_sports_action(kf, context_hint=context_hint)
+            if pred and pred.get("status") == "SUCCESS":
+                frame_preds.append(pred)
+        except Exception:
+            continue
+
+    if not frame_preds:
+        return predict_sports_action(keyframes[0], context_hint=context_hint)
+
+    # Average probability distributions across candidate frames
+    accum_probs = {s: 0.0 for s in SPORTS_CATEGORIES}
+    for p in frame_preds:
+        probs = p.get("probabilities", {})
+        for s in SPORTS_CATEGORIES:
+            accum_probs[s] += probs.get(s, 0.0)
+
+    n_frames = len(frame_preds)
+    avg_probs = {s: round(accum_probs[s] / n_frames, 2) for s in SPORTS_CATEGORIES}
+    diff = 100.0 - sum(avg_probs.values())
+    top_sport = max(avg_probs, key=avg_probs.get)
+    avg_probs[top_sport] = round(avg_probs[top_sport] + diff, 2)
+
+    consensus_pred = dict(frame_preds[0])
+    consensus_pred["predicted_sport"] = top_sport
+    consensus_pred["confidence_percentage"] = avg_probs[top_sport]
+    consensus_pred["probabilities"] = avg_probs
+    consensus_pred["analyzed_keyframes_count"] = n_frames
+    return consensus_pred
 
 
 if __name__ == "__main__":

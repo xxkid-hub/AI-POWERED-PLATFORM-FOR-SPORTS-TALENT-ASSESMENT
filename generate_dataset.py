@@ -16,7 +16,6 @@ DATASET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dataset"
 TARGET_SAMPLES_PER_SPORT = 100
 
 SPORTS_CATEGORIES = [
-    "Athletics",
     "Basketball",
     "Cricket",
     "Kabaddi",

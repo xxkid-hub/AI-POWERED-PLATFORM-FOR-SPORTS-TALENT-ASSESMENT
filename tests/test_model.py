@@ -1,6 +1,6 @@
 """
 Unit Tests for Model Inference, Checkpoint Loading, and Prediction Schema
-Includes tests for athletic motion validation, domain signature fusion (cricket pitch vs athletics track),
+Includes tests for athletic motion validation, domain signature fusion (cricket pitch vs soccer turf),
 and rejection of static non-sports frames.
 """
 

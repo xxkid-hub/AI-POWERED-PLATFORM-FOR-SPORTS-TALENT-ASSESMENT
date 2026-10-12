@@ -91,7 +91,7 @@ class SportsModelTrainer:
         print(f"  [+] Loaded total {len(X)} samples with {X.shape[1] if len(X) > 0 else 0} features each.", flush=True)
         return X, y, sample_paths
 
-    def train(self, test_size=TEST_SPLIT, n_estimators_rf=100, n_estimators_et=100, max_depth=10):
+    def train(self, test_size=TEST_SPLIT, n_estimators_rf=150, n_estimators_et=150, max_depth=12):
         """
         Executes complete training pipeline, hold-out validation, and saves artifacts.
         """
@@ -153,13 +153,39 @@ class SportsModelTrainer:
             m = class_report[sport]
             print(f"  {sport:12s} | Precision: {m['precision']:.3f} | Recall: {m['recall']:.3f} | F1: {m['f1-score']:.3f}", flush=True)
 
+        # Fit final production model on all dataset samples
+        print(f"\n[5/5] Training final production ensemble across all {len(X)} dataset samples...", flush=True)
+        final_scaler = StandardScaler()
+        X_full_scaled = final_scaler.fit_transform(X)
+        final_rf = RandomForestClassifier(
+            n_estimators=n_estimators_rf,
+            max_depth=max_depth,
+            random_state=self.seed,
+            n_jobs=1
+        )
+        final_et = ExtraTreesClassifier(
+            n_estimators=n_estimators_et,
+            max_depth=max_depth,
+            random_state=self.seed,
+            n_jobs=1
+        )
+        final_ensemble = VotingClassifier(
+            estimators=[('rf', final_rf), ('et', final_et)],
+            voting='soft'
+        )
+        final_ensemble.fit(X_full_scaled, y)
+
+        full_preds = final_ensemble.predict(X_full_scaled)
+        full_acc = float(accuracy_score(y, full_preds))
+        print(f" [+] Full Dataset Production Accuracy: {full_acc * 100:.2f}%\n", flush=True)
+
         # Save artifacts
         model_path = os.path.join(self.model_dir, "sports_talent_model.joblib")
         scaler_path = os.path.join(self.model_dir, "feature_scaler.joblib")
         report_path = os.path.join(self.model_dir, "evaluation_report.json")
 
-        joblib.dump(ensemble, model_path)
-        joblib.dump(scaler, scaler_path)
+        joblib.dump(final_ensemble, model_path)
+        joblib.dump(final_scaler, scaler_path)
 
         report_data = {
             "model_name": "ApexScout Ensemble Multi-Sport Kinematic Classifier",

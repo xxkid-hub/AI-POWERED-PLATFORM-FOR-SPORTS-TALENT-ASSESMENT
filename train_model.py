@@ -2,7 +2,7 @@
 """
 ApexScout AI - Multi-Sport Model Training CLI Pipeline
 Trains a custom Machine Learning & Kinematic Feature Model directly on the dataset/ directory
-across Athletics, Basketball, Cricket, Kabaddi, Soccer, and Volleyball.
+across Basketball, Cricket, Kabaddi, Soccer, and Volleyball.
 Supports CLI arguments (--seed, --config, --data-dir, --model-dir) for full reproducibility.
 """
 

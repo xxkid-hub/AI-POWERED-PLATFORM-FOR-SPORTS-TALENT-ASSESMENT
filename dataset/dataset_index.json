@@ -1,17 +1,12 @@
 {
   "dataset_name": "ApexScout Augmented Multi-Sport Training Dataset",
   "version": "3.0.0",
-  "total_sports": 6,
-  "total_samples": 600,
+  "total_sports": 5,
+  "total_samples": 500,
   "sports_breakdown": {
-    "Athletics": {
-      "base_samples": 15,
-      "augmented_samples": 85,
-      "total_samples": 100
-    },
     "Basketball": {
-      "base_samples": 15,
-      "augmented_samples": 85,
+      "base_samples": 65,
+      "augmented_samples": 35,
       "total_samples": 100
     },
     "Cricket": {
