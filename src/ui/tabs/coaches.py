@@ -48,45 +48,53 @@ def direct_message_dialog(coach: dict):
             f"plant-foot stability and release deceleration mechanics."
         )
 
-    msg_subject = st.text_input("Subject:", value=f"Combine Scouting Inquiry - {coach['sport']}", key=f"subj_{coach['name']}")
+    coach_name = coach["name"]
+    msg_subject = st.text_input("Subject:", value=f"Combine Scouting Inquiry - {coach['sport']}", key=f"subj_{coach_name}")
     msg_body = st.text_area(
         "Message Body:",
         value=default_body,
         height=140,
         placeholder="Type your message to the coach here...",
-        key=f"body_{coach['name']}"
+        key=f"body_{coach_name}"
     )
 
-    if f"sent_{coach['name']}" in st.session_state and st.session_state[f"sent_{coach['name']}"]:
-        st.success(f"🎉 **Message Sent!** Your message was successfully dispatched to **{coach['name']}**.\n\n"
-                   f"- **Transmission ID:** `{st.session_state.get(f'trans_id_{coach[\"name\"]}', 'MSG-84920')}`\n"
-                   f"- **Encrypted Channel:** 256-bit Scout Direct Connect\n"
-                   f"- **Status:** Delivered to Scout Inbox")
-        if st.button("Close Dialogue", key=f"close_{coach['name']}", use_container_width=True):
-            st.session_state[f"sent_{coach['name']}"] = False
+    sent_key = f"sent_{coach_name}"
+    trans_id_key = f"trans_id_{coach_name}"
+
+    if sent_key in st.session_state and st.session_state[sent_key]:
+        cur_id = st.session_state.get(trans_id_key, "MSG-84920")
+        st.success(
+            f"🎉 **Message Sent!** Your message was successfully dispatched to **{coach_name}**.\n\n"
+            f"- **Transmission ID:** `{cur_id}`\n"
+            f"- **Encrypted Channel:** 256-bit Scout Direct Connect\n"
+            f"- **Status:** Delivered to Scout Inbox"
+        )
+        if st.button("Close Dialogue", key=f"close_{coach_name}", use_container_width=True):
+            st.session_state[sent_key] = False
             st.rerun()
     else:
         col_send, col_cancel = st.columns([1.2, 1])
         with col_send:
-            if st.button("🚀 Send Message", type="primary", key=f"btn_send_{coach['name']}", use_container_width=True):
+            if st.button("🚀 Send Message", type="primary", key=f"btn_send_{coach_name}", use_container_width=True):
                 if not msg_body.strip():
                     st.warning("Please type a message before clicking send.")
                 else:
                     trans_id = f"MSG-{random.randint(10000, 99999)}"
-                    st.session_state[f"sent_{coach['name']}"] = True
-                    st.session_state[f"trans_id_{coach['name']}"] = trans_id
-                    st.session_state[f"last_msg_coach"] = coach['name']
-                    st.toast(f"✅ Message sent successfully to {coach['name']}!", icon="📨")
+                    st.session_state[sent_key] = True
+                    st.session_state[trans_id_key] = trans_id
+                    st.session_state["last_msg_coach"] = coach_name
+                    st.toast(f"✅ Message sent successfully to {coach_name}!", icon="📨")
                     st.rerun()
 
         with col_cancel:
-            if st.button("Cancel", key=f"btn_cancel_{coach['name']}", use_container_width=True):
+            if st.button("Cancel", key=f"btn_cancel_{coach_name}", use_container_width=True):
                 st.rerun()
 
 
 @st.dialog("📋 Dispatch Official Verified Dossier")
 def dispatch_dossier_dialog(coach: dict):
-    st.markdown(f"### Dispatch Verified Dossier to **{coach['name']}**")
+    coach_name = coach["name"]
+    st.markdown(f"### Dispatch Verified Dossier to **{coach_name}**")
     st.caption(f"**Target:** {coach['role']} • **Combine Fee:** {coach['fee']}")
     st.markdown("---")
 
@@ -102,24 +110,27 @@ def dispatch_dossier_dialog(coach: dict):
     </div>
     """, unsafe_allow_html=True)
 
-    if f"dossier_sent_{coach['name']}" in st.session_state and st.session_state[f"dossier_sent_{coach['name']}"]:
-        st.success(f"✓ **Official Dossier Dispatched!** Delivered to **{coach['name']}'s** verified scout portal.\n\n"
-                   f"- **Dossier Serial:** `DOS-77491-VERIFIED`\n"
-                   f"- **Recipient:** {coach['name']} ({coach['role']})\n"
-                   f"- **Status:** Awaiting Scout Review")
-        if st.button("Close Dialogue", key=f"close_dos_{coach['name']}", use_container_width=True):
-            st.session_state[f"dossier_sent_{coach['name']}"] = False
+    dossier_key = f"dossier_sent_{coach_name}"
+    if dossier_key in st.session_state and st.session_state[dossier_key]:
+        st.success(
+            f"✓ **Official Dossier Dispatched!** Delivered to **{coach_name}'s** verified scout portal.\n\n"
+            f"- **Dossier Serial:** `DOS-77491-VERIFIED`\n"
+            f"- **Recipient:** {coach_name} ({coach['role']})\n"
+            f"- **Status:** Awaiting Scout Review"
+        )
+        if st.button("Close Dialogue", key=f"close_dos_{coach_name}", use_container_width=True):
+            st.session_state[dossier_key] = False
             st.rerun()
     else:
-        st.info(f"Dispatching will grant **{coach['name']}** full access to your verified combine report and video highlights.")
+        st.info(f"Dispatching will grant **{coach_name}** full access to your verified combine report and video highlights.")
         col_confirm, col_cancel = st.columns([1.2, 1])
         with col_confirm:
-            if st.button("📤 Confirm & Dispatch Dossier", type="primary", key=f"btn_dos_confirm_{coach['name']}", use_container_width=True):
-                st.session_state[f"dossier_sent_{coach['name']}"] = True
-                st.toast(f"✅ Verified Dossier dispatched to {coach['name']}!", icon="📋")
+            if st.button("📤 Confirm & Dispatch Dossier", type="primary", key=f"btn_dos_confirm_{coach_name}", use_container_width=True):
+                st.session_state[dossier_key] = True
+                st.toast(f"✅ Verified Dossier dispatched to {coach_name}!", icon="📋")
                 st.rerun()
         with col_cancel:
-            if st.button("Cancel", key=f"btn_dos_cancel_{coach['name']}", use_container_width=True):
+            if st.button("Cancel", key=f"btn_dos_cancel_{coach_name}", use_container_width=True):
                 st.rerun()
 
 
