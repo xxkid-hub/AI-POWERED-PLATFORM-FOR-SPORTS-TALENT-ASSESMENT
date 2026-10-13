@@ -10,17 +10,33 @@ import pandas as pd
 from src.ui.mock_data import LEADERBOARD_RECORDS
 
 
-def render_leaderboard_tab():
-    st.title("Verified Grassroots & Elite Leaderboard")
-    st.markdown("Global rankings of top talent with verified 12-component biomechanics and **24–48h Medical SLA badges**.")
+def render_leaderboard_tab(language: str = "English"):
+    lang = language.lower()
+    if "hindi" in lang or "हिन्दी" in lang:
+        st.title("सत्यापित ग्रामीण एवं विशिष्ट स्काउट लीडरबोर्ड")
+        st.markdown("सत्यापित 12-घटक बायोमैकेनिक्स और **24-48 घंटे मेडिकल एसएलए बैज** के साथ शीर्ष प्रतिभाओं की वैश्विक रैंकिंग।")
+    elif "español" in lang or "spanish" in lang:
+        st.title("Tabla de Líderes Verificada de Talentos y Élite")
+        st.markdown("Clasificación global de talentos con biomecánica de 12 componentes verificada y **sellos de SLA médico 24-48h**.")
+    else:
+        st.title("Verified Grassroots & Elite Leaderboard")
+        st.markdown("Global rankings of top talent with verified 12-component biomechanics and **24–48h Medical SLA badges**.")
 
     df_lead = pd.DataFrame(LEADERBOARD_RECORDS)
     st.dataframe(df_lead, use_container_width=True)
 
 
-def render_passport_tab():
-    st.title("Verifiable Digital Athlete Passport")
-    st.markdown("Official scout combine dossier with tamper-proof video telemetry, 24-48h medical clearance token, and kinetic skill matrix.")
+def render_passport_tab(language: str = "English"):
+    lang = language.lower()
+    if "hindi" in lang or "हिन्दी" in lang:
+        st.title("सत्यापनीय डिजिटल एथलीट पासपोर्ट")
+        st.markdown("छेड़छाड़-रोधी वीडियो टेलीमेट्री, 24-48 घंटे मेडिकल क्लीयरेंस टोकन और काइनेटिक कौशल मैट्रिक्स के साथ आधिकारिक स्काउट कंबाइन डॉसियर।")
+    elif "español" in lang or "spanish" in lang:
+        st.title("Pasaporte Digital Verificable del Atleta")
+        st.markdown("Expediente oficial de combine con telemetría de video a prueba de manipulaciones, token médico 24-48h y matriz cinemática.")
+    else:
+        st.title("Verifiable Digital Athlete Passport")
+        st.markdown("Official scout combine dossier with tamper-proof video telemetry, 24-48h medical clearance token, and kinetic skill matrix.")
 
     st.markdown("""
     <div class='card-box' style='border:2px solid #00F2FE;'>
